@@ -68,9 +68,13 @@ final ButtonStyle outlinedShortStyle = OutlinedButton.styleFrom(
 class MainHorizontalButton extends StatelessWidget {
   final String route;
   final String content;
+  final VoidCallback onPressed;
 
   const MainHorizontalButton(
-      {super.key, required this.content, required this.route});
+      {super.key,
+      required this.content,
+      required this.route,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +88,7 @@ class MainHorizontalButton extends StatelessWidget {
         ),
         child: ElevatedButton(
           onPressed: () {
-            context.push(route);
+            onPressed;
           },
           style: filledLongStyle,
           child: Text(content),

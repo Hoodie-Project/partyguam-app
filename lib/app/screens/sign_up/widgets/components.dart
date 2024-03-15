@@ -210,11 +210,13 @@ class NickNameForm extends StatefulWidget {
 
 class _NickNameFormState extends State<NickNameForm> {
   final controller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool _showClearIcon = false;
 
   @override
   void initState() {
     super.initState();
+
     controller.addListener(_updateClearIconVisibility);
   }
 
@@ -248,6 +250,8 @@ class _NickNameFormState extends State<NickNameForm> {
           Radius.circular(16.0),
         ),
         child: TextFormField(
+          autovalidateMode: AutovalidateMode.always,
+          autofocus: true,
           controller: controller,
           decoration: InputDecoration(
             contentPadding:
@@ -290,7 +294,7 @@ class _NickNameFormState extends State<NickNameForm> {
                 Radius.circular(16.0),
               ),
             ),
-            focusedErrorBorder: OutlineInputBorder(
+            errorBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: AppColors.systemColors.shade100,
                 width: 1.0,
@@ -299,8 +303,19 @@ class _NickNameFormState extends State<NickNameForm> {
                 Radius.circular(16.0),
               ),
             ),
+            // focusedErrorBorder: OutlineInputBorder(
+            //   borderSide: BorderSide(
+            //     color: AppColors.systemColors.shade100,
+            //     width: 1.0,
+            //   ),
+            //   borderRadius: const BorderRadius.all(
+            //     Radius.circular(16.0),
+            //   ),
+            // ),
           ), // TODO: Validator 생성 필요
-          // validator: widget.validator,
+          validator: (value) {
+            return NicknameValidator(value);
+          },
         ),
       ),
     );
