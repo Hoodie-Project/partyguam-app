@@ -260,8 +260,9 @@ class _NickNameFormState extends State<NickNameForm> {
           suffixIcon: _showClearIcon
               ? IconButton(
                   // TODO: CustomIcons 설정
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.cancel_outlined,
+                    color: AppColors.greyColors.shade700,
                     size: 20.0,
                   ),
                   onPressed: () {
@@ -273,7 +274,10 @@ class _NickNameFormState extends State<NickNameForm> {
               : null,
 
           /// TODO: 에러메세지 인풋창과 정렬 맞춰야 함
-          errorStyle: TextStyle(),
+          errorStyle: const TextStyle(
+            fontWeight: FontWeight.normal,
+            fontSize: 12.0,
+          ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: AppColors.greyColors.shade200,
@@ -311,9 +315,8 @@ class _NickNameFormState extends State<NickNameForm> {
             ),
           ),
         ),
-        // TODO: Validator 생성 필요
         validator: (value) {
-          return NicknameValidator(value);
+          return nicknameValidation(value);
         },
       ),
     );
