@@ -5,8 +5,5 @@ String? NicknameValidator(value) {
   if (value == null || value.isEmpty) {
     return '닉네임을 입력하세요.';
   }
-  // if (existingNicknames.contains(value)) {
-  //   return '이미 사용 중인 닉네임입니다.';
-  // }
   return null;
 }
