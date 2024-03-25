@@ -13,22 +13,34 @@ class SignUp0114 extends StatelessWidget {
 
 class _SignUp0114State extends State<SignUp0114> {
   Color _containerColor1 = AppColors.greyColors.shade50;
-  Color containerColor2 = AppColors.greyColors.shade50;
-  Color tappedColor = AppColors.primaryLightColors.shade300;
+  Color _containerColor2 = AppColors.greyColors.shade50;
+  final Color _tappedColor = AppColors.primaryLightColors.shade300;
+
+  Color _borderColor1 = AppColors.greyColors.shade200;
+  Color _borderColor2 = AppColors.greyColors.shade200;
+  final Color _tappedBorderColor = AppColors.primaryLightColors.shade100;
 
   void _changeColor1() {
     setState(() {
       _containerColor1 =
-          _containerColor1 == tappedColor ? _containerColor1 : tappedColor;
-      containerColor2 = AppColors.greyColors.shade50;
+          _containerColor1 == _tappedColor ? _containerColor1 : _tappedColor;
+      _containerColor2 = AppColors.greyColors.shade50;
+      _borderColor1 = _borderColor1 == _tappedBorderColor
+          ? _borderColor2
+          : _tappedBorderColor;
+      _borderColor2 = AppColors.greyColors.shade200;
     });
   }
 
   void _changeColor2() {
     setState(() {
-      containerColor2 =
-          containerColor2 == tappedColor ? containerColor2 : tappedColor;
+      _containerColor2 =
+          _containerColor2 == _tappedColor ? _containerColor2 : _tappedColor;
       _containerColor1 = AppColors.greyColors.shade50;
+      _borderColor2 = _borderColor2 == _tappedBorderColor
+          ? _borderColor1
+          : _tappedBorderColor;
+      _borderColor1 = AppColors.greyColors.shade200;
     });
   }
 
@@ -60,6 +72,7 @@ class _SignUp0114State extends State<SignUp0114> {
                         _changeColor1();
                       },
                       child: SquareButton(
+                        borderColor: _borderColor1,
                         content: '남자',
                         containerColor: _containerColor1,
                       ),
@@ -74,8 +87,9 @@ class _SignUp0114State extends State<SignUp0114> {
                         _changeColor2();
                       },
                       child: SquareButton(
+                        borderColor: _borderColor2,
                         content: '여자',
-                        containerColor: containerColor2,
+                        containerColor: _containerColor2,
                       ),
                     ),
                   ),
