@@ -68,13 +68,12 @@ final ButtonStyle outlinedShortStyle = OutlinedButton.styleFrom(
 class MainHorizontalButton extends StatelessWidget {
   final String route;
   final String content;
-  final VoidCallback onPressed;
 
-  const MainHorizontalButton(
-      {super.key,
-      required this.content,
-      required this.route,
-      required this.onPressed});
+  const MainHorizontalButton({
+    super.key,
+    required this.content,
+    required this.route,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +87,7 @@ class MainHorizontalButton extends StatelessWidget {
         ),
         child: ElevatedButton(
           onPressed: () {
-            onPressed;
+            context.push(route);
           },
           style: filledLongStyle,
           child: Text(content),
@@ -152,8 +151,15 @@ class OutlinedShortButton extends StatelessWidget {
 
 class SquareButton extends StatefulWidget {
   final String content;
+  final Color borderColor;
+  final Color containerColor;
 
-  const SquareButton({super.key, required this.content});
+  const SquareButton({
+    super.key,
+    required this.content,
+    required this.borderColor,
+    required this.containerColor,
+  });
 
   @override
   State<SquareButton> createState() => _SquareButtonState();
@@ -163,7 +169,7 @@ class _SquareButtonState extends State<SquareButton> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.greyColors.shade50,
+      color: widget.containerColor,
       elevation: 1.0,
       borderRadius: const BorderRadius.all(
         Radius.circular(16.0),
@@ -172,7 +178,7 @@ class _SquareButtonState extends State<SquareButton> {
         height: 163.0,
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors.greyColors.shade200,
+            color: widget.borderColor,
             width: 1.0,
           ),
           borderRadius: const BorderRadius.all(

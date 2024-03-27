@@ -29,11 +29,9 @@ class SignUp0112 extends StatelessWidget {
                 mainTitle: '어떻게 불러드리면 될까요?\n닉네임을 입력해 주세요',
                 subTitle: '닉네임은 나중에 변경할 수 없어요.',
               ),
-              NickNameForm(
-                formKey: formKey,
+              const NickNameForm(
                 hintText: '15자 이내로 입력해 주세요. (영문/숫자/한글)',
               ),
-
               const Expanded(
                 child: SizedBox(),
               ),
@@ -41,8 +39,8 @@ class SignUp0112 extends StatelessWidget {
               //   content: '다음',
               //   route: '/sign_up/0113',
               // ),
-              MainHorizontalButtonDemo(
-                formKey: formKey,
+              MainHorizontalButton(
+                key: formKey,
                 content: '다음',
                 route: '/sign_up/0113',
               ),

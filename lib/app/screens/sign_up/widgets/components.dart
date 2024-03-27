@@ -198,13 +198,14 @@ class _EmailConfirmFormState extends State<EmailConfirmForm> {
 
 /// SignUp0112
 class NickNameForm extends StatefulWidget {
-  final GlobalKey<FormState> formKey;
   final String hintText;
 
 // final FormFieldValidator validator;
 
-  const NickNameForm(
-      {super.key, required this.hintText, required this.formKey});
+  const NickNameForm({
+    super.key,
+    required this.hintText,
+  });
 
   @override
   State<NickNameForm> createState() => _NickNameFormState();
