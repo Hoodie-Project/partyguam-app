@@ -45,7 +45,7 @@ class SignUp0115 extends StatelessWidget {
                 Expanded(
                   child: FilledShortButton(
                     content: '작성하기',
-                    route: '/sign_up/details/0121',
+                    route: '/sign_up/0121',
                   ),
                 ),
               ],
