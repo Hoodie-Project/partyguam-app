@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
+enum ProvinceMockData {
+  seoul('서울특별시', '서울특별시'),
+  busan('부산광역시', '부산광역시'),
+  gyeoungki('경기도', '경기도');
 
-List<Map<String, String>> AddressMockData = [
-  {"province": "서울특별시", "city": "광진구"},
-  {"province": "서울특별시", "city": "성동구"},
-  {"province": "부산광역시", "city": "사상구"},
-  {"province": "부산광역시", "city": "진구"},
-  {"province": "경기도", "city": "일산시"},
-];
+  const ProvinceMockData(this.label, this.province);
 
+  final String label;
+  final String province;
+}
+
+/*
 enum ColorLabel {
   blue('Blue', Colors.blue),
   pink('Pink', Colors.pink),
@@ -20,3 +22,4 @@ enum ColorLabel {
   final String label;
   final Color color;
 }
+*/
