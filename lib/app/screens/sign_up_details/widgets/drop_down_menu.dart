@@ -27,9 +27,9 @@ class _AddressDropDownMenuState extends State<AddressDropDownMenu> {
         menuHeight: 156.0,
         menuStyle: MenuStyle(
           // alignment: Alignment.centerLeft,
-          backgroundColor: MaterialStateProperty.resolveWith(
-            (states) => Colors.white,
-          ),
+          // backgroundColor: MaterialStateProperty.resolveWith(
+          //   (states) => AppColors.greyColors.shade50,
+          // ),
           minimumSize: MaterialStateProperty.resolveWith(
             (states) => Size(335.0, 156.0),
           ),
@@ -41,7 +41,8 @@ class _AddressDropDownMenuState extends State<AddressDropDownMenu> {
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          contentPadding: const EdgeInsets.only(left: 20.0),
+          contentPadding:
+              const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
           hintStyle: TextStyle(
             color: AppColors.greyColors.shade400,
             fontSize: 16.0,
@@ -58,16 +59,16 @@ class _AddressDropDownMenuState extends State<AddressDropDownMenu> {
           // ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.blue,
+              color: AppColors.greyColors.shade300,
               width: 1.0,
             ),
             borderRadius: const BorderRadius.all(
               Radius.circular(16.0),
             ),
           ),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.red,
+              color: AppColors.primaryLightColors,
               width: 1.0,
             ),
             borderRadius: BorderRadius.all(
@@ -90,17 +91,6 @@ class _AddressDropDownMenuState extends State<AddressDropDownMenu> {
             return DropdownMenuEntry(label: province.label, value: province);
           },
         ).toList(),
-        // dropdownMenuEntries: ColorLabel.values
-        //     .map<DropdownMenuEntry<ColorLabel>>((ColorLabel color) {
-        //   return DropdownMenuEntry<ColorLabel>(
-        //     value: color,
-        //     label: color.label,
-        //     enabled: color.label != 'Grey',
-        //     style: MenuItemButton.styleFrom(
-        //       foregroundColor: color.color,
-        //     ),
-        //   );
-        // }).toList(),
       ),
     );
   }
