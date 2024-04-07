@@ -80,7 +80,6 @@ class _AddressDropDownMenuState extends State<AddressDropDownMenu> {
               },
             ),
           ),
-          // menuStyle: MenuStyle(),
           selectedTrailingIcon: const Icon(
             Icons.keyboard_arrow_up_rounded,
             color: AppColors.primaryLightColors,
