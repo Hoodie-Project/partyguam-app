@@ -54,20 +54,38 @@ class PositionChip extends StatefulWidget {
 }
 
 class _PositionChipState extends State<PositionChip> {
+  bool _isSelected = false;
+
+  void _chipSelection() {
+    setState(() {
+      _isSelected = !_isSelected;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Chip(
-      backgroundColor: AppColors.greyColors.shade50,
+    return ActionChip(
+      backgroundColor: _isSelected
+          ? AppColors.greyColors.shade50
+          : AppColors.primaryLightColors.shade300,
+      elevation: 1.0,
       label: const Text('영상/모션디자이너'),
       labelStyle: TextStyle(
         color: AppColors.greyColors.shade600,
         fontSize: 16.0,
         fontWeight: FontWeight.normal,
       ),
+      onPressed: () {
+        _chipSelection();
+      },
       shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: AppColors.greyColors.shade200,
-        ),
+        side: _isSelected
+            ? BorderSide(
+                color: AppColors.greyColors.shade200,
+              )
+            : BorderSide(
+                color: AppColors.primaryLightColors.shade100,
+              ),
         borderRadius: BorderRadius.circular(999.0),
       ),
       // padding:
