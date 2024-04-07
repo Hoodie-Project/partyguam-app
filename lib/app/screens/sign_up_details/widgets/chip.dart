@@ -38,10 +38,43 @@ class _AddressChipState extends State<AddressChip> {
           //     EdgeInsets.only(top: 8.0, bottom: 8.0, left: 12.0, right: 12.0),
           visualDensity: const VisualDensity(
             horizontal: 2.0,
-            vertical: 2.5,
+            vertical: -1.0,
           ),
         ),
       ],
+    );
+  }
+}
+
+class PositionChip extends StatefulWidget {
+  const PositionChip({super.key});
+
+  @override
+  State<PositionChip> createState() => _PositionChipState();
+}
+
+class _PositionChipState extends State<PositionChip> {
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      backgroundColor: AppColors.greyColors.shade50,
+      label: const Text('영상/모션디자이너'),
+      labelStyle: TextStyle(
+        color: AppColors.greyColors.shade600,
+        fontSize: 16.0,
+        fontWeight: FontWeight.normal,
+      ),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: AppColors.greyColors.shade200,
+        ),
+        borderRadius: BorderRadius.circular(999.0),
+      ),
+      // padding:
+      //     EdgeInsets.only(top: 8.0, bottom: 8.0, left: 12.0, right: 12.0),
+      visualDensity: const VisualDensity(
+        vertical: -1.0,
+      ),
     );
   }
 }

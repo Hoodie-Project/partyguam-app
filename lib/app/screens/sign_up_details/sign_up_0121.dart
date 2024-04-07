@@ -19,6 +19,7 @@ class _SignUp0121State extends State<SignUp0121> {
         children: [
           AddressDropDownMenu(),
           AddressChip(),
+          PositionChip(),
         ],
       ),
     );
