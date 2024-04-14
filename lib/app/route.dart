@@ -5,6 +5,7 @@ import 'package:partyguam/app/screens/sign_up/sign_up_0112.dart';
 import 'package:partyguam/app/screens/sign_up/sign_up_0113.dart';
 import 'package:partyguam/app/screens/sign_up/sign_up_0114.dart';
 import 'package:partyguam/app/screens/sign_up/sign_up_0115.dart';
+import 'package:partyguam/app/screens/sign_up_details/sign_up_0121.dart';
 
 final router = GoRouter(
   routes: [
@@ -35,6 +36,10 @@ final router = GoRouter(
     GoRoute(
       path: '/sign_up/0115',
       builder: (context, state) => const SignUp0115(),
+    ),
+    GoRoute(
+      path: '/sign_up/0121',
+      builder: (context, state) => const SignUp0121(),
     ),
   ],
 );
