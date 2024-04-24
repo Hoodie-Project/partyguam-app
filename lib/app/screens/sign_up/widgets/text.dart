@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/theme/font_styles.dart';
+
+import '../../../theme/font_styles.dart';
 
 class TitleText extends StatelessWidget {
   final String mainTitle;

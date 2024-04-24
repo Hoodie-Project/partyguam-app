@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/theme/colors.dart';
+
+import '../../../theme/colors.dart';
 
 class SignUpDetailsStepper extends StatefulWidget {
   const SignUpDetailsStepper({super.key});

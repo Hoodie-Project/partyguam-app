@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/app/theme/colors.dart';
+
+import '../../../theme/colors.dart';
 
 class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
