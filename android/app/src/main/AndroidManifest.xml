@@ -1,11 +1,13 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.partyguam.net">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 인터넷 사용 권한 설정-->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:label="partyguam"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <!-- 카카오 로그인 API -->
+        <!-- 카카오 로그인 커스텀 URL 스킴 설정 -->
         <activity
             android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity"
             android:exported="true">
@@ -18,10 +20,9 @@
                 <!-- "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식의 앱 실행 스킴 설정 -->
                 <!-- 카카오 로그인 Redirect URI -->
                 <data
-                    android:scheme="kakao${APP_KEY}"
+                    android:scheme="kakao05630001c8c766d836027ab7fbf83f25"
                     android:host="oauth" />
             </intent-filter>
-            
         </activity>
         <activity
             android:name=".MainActivity"
