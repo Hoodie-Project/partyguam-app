@@ -34,7 +34,6 @@ class _Login0000State extends State<Login0000> {
                 text: '카카오톡 로그인',
                 icon: kakaoIcon,
                 backgroundColor: const Color(0XFFFEE500),
-                route: '/sign_up/0111',
               ),
               const SizedBox(
                 height: 8.0,
@@ -43,7 +42,6 @@ class _Login0000State extends State<Login0000> {
                 text: '구글 로그인',
                 icon: googleIcon,
                 backgroundColor: AppColors.greyColors.shade50,
-                route: '/sign_up/0112',
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 32.0),
