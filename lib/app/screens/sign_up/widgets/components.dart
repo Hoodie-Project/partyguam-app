@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import '../../../theme/colors.dart';
@@ -30,9 +31,7 @@ class _SocialLoginButtonState extends State<SocialLoginButton> {
       width: double.infinity,
       child: ElevatedButton.icon(
         onPressed: () {
-          _signInWithKakao();
-          print('second');
-          // context.push(widget.route);
+          _signInWithKakao(context);
         },
         style: ElevatedButton.styleFrom(
           alignment: Alignment.centerLeft,
@@ -62,15 +61,26 @@ class _SocialLoginButtonState extends State<SocialLoginButton> {
     );
   }
 
-  void _signInWithKakao() async {
+  _navigateToNextPage(BuildContext context) {
+    context.go('/sign_up/0111');
+    debugPrint('카카오톡으로 로그인 성공');
+  }
+
+  Future<void> _signInWithKakao(BuildContext context) async {
     // 카카오 로그인 구현 예제
 
 // 카카오톡 실행 가능 여부 확인
 // 카카오톡 실행이 가능하면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
     if (await isKakaoTalkInstalled()) {
       try {
-        await UserApi.instance.loginWithKakaoTalk();
-        print('카카오톡으로 로그인 성공');
+        await UserApi.instance.loginWithKakaoTalk().then((value) {
+          print(value);
+          if (context.mounted) {
+            _navigateToNextPage(context);
+          }
+        });
+
+        print(widget.route);
       } catch (error) {
         print('카카오톡으로 로그인 실패 $error');
 
@@ -82,15 +92,21 @@ class _SocialLoginButtonState extends State<SocialLoginButton> {
         // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
         try {
           await UserApi.instance.loginWithKakaoAccount();
-          print('카카오계정으로 로그인 성공');
+          if (context.mounted) {
+            _navigateToNextPage(context);
+          }
         } catch (error) {
           print('카카오계정으로 로그인 실패 $error');
         }
       }
     } else {
       try {
-        await UserApi.instance.loginWithKakaoAccount();
-        print('카카오계정으로 로그인 성공');
+        await UserApi.instance.loginWithKakaoAccount().then((value) {
+          print(value.accessToken);
+          if (context.mounted) {
+            _navigateToNextPage(context);
+          }
+        });
       } catch (error) {
         print('카카오계정으로 로그인 실패 $error');
       }
