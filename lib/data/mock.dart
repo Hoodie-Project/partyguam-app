@@ -1,7 +1,9 @@
 enum ProvinceMockData {
   seoul('서울특별시', '서울특별시'),
-  busan('부산광역시', '부산광역시'),
-  gyeoungki('경기도', '경기도');
+  busan('busan', 'busan'),
+  gyeoungki('경기도', '경기도'),
+  daejeon('대전광역시', '대전광역시'),
+  daegu('daegu', 'daegu');
 
   const ProvinceMockData(this.label, this.province);
 
@@ -9,17 +11,14 @@ enum ProvinceMockData {
   final String province;
 }
 
-/*
-enum ColorLabel {
-  blue('Blue', Colors.blue),
-  pink('Pink', Colors.pink),
-  green('Green', Colors.green),
-  yellow('Orange', Colors.orange),
-  grey('Grey', Colors.grey);
-
-  const ColorLabel(this.label, this.color);
-
-  final String label;
-  final Color color;
+class Player {
+  String name = 'nico';
+  int xp = 1500;
 }
-*/
+
+void main() {
+  var player = Player();
+  print(player.name);
+  player.name = 'lalal';
+  print(player.name);
+}

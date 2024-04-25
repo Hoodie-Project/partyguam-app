@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/colors.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/buttons.dart';
 import 'widgets/text.dart';
 
-class SignUp0114 extends StatelessWidget {
+class SignUp0114 extends StatefulWidget {
   const SignUp0114({super.key});
 
   @override
