@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -68,17 +69,36 @@ Future<String?> getKakaoUserInfo() async {
   try {
     User user = await UserApi.instance.me();
     String? email = user.kakaoAccount?.email;
+    int userId = user.id;
 
     if (email == null) {
       throw Exception('No email provided');
     }
 
-    debugPrint('kakao user info fetched'
-        '\n회원번호: ${user.id}'
-        '\n이메일: ${user.kakaoAccount?.email}');
+    await encryptUserId(userId);
 
     return email;
   } catch (error) {
-    print('Failed to fetch kakaouser info $error');
+    print('Failed to fetch kakaouser info: $error');
   }
+}
+
+Future<encrypt.Encrypted> encryptUserId(int userId) async {
+  final userIdToString = userId.toString();
+  final key =
+      encrypt.Key.fromUtf8(dotenv.env['APP_CIPHERIV_KEY_SECRET'] as String);
+  final iv = encrypt.IV.fromLength(16);
+  final encrypter = encrypt.Encrypter(
+    encrypt.AES(
+      key,
+      mode: encrypt.AESMode.cbc,
+    ),
+  );
+
+  final encrypted = encrypter.encrypt(
+    userIdToString,
+    iv: iv,
+  );
+
+  return encrypted;
 }
