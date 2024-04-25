@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/screens/sign_up/widgets/app_bar.dart';
-import 'package:partyguam/app/screens/sign_up/widgets/components.dart';
-import 'package:partyguam/app/screens/sign_up/widgets/text.dart';
-import 'package:partyguam/app/theme/colors.dart';
-import 'package:partyguam/app/theme/icons.dart';
 
-class Login0000 extends StatelessWidget {
+import '../../theme/colors.dart';
+import '../../theme/icons.dart';
+import 'widgets/app_bar.dart';
+import 'widgets/components.dart';
+import 'widgets/text.dart';
+
+class Login0000 extends StatefulWidget {
   const Login0000({super.key});
 
+  @override
+  State<Login0000> createState() => _Login0000State();
+}
+
+class _Login0000State extends State<Login0000> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +34,6 @@ class Login0000 extends StatelessWidget {
                 text: '카카오톡 로그인',
                 icon: kakaoIcon,
                 backgroundColor: const Color(0XFFFEE500),
-                route: '/sign_up/0111',
               ),
               const SizedBox(
                 height: 8.0,
@@ -37,7 +42,6 @@ class Login0000 extends StatelessWidget {
                 text: '구글 로그인',
                 icon: googleIcon,
                 backgroundColor: AppColors.greyColors.shade50,
-                route: '/sign_up/0112',
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 32.0),

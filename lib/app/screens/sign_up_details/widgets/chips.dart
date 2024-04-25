@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/theme/colors.dart';
+
+import '../../../theme/colors.dart';
 
 class AddressChip extends StatefulWidget {
   const AddressChip({super.key});

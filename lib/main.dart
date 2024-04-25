@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/route.dart';
-import 'package:partyguam/app/theme/theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 
-void main() {
+import 'app/route.dart';
+import 'app/theme/theme.dart';
+
+void main() async {
+  await dotenv.load(fileName: ".env");
+
+  // runApp() 호출 전 Flutter SDK 초기화
+  KakaoSdk.init(
+    nativeAppKey: dotenv.env['NATIVE_APP_KEY'],
+    javaScriptAppKey: dotenv.env['JAVASCRIPT_APP_KEY'],
+  );
+
   runApp(const MyApp());
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/theme/colors.dart';
+
+import 'colors.dart';
 
 class CustomFontStyle {
   static const TextStyle loginMainTitle = TextStyle(

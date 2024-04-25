@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/theme/colors.dart';
+
+import 'colors.dart';
 
 final ThemeData lightTheme = ThemeData(
   appBarTheme: AppBarTheme(
@@ -17,4 +18,14 @@ final ThemeData lightTheme = ThemeData(
   fontFamily: 'SUIT',
   scaffoldBackgroundColor: AppColors.greyColors.shade50,
   useMaterial3: true,
+  canvasColor: AppColors.greyColors.shade50,
+  dialogBackgroundColor: AppColors.greyColors.shade50,
+  // colorScheme: ColorScheme.fromSeed(
+  //   brightness: Brightness.light,
+  //   seedColor: AppColors.primaryLightColors,
+  //   primary: AppColors.greyColors.shade50,
+  //   onPrimary: AppColors.greyColors.shade50,
+  //   error: AppColors.systemColors.shade100,
+  //   errorContainer: AppColors.systemColors.shade100,
+  // ),
 );

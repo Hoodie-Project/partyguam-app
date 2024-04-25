@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/screens/sign_up/widgets/app_bar.dart';
-import 'package:partyguam/app/screens/sign_up/widgets/buttons.dart';
-import 'package:partyguam/app/screens/sign_up/widgets/components.dart';
-import 'package:partyguam/app/screens/sign_up/widgets/text.dart';
+
+import 'widgets/app_bar.dart';
+import 'widgets/buttons.dart';
+import 'widgets/components.dart';
+import 'widgets/text.dart';
 
 class SignUp0111 extends StatelessWidget {
   const SignUp0111({super.key});
@@ -27,7 +28,7 @@ class SignUp0111 extends StatelessWidget {
                 subTitle: '나중에 변경할 수 없어요.',
               ),
               // TODO: SSO 구현 후 email 값 변경 필요
-              EmailConfirmForm(email: 'partguam@gmail.com'),
+              EmailConfirmForm(),
               Expanded(
                 child: SizedBox(),
               ),

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:partyguam/app/theme/colors.dart';
+
+import '../../../../domain/usecases/user_usecase.dart';
+import '../../../theme/colors.dart';
 
 /// Login0000
 class SocialLoginButton extends StatefulWidget {
   final String text;
   final Widget icon;
   final Color backgroundColor;
-  final String route;
 
-  const SocialLoginButton(
-      {super.key,
-      required this.text,
-      required this.icon,
-      required this.backgroundColor,
-      required this.route});
+  const SocialLoginButton({
+    super.key,
+    required this.text,
+    required this.icon,
+    required this.backgroundColor,
+  });
 
   @override
   State<SocialLoginButton> createState() => _SocialLoginButtonState();
@@ -26,8 +26,10 @@ class _SocialLoginButtonState extends State<SocialLoginButton> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        onPressed: () {
-          context.push(widget.route);
+        onPressed: () async {
+          if (widget.text == '카카오톡 로그인') {
+            await signInWithKakao(context);
+          } else if (widget.text == '구글 로그인') {}
         },
         style: ElevatedButton.styleFrom(
           alignment: Alignment.centerLeft,
@@ -132,15 +134,33 @@ class SignUpTextButton extends StatelessWidget {
 
 /// SignUp0111
 class EmailConfirmForm extends StatefulWidget {
-  final String email;
-
-  const EmailConfirmForm({super.key, required this.email});
+  const EmailConfirmForm({super.key});
 
   @override
   State<EmailConfirmForm> createState() => _EmailConfirmFormState();
 }
 
 class _EmailConfirmFormState extends State<EmailConfirmForm> {
+  String? email;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserEmail();
+  }
+
+  void _getUserEmail() async {
+    try {
+      String? userEmail = await getKakaoUserInfo();
+
+      setState(() {
+        email = userEmail;
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -160,14 +180,16 @@ class _EmailConfirmFormState extends State<EmailConfirmForm> {
               Radius.circular(16.0),
             ),
           ),
-          child: Text(
-            widget.email,
-            style: TextStyle(
-              color: AppColors.greyColors.shade500,
-              fontSize: 16.0,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
+          child: email != null
+              ? Text(
+                  '$email',
+                  style: TextStyle(
+                    color: AppColors.greyColors.shade500,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                )
+              : Text(''),
         ),
       ),
     );

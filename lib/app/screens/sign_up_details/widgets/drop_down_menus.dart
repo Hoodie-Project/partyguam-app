@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/theme/colors.dart';
-import 'package:partyguam/data/mock.dart';
+
+import '../../../../data/mock.dart';
+import '../../../theme/colors.dart';
 
 class AddressDropDownMenu extends StatefulWidget {
   const AddressDropDownMenu({super.key});
