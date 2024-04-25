@@ -19,7 +19,7 @@ Future<void> signInWithKakao(BuildContext context) async {
         }
       });
     } catch (error) {
-      debugPrint('KakaoTalk login failure $error');
+      debugPrint('KakaoTalk login failure: $error');
 
       // 사용자의 의도적인 로그인 취소 (예: 뒤로가기)
       if (error is PlatformException && error.code == 'CANCELED') {
@@ -38,7 +38,7 @@ Future<void> signInWithKakao(BuildContext context) async {
           },
         );
       } catch (error) {
-        debugPrint('KakaoAccount login failure $error');
+        debugPrint('KakaoAccount login failure: $error');
       }
     }
   } else {
@@ -53,7 +53,7 @@ Future<void> signInWithKakao(BuildContext context) async {
         },
       );
     } catch (error) {
-      print('KakaoAccount login failure $error');
+      print('KakaoAccount login failure: $error');
     }
   }
 }
@@ -62,7 +62,7 @@ Future<void> navigateToNextPage(BuildContext context) async {
   await getKakaoUserInfo();
 
   context.push('/sign_up/0111');
-  debugPrint('Kakao login Succeed');
+  debugPrint('Kakao login success');
 }
 
 Future<String?> getKakaoUserInfo() async {
@@ -101,4 +101,13 @@ Future<encrypt.Encrypted> encryptUserId(int userId) async {
   );
 
   return encrypted;
+}
+
+Future<void> kakaoLogOut() async {
+  try {
+    await UserApi.instance.logout();
+    print('Kakao logout success, SDK에서 토큰 삭제');
+  } catch (error) {
+    print('Kakao logout failure, SDK에서 토큰 삭제: $error');
+  }
 }
