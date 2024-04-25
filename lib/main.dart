@@ -7,10 +7,11 @@ import 'app/theme/theme.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
+
   // runApp() 호출 전 Flutter SDK 초기화
   KakaoSdk.init(
-    nativeAppKey: '05630001c8c766d836027ab7fbf83f25',
-    javaScriptAppKey: '315d38f7c8be8d2204175e3229848dc2',
+    nativeAppKey: dotenv.env['NATIVE_APP_KEY'],
+    javaScriptAppKey: dotenv.env['JAVASCRIPT_APP_KEY'],
   );
 
   runApp(const MyApp());
