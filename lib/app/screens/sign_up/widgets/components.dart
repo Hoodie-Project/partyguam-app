@@ -134,15 +134,33 @@ class SignUpTextButton extends StatelessWidget {
 
 /// SignUp0111
 class EmailConfirmForm extends StatefulWidget {
-  final String email;
-
-  const EmailConfirmForm({super.key, required this.email});
+  const EmailConfirmForm({super.key});
 
   @override
   State<EmailConfirmForm> createState() => _EmailConfirmFormState();
 }
 
 class _EmailConfirmFormState extends State<EmailConfirmForm> {
+  String? email;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserEmail();
+  }
+
+  void _getUserEmail() async {
+    try {
+      String? userEmail = await getKakaoUserInfo();
+
+      setState(() {
+        email = userEmail;
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -162,14 +180,16 @@ class _EmailConfirmFormState extends State<EmailConfirmForm> {
               Radius.circular(16.0),
             ),
           ),
-          child: Text(
-            widget.email,
-            style: TextStyle(
-              color: AppColors.greyColors.shade500,
-              fontSize: 16.0,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
+          child: email != null
+              ? Text(
+                  '$email',
+                  style: TextStyle(
+                    color: AppColors.greyColors.shade500,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                )
+              : Text(''),
         ),
       ),
     );

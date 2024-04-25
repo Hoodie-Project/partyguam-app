@@ -28,7 +28,7 @@ class SignUp0111 extends StatelessWidget {
                 subTitle: '나중에 변경할 수 없어요.',
               ),
               // TODO: SSO 구현 후 email 값 변경 필요
-              EmailConfirmForm(email: 'partguam@gmail.com'),
+              EmailConfirmForm(),
               Expanded(
                 child: SizedBox(),
               ),
