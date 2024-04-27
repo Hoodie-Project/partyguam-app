@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:partyguam/app/pages/sign_up/widgets/text.dart';
 
-import '../../../domain/usecases/validation.dart';
-import '../../theme/colors.dart';
-import 'widgets/app_bar.dart';
-import 'widgets/styles.dart';
-import 'widgets/text.dart';
+import '../../../../domain/usecases/validation.dart';
+import '../../../theme/colors.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/styles.dart';
 
 class SignUp0112 extends StatefulWidget {
   SignUp0112({super.key});

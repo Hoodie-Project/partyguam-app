@@ -133,7 +133,7 @@ class SignUpTextButton extends StatelessWidget {
   }
 }
 
-/// SignUp0111
+/// TODO: 코드 중복 존재, 우선 구현 후 삭제 (SignUp0111)
 class EmailConfirmForm extends StatefulWidget {
   const EmailConfirmForm({super.key});
 
@@ -198,7 +198,7 @@ class _EmailConfirmFormState extends State<EmailConfirmForm> {
   }
 }
 
-/// SignUp0112
+/// TODO: 코드 중복 존재, 우선 구현 후 삭제 (SignUp0112)
 class NickNameForm extends StatefulWidget {
   final String hintText;
 

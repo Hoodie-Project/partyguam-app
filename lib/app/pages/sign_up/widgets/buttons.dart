@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/app/screens/sign_up/widgets/styles.dart';
 
 import '../../../theme/colors.dart';
+import 'styles.dart';
 
 class MainHorizontalButton extends StatelessWidget {
   final String route;

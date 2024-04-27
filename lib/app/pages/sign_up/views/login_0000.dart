@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/colors.dart';
-import '../../theme/icons.dart';
-import 'widgets/app_bar.dart';
-import 'widgets/components.dart';
-import 'widgets/text.dart';
+import '../../../theme/colors.dart';
+import '../../../theme/icons.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/components.dart';
+import '../widgets/text.dart';
 
 class Login0000 extends StatefulWidget {
   const Login0000({super.key});
