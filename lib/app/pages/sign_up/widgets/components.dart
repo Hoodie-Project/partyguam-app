@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../domain/usecases/user_usecase.dart';
 import '../../../../domain/usecases/validation.dart';
@@ -30,7 +31,9 @@ class _SocialLoginButtonState extends State<SocialLoginButton> {
         onPressed: () async {
           if (widget.text == '카카오톡 로그인') {
             await signInWithKakao(context);
-          } else if (widget.text == '구글 로그인') {}
+          } else if (widget.text == '구글 로그인') {
+            context.push('/sign_up/0111');
+          }
         },
         style: ElevatedButton.styleFrom(
           alignment: Alignment.centerLeft,
