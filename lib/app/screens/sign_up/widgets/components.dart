@@ -153,6 +153,7 @@ class _EmailConfirmFormState extends State<EmailConfirmForm> {
   void _getUserEmail() async {
     try {
       String? userEmail = await getKakaoUserInfo();
+      print(userEmail);
 
       setState(() {
         email = userEmail;
@@ -213,32 +214,32 @@ class NickNameForm extends StatefulWidget {
 }
 
 class _NickNameFormState extends State<NickNameForm> {
-  final controller = TextEditingController();
+  final textController = TextEditingController();
   bool _showClearIcon = false;
 
   @override
   void initState() {
     super.initState();
 
-    controller.addListener(_updateClearIconVisibility);
+    textController.addListener(_updateClearIconVisibility);
   }
 
   @override
   void dispose() {
-    controller.removeListener(_updateClearIconVisibility);
-    controller.dispose();
+    textController.removeListener(_updateClearIconVisibility);
+    textController.dispose();
     super.dispose();
   }
 
   void _updateClearIconVisibility() {
     setState(() {
-      _showClearIcon = controller.text.isNotEmpty;
+      _showClearIcon = textController.text.isNotEmpty;
     });
   }
 
   void _clearText() {
     setState(() {
-      controller.clear();
+      textController.clear();
     });
   }
 
@@ -249,7 +250,7 @@ class _NickNameFormState extends State<NickNameForm> {
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         autofocus: true,
-        controller: controller,
+        controller: textController,
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
