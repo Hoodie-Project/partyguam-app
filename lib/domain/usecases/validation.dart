@@ -1,5 +1,5 @@
 String? nicknameValidation(value) {
-  RegExp specialCharacters = RegExp('[^a-zA-Z0-9가-힣\\s]');
+  final RegExp specialCharacters = RegExp('[^a-zA-Z0-9가-힣\\s]');
 
   /// TODO: 닉네임 중복 체크 추가
   if (specialCharacters.hasMatch(value)) {
