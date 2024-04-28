@@ -53,7 +53,7 @@ class FilledShortButton extends StatelessWidget {
       ),
       child: FilledButton(
         onPressed: () {
-          context.go(route);
+          context.push(route);
         },
         style: ButtonStyles.filledShortStyle,
         child: Text(content),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sign_up/widgets/app_bar.dart';
+import '../../sign_up/widgets/app_bar.dart';
 
 class SignUp0121 extends StatefulWidget {
   const SignUp0121({super.key});
