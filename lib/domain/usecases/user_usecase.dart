@@ -47,6 +47,7 @@ Future<void> signInWithKakao(BuildContext context) async {
       await UserApi.instance.loginWithKakaoAccount().then(
         (value) {
           print(value);
+
           if (context.mounted) {
             navigateToNextPage(context);
           }
@@ -59,9 +60,10 @@ Future<void> signInWithKakao(BuildContext context) async {
 }
 
 Future<void> navigateToNextPage(BuildContext context) async {
-  await getKakaoUserInfo();
+  if (context.mounted) {
+    context.push('/sign_up/0111');
+  }
 
-  context.push('/sign_up/0111');
   debugPrint('Kakao login success');
 }
 

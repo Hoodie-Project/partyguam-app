@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 
-import 'app/route.dart';
 import 'app/theme/theme.dart';
+import 'app/utils/navigator.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../domain/usecases/user_usecase.dart';
+import '../../../../domain/usecases/validation.dart';
 import '../../../theme/colors.dart';
 
 /// Login0000
@@ -29,7 +31,9 @@ class _SocialLoginButtonState extends State<SocialLoginButton> {
         onPressed: () async {
           if (widget.text == '카카오톡 로그인') {
             await signInWithKakao(context);
-          } else if (widget.text == '구글 로그인') {}
+          } else if (widget.text == '구글 로그인') {
+            context.push('/sign_up/0111');
+          }
         },
         style: ElevatedButton.styleFrom(
           alignment: Alignment.centerLeft,
@@ -132,7 +136,7 @@ class SignUpTextButton extends StatelessWidget {
   }
 }
 
-/// SignUp0111
+/// TODO: 코드 중복 존재, 우선 구현 후 삭제 (SignUp0111)
 class EmailConfirmForm extends StatefulWidget {
   const EmailConfirmForm({super.key});
 
@@ -152,6 +156,7 @@ class _EmailConfirmFormState extends State<EmailConfirmForm> {
   void _getUserEmail() async {
     try {
       String? userEmail = await getKakaoUserInfo();
+      print(userEmail);
 
       setState(() {
         email = userEmail;
@@ -196,44 +201,48 @@ class _EmailConfirmFormState extends State<EmailConfirmForm> {
   }
 }
 
-/// SignUp0112
+/// TODO: 코드 중복 존재, 우선 구현 후 삭제 (SignUp0112)
 class NickNameForm extends StatefulWidget {
   final String hintText;
 
 // final FormFieldValidator validator;
 
-  const NickNameForm({super.key, required this.hintText});
+  const NickNameForm({
+    super.key,
+    required this.hintText,
+  });
 
   @override
   State<NickNameForm> createState() => _NickNameFormState();
 }
 
 class _NickNameFormState extends State<NickNameForm> {
-  final controller = TextEditingController();
+  final textController = TextEditingController();
   bool _showClearIcon = false;
 
   @override
   void initState() {
     super.initState();
-    controller.addListener(_updateClearIconVisibility);
+
+    textController.addListener(_updateClearIconVisibility);
   }
 
   @override
   void dispose() {
-    controller.removeListener(_updateClearIconVisibility);
-    controller.dispose();
+    textController.removeListener(_updateClearIconVisibility);
+    textController.dispose();
     super.dispose();
   }
 
   void _updateClearIconVisibility() {
     setState(() {
-      _showClearIcon = controller.text.isNotEmpty;
+      _showClearIcon = textController.text.isNotEmpty;
     });
   }
 
   void _clearText() {
     setState(() {
-      controller.clear();
+      textController.clear();
     });
   }
 
@@ -241,67 +250,80 @@ class _NickNameFormState extends State<NickNameForm> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: Material(
-        color: AppColors.greyColors.shade50,
-        elevation: 1.0,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(16.0),
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        autofocus: true,
+        controller: textController,
+        decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
+          hintText: widget.hintText,
+          hintStyle: TextStyle(
+            color: AppColors.greyColors.shade400,
+            fontSize: 16.0,
+            fontWeight: FontWeight.normal,
+          ),
+          suffixIcon: _showClearIcon
+              ? IconButton(
+                  // TODO: CustomIcons 설정
+                  icon: Icon(
+                    Icons.cancel_outlined,
+                    color: AppColors.greyColors.shade700,
+                    size: 20.0,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _clearText();
+                    });
+                  },
+                )
+              : null,
+
+          /// TODO: 에러메세지 인풋창과 정렬 맞춰야 함
+          errorStyle: const TextStyle(
+            fontWeight: FontWeight.normal,
+            fontSize: 12.0,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.greyColors.shade200,
+              width: 1.0,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16.0),
+            ),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.primaryLightColors,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(16.0),
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.systemColors.shade100,
+              width: 1.0,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16.0),
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.systemColors.shade100,
+              width: 1.0,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16.0),
+            ),
+          ),
         ),
-        child: TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
-            hintText: widget.hintText,
-            hintStyle: TextStyle(
-              color: AppColors.greyColors.shade400,
-              fontSize: 16.0,
-              fontWeight: FontWeight.normal,
-            ),
-            suffixIcon: _showClearIcon
-                ? IconButton(
-                    // TODO: CustomIcons 설정
-                    icon: const Icon(
-                      Icons.cancel_outlined,
-                      size: 20.0,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _clearText();
-                      });
-                    },
-                  )
-                : null,
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.greyColors.shade200,
-                width: 1.0,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(16.0),
-              ),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.primaryLightColors,
-                width: 1.0,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(16.0),
-              ),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.systemColors.shade100,
-                width: 1.0,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(16.0),
-              ),
-            ),
-          ), // TODO: Validator 생성 필요
-          // validator: widget.validator,
-        ),
+        validator: (value) {
+          return nicknameValidation(value);
+        },
       ),
     );
   }

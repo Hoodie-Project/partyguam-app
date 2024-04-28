@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/font_styles.dart';
-import 'widgets/app_bar.dart';
-import 'widgets/buttons.dart';
+import '../../../theme/font_styles.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/buttons.dart';
 
 class SignUp0115 extends StatelessWidget {
   const SignUp0115({super.key});
