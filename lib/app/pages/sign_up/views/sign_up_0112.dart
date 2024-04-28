@@ -16,11 +16,11 @@ class SignUp0112 extends StatefulWidget {
 }
 
 class _SignUp0112State extends State<SignUp0112> {
-  bool _showClearIcon = false;
-  bool _isButtonDisabled = true;
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final textController = TextEditingController();
+
+  bool _showClearIcon = false;
+  bool _isButtonDisabled = true;
   int maxLength = 15;
 
   @override

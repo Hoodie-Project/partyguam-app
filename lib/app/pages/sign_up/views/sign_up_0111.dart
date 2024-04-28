@@ -14,29 +14,30 @@ class SignUp0111 extends StatefulWidget {
 }
 
 class _SignUp0111State extends State<SignUp0111> {
+  String? email;
+
+  Future<void> getUserEmail() async {
+    try {
+      String? userEmail = await getKakaoUserInfo();
+      print(userEmail);
+
+      setState(() {
+        email = userEmail;
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getUserEmail();
+  }
+
   @override
   Widget build(BuildContext context) {
-    String? email;
-
-    void getUserEmail() async {
-      try {
-        String? userEmail = await getKakaoUserInfo();
-        print(userEmail);
-
-        setState(() {
-          email = userEmail;
-        });
-      } catch (error) {
-        print(error);
-      }
-    }
-
-    @override
-    void initState() {
-      super.initState();
-      getUserEmail();
-    }
-
     return Scaffold(
       appBar: const SignUpAppBar(
         title: '가입하기',
@@ -89,14 +90,14 @@ class _SignUp0111State extends State<SignUp0111> {
           ),
           child: email != null
               ? Text(
-                  '$email',
+                  email,
                   style: TextStyle(
                     color: AppColors.greyColors.shade500,
                     fontSize: 16.0,
                     fontWeight: FontWeight.normal,
                   ),
                 )
-              : const Text(''),
+              : const Text('알 수 없는 에러가 발생했습니다.'),
         ),
       ),
     );
