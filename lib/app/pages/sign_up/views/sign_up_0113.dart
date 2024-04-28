@@ -99,6 +99,7 @@ class _SignUp0113State extends State<SignUp0113> {
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
+            counterText: '',
             hintText: '8자리를 입력해 주세요. (ex. 1990-12-31)',
             hintStyle: TextStyle(
               color: AppColors.greyColors.shade400,
@@ -128,6 +129,7 @@ class _SignUp0113State extends State<SignUp0113> {
             errorBorder: TextFormBorderStyles.errorBorder,
             focusedErrorBorder: TextFormBorderStyles.focusedErrorBorder,
           ),
+          maxLength: 10,
           keyboardType: TextInputType.datetime,
           validator: (String? value) {
             return birthDateValidation(value);

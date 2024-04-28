@@ -13,14 +13,17 @@ String? nicknameValidation(String? value) {
 String? birthDateValidation(value) {
   final dateFormat = RegExp(r'^\d{4}-\d{2}-\d{2}$');
   final enteredDate = DateTime.tryParse(value);
+  final currentDate = DateTime.now();
   final beforeDate = enteredDate?.isBefore(DateTime(1990, 1, 1));
+  // final check = currentDate.isBefore(enteredDate);
 
   if (!dateFormat.hasMatch(value)) {
     return '생년월일을 다시 확인해 주세요.';
   }
 
-  if (enteredDate != null && beforeDate!) {
+  if (beforeDate! || currentDate.isBefore(enteredDate!)) {
     return '생년월일을 다시 확인해 주세요.';
   }
+
   return null;
 }
