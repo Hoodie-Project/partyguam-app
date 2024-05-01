@@ -49,7 +49,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SignUpDetailsStepper(),
+          const SignUpDetailsStepper(currentStep: 2),
           Padding(
             padding: const EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
             child: Column(
