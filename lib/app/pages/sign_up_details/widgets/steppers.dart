@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import '../../../theme/colors.dart';
 
 class SignUpDetailsStepper extends StatefulWidget {
-  const SignUpDetailsStepper({super.key});
+  const SignUpDetailsStepper({super.key, required this.currentStep});
+
+  final int currentStep;
 
   @override
   State<SignUpDetailsStepper> createState() => _SignUpDetailsStepperState();
 }
 
 class _SignUpDetailsStepperState extends State<SignUpDetailsStepper> {
-  int currentStep = 0;
-
   @override
   Widget build(BuildContext context) {
-    List<Step> getSteps = [
+    List<Step> stepList = [
       Step(
-        state: currentStep > 0 ? StepState.complete : StepState.indexed,
-        isActive: currentStep >= 0,
+        state: widget.currentStep > 0 ? StepState.complete : StepState.indexed,
+        isActive: widget.currentStep >= 0,
         title: const Text(
           '관심지역',
           style: TextStyle(
@@ -28,10 +28,10 @@ class _SignUpDetailsStepperState extends State<SignUpDetailsStepper> {
         content: Container(),
       ),
       Step(
-        state: currentStep > 1 ? StepState.complete : StepState.indexed,
-        isActive: currentStep >= 1,
+        state: widget.currentStep > 1 ? StepState.complete : StepState.indexed,
+        isActive: widget.currentStep >= 1,
         title: const Text(
-          '경력&포지션',
+          '경력/포지션',
           style: TextStyle(
             fontSize: 12.0,
             fontWeight: FontWeight.w700,
@@ -40,8 +40,8 @@ class _SignUpDetailsStepperState extends State<SignUpDetailsStepper> {
         content: Container(),
       ),
       Step(
-        state: currentStep > 2 ? StepState.complete : StepState.indexed,
-        isActive: currentStep >= 2,
+        state: widget.currentStep > 2 ? StepState.complete : StepState.indexed,
+        isActive: widget.currentStep >= 2,
         title: const Text(
           '성향선택(1/4)',
           style: TextStyle(
@@ -60,39 +60,21 @@ class _SignUpDetailsStepperState extends State<SignUpDetailsStepper> {
               primary: AppColors.primaryLightColors,
             ),
       ),
-      child: Container(
-        height: 200,
+      child: SizedBox(
+        height: 80,
         child: Stepper(
           elevation: 0,
           connectorThickness: 2.0,
-          // controlsBuilder: (BuildContext context, ControlsDetails details) {
-          //   return Container();
-          // },
-          currentStep: currentStep,
-          onStepContinue: () {
-            final isLastStep = currentStep == getSteps.length - 1;
-            setState(
-              () {
-                if (isLastStep) {
-                  /// 데이터 전송
-                  print('completed');
-                } else {
-                  currentStep += 1;
-                }
-              },
-            );
-          },
-          onStepCancel: () {
-            currentStep == 0
-                ? null
-                : setState(
-                    () {
-                      currentStep -= 1;
-                    },
-                  );
-          },
+          currentStep: widget.currentStep,
           type: StepperType.horizontal,
-          steps: getSteps,
+          steps: stepList,
+
+          /// TODO: 디자인 변경 가능
+          // stepIconBuilder: (int stepIndex, StepState stepState) {
+          //   if (stepState == StepState.complete) {
+          //     return const Icon(Icons.check, size: 20.0);
+          //   }
+          // },
         ),
       ),
     );

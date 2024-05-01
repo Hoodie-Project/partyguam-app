@@ -97,7 +97,7 @@ class _SignUp0111State extends State<SignUp0111> {
                     fontWeight: FontWeight.normal,
                   ),
                 )
-              : const Text('알 수 없는 에러가 발생했습니다.'),
+              : const Text(''),
         ),
       ),
     );
