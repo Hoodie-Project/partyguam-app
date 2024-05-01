@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:partyguam/app/pages/sign_up/widgets/text.dart';
 import 'package:partyguam/app/theme/colors.dart';
+import 'package:partyguam/app/utils/constants.dart';
 
 import '../../sign_up/widgets/app_bar.dart';
 import '../../sign_up/widgets/buttons.dart';
@@ -15,6 +16,22 @@ class SignUpDetail0123 extends StatefulWidget {
 }
 
 class _SignUpDetail0121State extends State<SignUpDetail0123> {
+  int _selectedIndex = -1;
+  final bool _isSelected = false;
+
+  final timeLabelList = Time.values.map((element) => element.label).toList();
+  final timeHoursList = Time.values.map((element) => element.hours).toList();
+
+  void _selectItem(int index) {
+    setState(() {
+      if (_selectedIndex == index) {
+        _selectedIndex = -1;
+      } else {
+        _selectedIndex = index;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +41,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         children: [
           const SignUpDetailsStepper(),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            padding: const EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,7 +59,9 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
           const Padding(
             padding: EdgeInsets.only(left: 20.0, right: 20.0),
             child: MainHorizontalButton(
-                content: '다음', route: '/sign_up/detail/0124'),
+              content: '다음',
+              route: '/sign_up/detail/0124',
+            ),
           ),
           // SignUpDetailNextButton(context),
           Padding(
@@ -75,19 +94,22 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          return _timeListTile();
+          return _timeListTile(index);
         },
         separatorBuilder: (BuildContext context, int index) {
           return const SizedBox(
             height: 8.0,
           );
         },
-        itemCount: 5,
+        itemCount: timeLabelList.length,
       ),
     );
   }
 
-  Widget _timeListTile() {
+  Widget _timeListTile(int index) {
+    final timeLabel = timeLabelList[index];
+    final timeHours = timeHoursList[index];
+
     return Material(
       elevation: 1.0,
       shape: RoundedRectangleBorder(
@@ -96,19 +118,36 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 20),
-        title: const Text('오전 (6시 ~ 12시)'),
+        title: Text('$timeLabel $timeHours'),
         titleTextStyle: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.normal,
           color: AppColors.greyColors.shade700,
         ),
+        selected: _selectedIndex == index,
+        onTap: () {
+          setState(() {
+            _selectItem(index);
+          });
+        },
+        iconColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.green;
+          }
+          return AppColors.greyColors.shade200;
+        }),
+        textColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.green;
+          }
+          return Colors.black;
+        }),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
           side: BorderSide(color: AppColors.greyColors.shade200),
         ),
         leading: const Icon(Icons.check_circle_outline_rounded),
         tileColor: AppColors.greyColors.shade50,
-        iconColor: AppColors.greyColors.shade200,
       ),
     );
   }
