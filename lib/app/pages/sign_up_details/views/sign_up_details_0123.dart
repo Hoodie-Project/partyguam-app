@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../theme/colors.dart';
 import '../../../utils/constants.dart';
 import '../../sign_up/widgets/app_bar.dart';
-import '../../sign_up/widgets/buttons.dart';
+import '../../sign_up/widgets/styles.dart';
 import '../../sign_up/widgets/text.dart';
 import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
@@ -17,7 +18,9 @@ class SignUpDetail0123 extends StatefulWidget {
 }
 
 class _SignUpDetail0121State extends State<SignUpDetail0123> {
+  bool _isButtonDisabled = true;
   final List<int> selectedItems = [];
+
   final timeLabelList = Time.values.map((element) => element.label).toList();
   final timeHoursList = Time.values.map((element) => element.hours).toList();
 
@@ -40,6 +43,13 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         }
       }
     });
+  }
+
+  /// TODO: 버튼 활성화 로직 필요
+  void _submitForm() {
+    if (selectedItems.isNotEmpty) {
+      context.push('/sign_up/detail/0124');
+    }
   }
 
   @override
@@ -66,11 +76,22 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
           const Expanded(
             child: SizedBox(),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(left: 20.0, right: 20.0),
-            child: MainHorizontalButton(
-              content: '다음',
-              route: '/sign_up/detail/0124',
+            child: SizedBox(
+              width: double.infinity,
+              child: Material(
+                color: AppColors.greyColors.shade50,
+                elevation: 1.0,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                child: ElevatedButton(
+                  onPressed: _submitForm,
+                  style: ButtonStyles.filledLongStyle,
+                  child: const Text('다음'),
+                ),
+              ),
             ),
           ),
           const SkipButton(route: '/sign_up/detail/0124'),
@@ -128,6 +149,24 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
           side: BorderSide(color: AppColors.greyColors.shade200),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNextButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Material(
+        color: AppColors.greyColors.shade50,
+        elevation: 1.0,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16.0),
+        ),
+        child: ElevatedButton(
+          onPressed: _submitForm,
+          style: ButtonStyles.filledLongStyle,
+          child: const Text('다음'),
         ),
       ),
     );
