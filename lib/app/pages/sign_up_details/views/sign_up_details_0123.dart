@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:partyguam/app/pages/sign_up/widgets/text.dart';
-import 'package:partyguam/app/theme/colors.dart';
-import 'package:partyguam/app/utils/constants.dart';
 
+import '../../../theme/colors.dart';
+import '../../../utils/constants.dart';
 import '../../sign_up/widgets/app_bar.dart';
 import '../../sign_up/widgets/buttons.dart';
+import '../../sign_up/widgets/text.dart';
+import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
+import 'styles.dart';
 
 class SignUpDetail0123 extends StatefulWidget {
   const SignUpDetail0123({super.key});
@@ -16,18 +17,27 @@ class SignUpDetail0123 extends StatefulWidget {
 }
 
 class _SignUpDetail0121State extends State<SignUpDetail0123> {
-  int _selectedIndex = -1;
-  final bool _isSelected = false;
-
+  final List<int> selectedItems = [];
   final timeLabelList = Time.values.map((element) => element.label).toList();
   final timeHoursList = Time.values.map((element) => element.hours).toList();
 
   void _selectItem(int index) {
     setState(() {
-      if (_selectedIndex == index) {
-        _selectedIndex = -1;
-      } else {
-        _selectedIndex = index;
+      // 빈 배열 인경우 (아무 것도 선택 안 했을 때)
+      if (selectedItems.isEmpty) {
+        selectedItems.add(index); // 그냥 추가
+        // 요소가 하나 있는 경우 (한 개 선택 했을 때)
+      } else if (selectedItems.length == 1) {
+        if (selectedItems.contains(index)) {
+          selectedItems.remove(index);
+        } else {
+          selectedItems.add(index);
+        }
+        // 요소가 두개 있는 경우 (모두 선택 했을 때)
+      } else if (selectedItems.length == 2) {
+        if (selectedItems.contains(index)) {
+          selectedItems.remove(index);
+        }
       }
     });
   }
@@ -63,26 +73,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
               route: '/sign_up/detail/0124',
             ),
           ),
-          // SignUpDetailNextButton(context),
-          Padding(
-            padding: const EdgeInsets.only(top: 12.0, bottom: 20.0),
-            child: Center(
-              child: TextButton(
-                onPressed: () {
-                  context.push('/sign_up/detail/0124');
-                },
-                child: Text(
-                  '건너뛰기',
-                  style: TextStyle(
-                    color: AppColors.greyColors.shade500,
-                    decoration: TextDecoration.underline,
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-            ),
-          )
+          const SkipButton(route: '/sign_up/detail/0124'),
         ],
       ),
     );
@@ -90,16 +81,14 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
 
   Widget _timeListView() {
     return SizedBox(
-      height: 350,
+      height: 350.0,
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return _timeListTile(index);
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(
-            height: 8.0,
-          );
+          return const SizedBox(height: 8.0);
         },
         itemCount: timeLabelList.length,
       ),
@@ -109,67 +98,38 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
   Widget _timeListTile(int index) {
     final timeLabel = timeLabelList[index];
     final timeHours = timeHoursList[index];
+    final bool isSelected = selectedItems.contains(index);
 
     return Material(
       elevation: 1.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-        side: BorderSide(color: AppColors.greyColors.shade200),
-      ),
+      shape: isSelected
+          ? CustomBorderStyle.selectedBorderStyle
+          : CustomBorderStyle.unselectedBorderStyle,
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 20),
         title: Text('$timeLabel $timeHours'),
-        titleTextStyle: TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.normal,
-          color: AppColors.greyColors.shade700,
-        ),
-        selected: _selectedIndex == index,
+        titleTextStyle: isSelected
+            ? SignUpDetailsTextStyle.selectedTextStyle
+            : SignUpDetailsTextStyle.unselectedTextStyle,
+        // 클릭한 타일 (타일 5개 중에 무엇이 selected 됐는지 확인)
+        selected: isSelected,
         onTap: () {
           setState(() {
             _selectItem(index);
           });
         },
-        iconColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
-          if (states.contains(MaterialState.selected)) {
-            return Colors.green;
-          }
-          return AppColors.greyColors.shade200;
-        }),
-        textColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
-          if (states.contains(MaterialState.selected)) {
-            return Colors.green;
-          }
-          return Colors.black;
-        }),
+        leading: isSelected
+            ? const Icon(Icons.check_circle_rounded)
+            : const Icon(Icons.check_circle_outline_rounded),
+        iconColor: SignUpDetailsColorStyle.selectedIconColor,
+        textColor: SignUpDetailsColorStyle.selectedTextColor,
+        tileColor: AppColors.greyColors.shade50,
+        selectedTileColor: AppColors.primaryLightColors.shade300,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
           side: BorderSide(color: AppColors.greyColors.shade200),
         ),
-        leading: const Icon(Icons.check_circle_outline_rounded),
-        tileColor: AppColors.greyColors.shade50,
       ),
     );
   }
 }
-
-// SignUpDetailNextButton(BuildContext context) {
-//   final currentStep =
-//   return SizedBox(
-//     width: double.infinity,
-//     child: Material(
-//       color: AppColors.greyColors.shade50,
-//       elevation: 1.0,
-//       borderRadius: const BorderRadius.all(
-//         Radius.circular(16.0),
-//       ),
-//       child: ElevatedButton(
-//         onPressed: () {
-//           context.push('sign_up/detail/0124');
-//         },
-//         style: ButtonStyles.filledLongStyle,
-//         child: Text('다음'),
-//       ),
-//     ),
-//   );
-// }
