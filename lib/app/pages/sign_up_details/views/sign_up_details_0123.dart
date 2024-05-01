@@ -103,8 +103,8 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
     return Material(
       elevation: 1.0,
       shape: isSelected
-          ? CustomBorderStyle.selectedBorderStyle
-          : CustomBorderStyle.unselectedBorderStyle,
+          ? SignUpDetailsBorderStyle.selectedBorderStyle
+          : SignUpDetailsBorderStyle.unselectedBorderStyle,
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 20),
         title: Text('$timeLabel $timeHours'),
@@ -122,7 +122,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
             ? const Icon(Icons.check_circle_rounded)
             : const Icon(Icons.check_circle_outline_rounded),
         iconColor: SignUpDetailsColorStyle.selectedIconColor,
-        textColor: SignUpDetailsColorStyle.selectedTextColor,
+        textColor: SignUpDetailsColorStyle.regularTextColor,
         tileColor: AppColors.greyColors.shade50,
         selectedTileColor: AppColors.primaryLightColors.shade300,
         shape: RoundedRectangleBorder(

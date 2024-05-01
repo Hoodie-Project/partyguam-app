@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/colors.dart';
 
-class CustomBorderStyle {
+class SignUpDetailsBorderStyle {
   static RoundedRectangleBorder selectedBorderStyle = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(16.0),
     side: BorderSide(color: AppColors.primaryLightColors.shade100),
@@ -37,12 +37,9 @@ class SignUpDetailsColorStyle {
     return AppColors.greyColors.shade200;
   });
 
-  static MaterialStateColor selectedTextColor =
+  static MaterialStateColor regularTextColor =
       MaterialStateColor.resolveWith((Set<MaterialState> states) {
-    if (states.contains(MaterialState.selected)) {
-      return AppColors.greyColors.shade700;
-    }
-    return AppColors.greyColors.shade50;
+    return AppColors.greyColors.shade700;
   });
 
   static MaterialStateColor selectedTileColor =
