@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../domain/usecases/validation.dart';
 import '../../../theme/colors.dart';
@@ -17,6 +18,11 @@ class SignUp0113 extends StatefulWidget {
 class _SignUp0113State extends State<SignUp0113> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final textController = TextEditingController();
+  final maskFormatter = MaskTextInputFormatter(
+    mask: '####-##-##',
+    filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
 
   bool _showClearIcon = false;
   bool _isButtonDisabled = true;
@@ -96,6 +102,7 @@ class _SignUp0113State extends State<SignUp0113> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           autofocus: true,
           controller: textController,
+          inputFormatters: [maskFormatter],
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
