@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../theme/colors.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/buttons.dart';
+import '../widgets/styles.dart';
 import '../widgets/text.dart';
 
 class SignUp0114 extends StatefulWidget {
@@ -13,6 +14,8 @@ class SignUp0114 extends StatefulWidget {
 }
 
 class _SignUp0114State extends State<SignUp0114> {
+  bool _isButtonEnabled = false;
+
   Color _containerColor1 = AppColors.greyColors.shade50;
   Color _containerColor2 = AppColors.greyColors.shade50;
   final Color _tappedColor = AppColors.primaryLightColors.shade300;
@@ -30,6 +33,7 @@ class _SignUp0114State extends State<SignUp0114> {
           ? _borderColor2
           : _tappedBorderColor;
       _borderColor2 = AppColors.greyColors.shade200;
+      _checkButtonState();
     });
   }
 
@@ -43,6 +47,20 @@ class _SignUp0114State extends State<SignUp0114> {
           : _tappedBorderColor;
       _borderColor1 = AppColors.greyColors.shade200;
     });
+
+    _checkButtonState();
+  }
+
+  void _checkButtonState() {
+    if (_containerColor1 == _tappedColor || _containerColor2 == _tappedColor) {
+      setState(() {
+        _isButtonEnabled = true;
+      });
+    }
+  }
+
+  void _navigateToNextPage() {
+    context.push('/sign_up/0115');
   }
 
   @override
@@ -72,10 +90,10 @@ class _SignUp0114State extends State<SignUp0114> {
                       onTap: () {
                         _changeColor1();
                       },
-                      child: SquareButton(
-                        borderColor: _borderColor1,
-                        content: '남자',
-                        containerColor: _containerColor1,
+                      child: _buildSquareButton(
+                        _containerColor1,
+                        _borderColor1,
+                        '남자',
                       ),
                     ),
                   ),
@@ -87,10 +105,10 @@ class _SignUp0114State extends State<SignUp0114> {
                       onTap: () {
                         _changeColor2();
                       },
-                      child: SquareButton(
-                        borderColor: _borderColor2,
-                        content: '여자',
-                        containerColor: _containerColor2,
+                      child: _buildSquareButton(
+                        _containerColor2,
+                        _borderColor2,
+                        '여자',
                       ),
                     ),
                   ),
@@ -99,12 +117,59 @@ class _SignUp0114State extends State<SignUp0114> {
               const Expanded(
                 child: SizedBox(),
               ),
-              const MainHorizontalButton(
-                content: '다음',
-                route: '/sign_up/0115',
-              ),
+              _buildNextButton(context),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSquareButton(
+      Color containerColor, Color borderColor, String content) {
+    return Material(
+      color: containerColor,
+      elevation: 1.0,
+      borderRadius: const BorderRadius.all(
+        Radius.circular(16.0),
+      ),
+      child: Container(
+        height: 163.0,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: borderColor,
+            width: 1.0,
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(16.0),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            content,
+            style: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNextButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Material(
+        color: AppColors.greyColors.shade50,
+        elevation: 1.0,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16.0),
+        ),
+        child: ElevatedButton(
+          onPressed: _isButtonEnabled ? _navigateToNextPage : null,
+          style: ButtonStyles.filledLongStyle,
+          child: const Text('다음'),
         ),
       ),
     );
