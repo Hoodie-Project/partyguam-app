@@ -39,7 +39,7 @@ class _SignUp0111State extends State<SignUp0111> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const SignUpAppBar(
+      appBar: const DialogAppBar(
         title: '가입하기',
         route: '/sign_up/0112',
         pageCount: '1/4',
