@@ -10,7 +10,7 @@ class SignUp0115 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: LoginAppBar(title: ''),
+      appBar: NoIconsAppBar(title: '가입완료'),
       body: Padding(
         padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
         child: Column(

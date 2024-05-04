@@ -70,7 +70,6 @@ class _SignUp0113State extends State<SignUp0113> {
     return Scaffold(
       appBar: const SignUpAppBar(
         title: '가입하기',
-        route: '/sign_up/0114',
         pageCount: '3/4',
       ),
       body: Padding(

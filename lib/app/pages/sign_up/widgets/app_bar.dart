@@ -44,14 +44,13 @@ class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 class SignUpAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String route;
   final String pageCount;
 
-  const SignUpAppBar(
-      {super.key,
-      required this.title,
-      required this.pageCount,
-      required this.route});
+  const SignUpAppBar({
+    super.key,
+    required this.title,
+    required this.pageCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -93,14 +92,13 @@ class SignUpAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 class DialogAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String route;
   final String pageCount;
 
-  const DialogAppBar(
-      {super.key,
-      required this.title,
-      required this.pageCount,
-      required this.route});
+  const DialogAppBar({
+    super.key,
+    required this.title,
+    required this.pageCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +125,34 @@ class DialogAppBar extends StatelessWidget implements PreferredSizeWidget {
           showExitDialog(context, '/');
         },
       ),
+      title: Text(title),
+      titleTextStyle: const TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(56);
+}
+
+class NoIconsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+
+  const NoIconsAppBar({
+    super.key,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      centerTitle: true,
+      elevation: 0,
+      leading: const Text(''),
       title: Text(title),
       titleTextStyle: const TextStyle(
         color: Colors.black,
