@@ -52,7 +52,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
   }
 
   void _navigateToNextPage() {
-    if (selectedItems.length == 2) {
+    if (selectedItems.isNotEmpty) {
       context.push('/sign_up/detail/0124');
     }
   }

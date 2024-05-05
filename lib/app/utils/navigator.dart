@@ -11,6 +11,7 @@ import '../pages/sign_up_details/views/sign_up_details_0123.dart';
 import '../pages/sign_up_details/views/sign_up_details_0124.dart';
 import '../pages/sign_up_details/views/sign_up_details_0125.dart';
 import '../pages/sign_up_details/views/sign_up_details_0126.dart';
+import '../pages/sign_up_details/views/sign_up_details_0127.dart';
 
 final navigator = GoRouter(
   routes: [
@@ -65,6 +66,11 @@ final navigator = GoRouter(
       name: 'signUpDetail0126',
       path: '/sign_up/detail/0126',
       builder: (context, state) => const SignUpDetail0126(),
+    ),
+    GoRoute(
+      name: 'signUpDetail0127',
+      path: '/sign_up/detail/0127',
+      builder: (context, state) => const SignUpDetail0127(),
     ),
   ],
 );
