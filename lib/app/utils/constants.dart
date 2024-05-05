@@ -32,3 +32,15 @@ enum ConfidentList {
 
   final String option;
 }
+
+enum ChallengeList {
+  option1('새로운 기술 및 업무에 도전하고 싶어요.'),
+  option2('해당 분야의 경력을 쌓고 싶어요.'),
+  option3('어려운 문제 및 상황을 풀어나가고 싶어요.'),
+  option4('리더십 역량을 기르고 싶어요.'),
+  option5('제한된 시간에서 능력을 확인하고 싶어요.');
+
+  const ChallengeList(this.option);
+
+  final String option;
+}
