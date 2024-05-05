@@ -40,9 +40,11 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         }
         // 요소가 두개 있는 경우 (모두 선택 했을 때)
       } else if (selectedItems.length == 2) {
-        selectedItems.remove(index);
-
-        showWarningSnackBar(context, ' 최대 2개까지 선택할 수 있어요.');
+        if (selectedItems.contains(index)) {
+          selectedItems.remove(index);
+        } else {
+          showWarningSnackBar(context, ' 최대 2개까지 선택할 수 있어요.');
+        }
       }
     });
   }
