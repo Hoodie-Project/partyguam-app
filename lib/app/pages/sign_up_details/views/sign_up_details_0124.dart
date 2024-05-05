@@ -89,7 +89,6 @@ class _SignUpDetail0121State extends State<SignUpDetail0124> {
     return SizedBox(
       height: 350.0,
       child: ListView.separated(
-        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return _buildListTiles(index);
         },
