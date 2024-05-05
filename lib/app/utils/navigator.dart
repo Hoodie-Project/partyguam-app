@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:partyguam/app/pages/sign_up_details/views/sign_up_details_0123.dart';
 import 'package:partyguam/app/pages/sign_up_details/views/sign_up_details_0124.dart';
 
-import '../pages/sign_up/views/login_0000.dart';
+import '../pages/sign_up/views/sign_in_0000.dart';
 import '../pages/sign_up/views/sign_up_0111.dart';
 import '../pages/sign_up/views/sign_up_0112.dart';
 import '../pages/sign_up/views/sign_up_0113.dart';
@@ -14,7 +14,7 @@ final navigator = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const Login0000(),
+      builder: (context, state) => const SignIn0000(),
     ),
     GoRoute(
       path: '/sign_up/0111',

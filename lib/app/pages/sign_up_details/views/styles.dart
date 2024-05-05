@@ -2,34 +2,30 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/colors.dart';
 
-class SignUpDetailsBorderStyle {
-  static RoundedRectangleBorder selectedBorderStyle = RoundedRectangleBorder(
+class SignUpDetailsListStyle {
+  static RoundedRectangleBorder selectedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(16.0),
     side: BorderSide(color: AppColors.primaryLightColors.shade100),
   );
 
-  static RoundedRectangleBorder unselectedBorderStyle = RoundedRectangleBorder(
+  static RoundedRectangleBorder unselectedBorder = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(16.0),
     side: BorderSide(color: AppColors.greyColors.shade200),
   );
-}
 
-class SignUpDetailsTextStyle {
-  static TextStyle selectedTextStyle = TextStyle(
+  static TextStyle selectedText = TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.w600,
     color: AppColors.greyColors.shade700,
   );
 
-  static TextStyle unselectedTextStyle = TextStyle(
+  static TextStyle unselectedText = TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.normal,
     color: AppColors.greyColors.shade700,
   );
-}
 
-class SignUpDetailsColorStyle {
-  static MaterialStateColor selectedIconColor =
+  static MaterialStateColor selectedIcon =
       MaterialStateColor.resolveWith((Set<MaterialState> states) {
     if (states.contains(MaterialState.selected)) {
       return AppColors.primaryDarkColors.shade100;
@@ -37,12 +33,12 @@ class SignUpDetailsColorStyle {
     return AppColors.greyColors.shade200;
   });
 
-  static MaterialStateColor regularTextColor =
+  static MaterialStateColor regularText =
       MaterialStateColor.resolveWith((Set<MaterialState> states) {
     return AppColors.greyColors.shade700;
   });
 
-  static MaterialStateColor selectedTileColor =
+  static MaterialStateColor selectedTile =
       MaterialStateColor.resolveWith((Set<MaterialState> states) {
     if (states.contains(MaterialState.selected)) {
       return AppColors.primaryLightColors.shade300;

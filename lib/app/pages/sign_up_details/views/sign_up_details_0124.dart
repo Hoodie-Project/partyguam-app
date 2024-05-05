@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:partyguam/app/widgets/buttons.dart';
 
-import '../../sign_up/widgets/app_bar.dart';
-import '../../sign_up/widgets/buttons.dart';
+import '../../../widgets/app_bar.dart';
 import '../widgets/steppers.dart';
 
 class SignUpDetail0124 extends StatefulWidget {
@@ -14,15 +14,16 @@ class SignUpDetail0124 extends StatefulWidget {
 class _SignUpDetail0121State extends State<SignUpDetail0124> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: LoginAppBar(title: '세부프로필'),
+    return Scaffold(
+      appBar: const SignInAppBar(title: '세부프로필'),
       body: Column(
         children: [
-          SignUpDetailsStepper(currentStep: 2),
-          MainHorizontalButton(
-            content: '다음',
-            route: '/sign_up/detail/0123',
-          )
+          const SignUpDetailsStepper(currentStep: 2),
+          buildFilledLongButton(
+            context,
+            '다음',
+            '/sign_up/detail/0123',
+          ),
         ],
       ),
     );
