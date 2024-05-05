@@ -43,7 +43,9 @@ class CommonButtonStyles {
   );
 
   static final ButtonStyle outlinedShortStyle = OutlinedButton.styleFrom(
-    side: const BorderSide(color: AppColors.primaryLightColors),
+    side: const BorderSide(
+      color: AppColors.primaryLightColors,
+    ),
     backgroundColor: AppColors.greyColors.shade50,
     foregroundColor: AppColors.greyColors.shade700,
     minimumSize: const Size(

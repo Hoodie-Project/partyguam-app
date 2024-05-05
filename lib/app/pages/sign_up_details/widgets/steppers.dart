@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../theme/colors.dart';
 
 class SignUpDetailsStepper extends StatefulWidget {
-  const SignUpDetailsStepper({super.key, required this.currentStep});
+  const SignUpDetailsStepper(
+      {super.key, required this.currentStep, required this.stage});
 
   final int currentStep;
+  final String stage;
 
   @override
   State<SignUpDetailsStepper> createState() => _SignUpDetailsStepperState();
@@ -42,9 +44,9 @@ class _SignUpDetailsStepperState extends State<SignUpDetailsStepper> {
       Step(
         state: widget.currentStep > 2 ? StepState.complete : StepState.indexed,
         isActive: widget.currentStep >= 2,
-        title: const Text(
-          '성향선택(1/4)',
-          style: TextStyle(
+        title: Text(
+          widget.stage,
+          style: const TextStyle(
             fontSize: 12.0,
             fontWeight: FontWeight.w700,
           ),

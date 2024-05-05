@@ -18,7 +18,10 @@ class _SignUpDetail0121State extends State<SignUpDetail0124> {
       appBar: const SignInAppBar(title: '세부프로필'),
       body: Column(
         children: [
-          const SignUpDetailsStepper(currentStep: 2),
+          const SignUpDetailsStepper(
+            currentStep: 2,
+            stage: '성향선택(2/4)',
+          ),
           buildFilledLongButton(
             context,
             '다음',
