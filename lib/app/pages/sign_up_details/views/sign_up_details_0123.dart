@@ -35,7 +35,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       } else if (selectedItems.length == 1) {
         if (selectedItems.contains(index)) {
           selectedItems.remove(index);
-          _isButtonDisabled = true;
+          // _isButtonDisabled = true;
         } else {
           selectedItems.add(index);
         }
@@ -43,7 +43,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       } else if (selectedItems.length == 2) {
         if (selectedItems.contains(index)) {
           selectedItems.remove(index);
-          _isButtonDisabled = true;
+          // _isButtonDisabled = true;
         } else {
           showWarningSnackBar(context, ' 최대 2개까지 선택할 수 있어요.');
         }
@@ -52,7 +52,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
   }
 
   void _navigateToNextPage() {
-    if (selectedItems.isNotEmpty) {
+    if (selectedItems.length == 2) {
       context.push('/sign_up/detail/0124');
     }
   }
@@ -101,7 +101,6 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
     return SizedBox(
       height: 350.0,
       child: ListView.separated(
-        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return _buildListTiles(index);
         },

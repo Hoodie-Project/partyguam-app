@@ -19,3 +19,16 @@ enum Personality {
 
   final String option;
 }
+
+enum ConfidentList {
+  option1('기술적인 역량과 전문 지식을 가지고 있어요.'),
+  option2('효율적으로 일을 처리할 수 있어요.'),
+  option3('시간관리 능력이 뛰어나요.'),
+  option4('문제 해결 능력이 뛰어나요.'),
+  option5('창의적인 아이디어가 많아요.'),
+  option6('소통과 협업에 자신있어요.');
+
+  const ConfidentList(this.option);
+
+  final String option;
+}
