@@ -35,6 +35,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       } else if (selectedItems.length == 1) {
         if (selectedItems.contains(index)) {
           selectedItems.remove(index);
+          _isButtonDisabled = true;
         } else {
           selectedItems.add(index);
         }
@@ -42,6 +43,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       } else if (selectedItems.length == 2) {
         if (selectedItems.contains(index)) {
           selectedItems.remove(index);
+          _isButtonDisabled = true;
         } else {
           showWarningSnackBar(context, ' 최대 2개까지 선택할 수 있어요.');
         }
@@ -62,7 +64,10 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SignUpDetailsStepper(currentStep: 2),
+          const SignUpDetailsStepper(
+            currentStep: 2,
+            stage: '성향선택(1/4)',
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
             child: Column(
