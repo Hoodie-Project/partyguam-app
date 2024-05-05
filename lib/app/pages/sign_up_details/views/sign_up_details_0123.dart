@@ -35,6 +35,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       } else if (selectedItems.length == 1) {
         if (selectedItems.contains(index)) {
           selectedItems.remove(index);
+          _isButtonDisabled = true;
         } else {
           selectedItems.add(index);
         }
@@ -42,6 +43,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
       } else if (selectedItems.length == 2) {
         if (selectedItems.contains(index)) {
           selectedItems.remove(index);
+          _isButtonDisabled = true;
         } else {
           showWarningSnackBar(context, ' 최대 2개까지 선택할 수 있어요.');
         }

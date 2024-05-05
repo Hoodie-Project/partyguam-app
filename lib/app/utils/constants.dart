@@ -10,3 +10,12 @@ enum Time {
   final String label;
   final String hours;
 }
+
+enum Personality {
+  option1('계획에 따른 체계적인 실행이 중요해요'),
+  option2('계획을 따르지만 유연한 실행이 중요해요');
+
+  const Personality(this.option);
+
+  final String option;
+}
