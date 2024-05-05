@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../theme/colors.dart';
 import '../../../utils/constants.dart';
+import '../../../widgets/snack_bar.dart';
 import '../../sign_up/widgets/app_bar.dart';
 import '../../sign_up/widgets/styles.dart';
 import '../../sign_up/widgets/text.dart';
@@ -28,7 +29,8 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
     setState(() {
       // 빈 배열 인경우 (아무 것도 선택 안 했을 때)
       if (selectedItems.isEmpty) {
-        selectedItems.add(index); // 그냥 추가
+        _isButtonDisabled = false;
+        selectedItems.add(index);
         // 요소가 하나 있는 경우 (한 개 선택 했을 때)
       } else if (selectedItems.length == 1) {
         if (selectedItems.contains(index)) {
@@ -38,15 +40,13 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         }
         // 요소가 두개 있는 경우 (모두 선택 했을 때)
       } else if (selectedItems.length == 2) {
-        if (selectedItems.contains(index)) {
-          selectedItems.remove(index);
-        }
+        showWarningSnackBar(context, ' 최대 2개까지 선택할 수 있어요.');
       }
     });
   }
 
   /// TODO: 버튼 활성화 로직 필요
-  void _submitForm() {
+  void _navigateToNextPage() {
     if (selectedItems.isNotEmpty) {
       context.push('/sign_up/detail/0124');
     }
@@ -77,22 +77,8 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
             child: SizedBox(),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 20.0, right: 20.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: Material(
-                color: AppColors.greyColors.shade50,
-                elevation: 1.0,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(16.0),
-                ),
-                child: ElevatedButton(
-                  onPressed: _submitForm,
-                  style: ButtonStyles.filledLongStyle,
-                  child: const Text('다음'),
-                ),
-              ),
-            ),
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: _buildNextButton(context),
           ),
           const SkipButton(route: '/sign_up/detail/0124'),
         ],
@@ -164,7 +150,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
           Radius.circular(16.0),
         ),
         child: ElevatedButton(
-          onPressed: _submitForm,
+          onPressed: _isButtonDisabled ? null : _navigateToNextPage,
           style: ButtonStyles.filledLongStyle,
           child: const Text('다음'),
         ),
