@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/app/utils/constants.dart';
-import 'package:partyguam/app/widgets/snack_bar.dart';
-import 'package:partyguam/app/widgets/text.dart';
 
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
+import '../../../utils/constants.dart';
 import '../../../widgets/app_bar.dart';
+import '../../../widgets/snack_bar.dart';
+import '../../../widgets/text.dart';
 import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
 import 'styles.dart';
@@ -50,7 +50,7 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
   }
 
   void _navigateToNextPage() {
-    if (selectedItems.length == 2) {
+    if (selectedItems.isNotEmpty) {
       context.push('/sign_up/detail/0126');
     }
   }
