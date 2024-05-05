@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../pages/main/main_1100.dart';
 import '../pages/sign_up/views/sign_in_0000.dart';
 import '../pages/sign_up/views/sign_up_0111.dart';
 import '../pages/sign_up/views/sign_up_0112.dart';
@@ -15,6 +16,11 @@ import '../pages/sign_up_details/views/sign_up_details_0127.dart';
 
 final navigator = GoRouter(
   routes: [
+    GoRoute(
+      name: 'main1100',
+      path: '/main/1100',
+      builder: (context, state) => const Main1100(),
+    ),
     GoRoute(
       path: '/',
       builder: (context, state) => const SignIn0000(),
