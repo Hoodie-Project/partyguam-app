@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../theme/colors.dart';
+import '../../../theme/styles.dart';
 import '../../../utils/constants.dart';
+import '../../../widgets/app_bar.dart';
 import '../../../widgets/snack_bar.dart';
-import '../../sign_up/views/styles.dart';
-import '../../sign_up/widgets/app_bar.dart';
-import '../../sign_up/widgets/text.dart';
+import '../../../widgets/text.dart';
 import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
 import 'styles.dart';
@@ -40,6 +40,8 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         }
         // 요소가 두개 있는 경우 (모두 선택 했을 때)
       } else if (selectedItems.length == 2) {
+        selectedItems.remove(index);
+
         showWarningSnackBar(context, ' 최대 2개까지 선택할 수 있어요.');
       }
     });
@@ -64,9 +66,9 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TitleText(
-                  mainTitle: '주로 작업하는 시간대는\n어떻게 되시나요?',
-                  subTitle: '비슷한 성향의 파티원을 추천해 드려요. (최대 2개)',
+                buildTitleText(
+                  '주로 작업하는 시간대는\n어떻게 되시나요?',
+                  '비슷한 성향의 파티원을 추천해 드려요. (최대 2개)',
                 ),
                 _buildListView(),
               ],
@@ -112,14 +114,14 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
     return Material(
       elevation: 1.0,
       shape: isSelected
-          ? SignUpDetailsBorderStyle.selectedBorderStyle
-          : SignUpDetailsBorderStyle.unselectedBorderStyle,
+          ? SignUpDetailsListStyle.selectedBorder
+          : SignUpDetailsListStyle.unselectedBorder,
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 20),
         title: Text('$timeLabel $timeHours'),
         titleTextStyle: isSelected
-            ? SignUpDetailsTextStyle.selectedTextStyle
-            : SignUpDetailsTextStyle.unselectedTextStyle,
+            ? SignUpDetailsListStyle.selectedText
+            : SignUpDetailsListStyle.unselectedText,
         // 클릭한 타일 (타일 5개 중에 무엇이 selected 됐는지 확인)
         selected: isSelected,
         onTap: () {
@@ -130,8 +132,8 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         leading: isSelected
             ? const Icon(Icons.check_circle_rounded)
             : const Icon(Icons.check_circle_outline_rounded),
-        iconColor: SignUpDetailsColorStyle.selectedIconColor,
-        textColor: SignUpDetailsColorStyle.regularTextColor,
+        iconColor: SignUpDetailsListStyle.selectedIcon,
+        textColor: SignUpDetailsListStyle.regularText,
         tileColor: AppColors.greyColors.shade50,
         selectedTileColor: AppColors.primaryLightColors.shade300,
         shape: RoundedRectangleBorder(
@@ -153,7 +155,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         ),
         child: ElevatedButton(
           onPressed: _isButtonDisabled ? null : _navigateToNextPage,
-          style: ButtonStyles.filledLongStyle,
+          style: CommonButtonStyles.filledLongStyle,
           child: const Text('다음'),
         ),
       ),

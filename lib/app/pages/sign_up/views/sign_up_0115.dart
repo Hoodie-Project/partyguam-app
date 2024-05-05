@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/font_styles.dart';
-import '../widgets/app_bar.dart';
-import '../widgets/buttons.dart';
+import '../../../widgets/app_bar.dart';
+import '../../../widgets/buttons.dart';
+import 'styles.dart';
 
 class SignUp0115 extends StatelessWidget {
   const SignUp0115({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: NoIconsAppBar(title: '가입완료'),
+    return Scaffold(
+      appBar: const NoIconsAppBar(title: '가입완료'),
       body: Padding(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
+            const Expanded(
               flex: 1,
               child: SizedBox(),
             ),
@@ -24,10 +24,10 @@ class SignUp0115 extends StatelessWidget {
               child: Text(
                 textAlign: TextAlign.center,
                 '가입을 축하합니다!\n세부 프로필을 작성해 볼까요?',
-                style: CustomFontStyle.loginMainTitle,
+                style: SignUp0115Styles.mainTitle,
               ),
             ),
-            Expanded(
+            const Expanded(
               flex: 1,
               child: SizedBox(),
             ),
@@ -35,18 +35,20 @@ class SignUp0115 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: OutlinedShortButton(
-                    content: '홈으로 이동',
-                    route: '/',
+                  child: buildOutlinedShortButton(
+                    context,
+                    '홈으로 이동',
+                    '/',
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8.0,
                 ),
                 Expanded(
-                  child: FilledShortButton(
-                    content: '작성하기',
-                    route: '/sign_up/detail/0121',
+                  child: buildFilledLongButton(
+                    context,
+                    '작성하기',
+                    '/sign_up/detail/0121',
                   ),
                 ),
               ],

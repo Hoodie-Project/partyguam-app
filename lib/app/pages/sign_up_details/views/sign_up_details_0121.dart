@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/widgets/button.dart';
+import 'package:partyguam/app/widgets/buttons.dart';
 
-import '../../sign_up/widgets/app_bar.dart';
+import '../../../widgets/app_bar.dart';
 import '../widgets/steppers.dart';
 
 class SignUpDetail0121 extends StatefulWidget {
@@ -19,11 +19,11 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
       body: Column(
         children: [
           const SignUpDetailsStepper(currentStep: 0),
-          filledLongButton(
+          buildFilledLongButton(
             context,
             '다음',
             '/sign_up/detail/0123',
-          )
+          ),
         ],
       ),
     );

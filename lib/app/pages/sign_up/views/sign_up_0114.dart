@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../theme/colors.dart';
-import '../widgets/app_bar.dart';
-import '../widgets/text.dart';
+import '../../../theme/styles.dart';
+import '../../../widgets/app_bar.dart';
+import '../../../widgets/text.dart';
 import 'styles.dart';
 
 class SignUp0114 extends StatefulWidget {
@@ -78,9 +79,9 @@ class _SignUp0114State extends State<SignUp0114> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TitleText(
-                mainTitle: '성별은\n어떻게 되시나요?',
-                subTitle: '프로필에서 노출 여부를 설정할 수 있어요.',
+              buildTitleText(
+                '성별은\n어떻게 되시나요?',
+                '프로필에서 노출 여부를 설정할 수 있어요.',
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,10 +148,7 @@ class _SignUp0114State extends State<SignUp0114> {
         child: Center(
           child: Text(
             content,
-            style: const TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.normal,
-            ),
+            style: SignUp0114Styles.squareButtonText,
           ),
         ),
       ),
@@ -168,7 +166,7 @@ class _SignUp0114State extends State<SignUp0114> {
         ),
         child: ElevatedButton(
           onPressed: _isButtonEnabled ? _navigateToNextPage : null,
-          style: ButtonStyles.filledLongStyle,
+          style: CommonButtonStyles.filledLongStyle,
           child: const Text('다음'),
         ),
       ),

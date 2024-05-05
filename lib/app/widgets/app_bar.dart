@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/app/widgets/alert_dialog.dart';
 
-import '../../../theme/colors.dart';
+import '../theme/colors.dart';
+import 'alert_dialog.dart';
 
-class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SignInAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const SignInAppBar({super.key, required this.title});
+
   final String title;
-
-  const LoginAppBar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +43,14 @@ class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class SignUpAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final String pageCount;
-
   const SignUpAppBar({
     super.key,
     required this.title,
     required this.pageCount,
   });
+
+  final String title;
+  final String pageCount;
 
   @override
   Widget build(BuildContext context) {
@@ -91,14 +91,14 @@ class SignUpAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class DialogAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final String pageCount;
-
   const DialogAppBar({
     super.key,
     required this.title,
     required this.pageCount,
   });
+
+  final String title;
+  final String pageCount;
 
   @override
   Widget build(BuildContext context) {
@@ -139,12 +139,12 @@ class DialogAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class NoIconsAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-
   const NoIconsAppBar({
     super.key,
     required this.title,
   });
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {

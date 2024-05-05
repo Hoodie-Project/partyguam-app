@@ -4,8 +4,9 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../domain/usecases/validation.dart';
 import '../../../theme/colors.dart';
-import '../widgets/app_bar.dart';
-import '../widgets/text.dart';
+import '../../../theme/styles.dart';
+import '../../../widgets/app_bar.dart';
+import '../../../widgets/text.dart';
 import 'styles.dart';
 
 class SignUp0113 extends StatefulWidget {
@@ -80,9 +81,10 @@ class _SignUp0113State extends State<SignUp0113> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TitleText(
-                mainTitle: '***님의\n생년월일을 알려주세요.',
-                subTitle: '프로필에서 노출 여부를 설정할 수 있어요.'),
+            buildTitleText(
+              '***님의\n생년월일을 알려주세요.',
+              '프로필에서 노출 여부를 설정할 수 있어요.',
+            ),
             _buildBirthDateForm(),
             const Expanded(
               child: SizedBox(),
@@ -109,11 +111,7 @@ class _SignUp0113State extends State<SignUp0113> {
                 const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
             counterText: '',
             hintText: '8자리를 입력해 주세요. (ex. 1990-12-31)',
-            hintStyle: TextStyle(
-              color: AppColors.greyColors.shade400,
-              fontSize: 16.0,
-              fontWeight: FontWeight.normal,
-            ),
+            hintStyle: SignUpTextFormStyles.hintText,
             suffixIcon: _showClearIcon
                 ? IconButton(
                     icon: Icon(
@@ -128,14 +126,11 @@ class _SignUp0113State extends State<SignUp0113> {
                     },
                   )
                 : null,
-            errorStyle: const TextStyle(
-              fontWeight: FontWeight.normal,
-              fontSize: 12.0,
-            ),
-            enabledBorder: TextFormBorderStyles.enabledBorder,
-            focusedBorder: TextFormBorderStyles.focusedBorder,
-            errorBorder: TextFormBorderStyles.errorBorder,
-            focusedErrorBorder: TextFormBorderStyles.focusedErrorBorder,
+            errorStyle: SignUpTextFormStyles.errorStyle,
+            enabledBorder: SignUpTextFormStyles.enabledBorder,
+            focusedBorder: SignUpTextFormStyles.focusedBorder,
+            errorBorder: SignUpTextFormStyles.errorBorder,
+            focusedErrorBorder: SignUpTextFormStyles.focusedErrorBorder,
           ),
           maxLength: 10,
           keyboardType: TextInputType.datetime,
@@ -158,7 +153,7 @@ class _SignUp0113State extends State<SignUp0113> {
         ),
         child: ElevatedButton(
           onPressed: _isButtonDisabled ? null : _navigateToNextPage,
-          style: ButtonStyles.filledLongStyle,
+          style: CommonButtonStyles.filledLongStyle,
           child: const Text('다음'),
         ),
       ),

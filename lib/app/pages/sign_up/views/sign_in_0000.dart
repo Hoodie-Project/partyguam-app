@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../domain/usecases/user_usecase.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/icons.dart';
-import '../widgets/app_bar.dart';
-import '../widgets/text.dart';
+import '../../../widgets/app_bar.dart';
+import '../../../widgets/text.dart';
+import 'styles.dart';
 
 class SignIn0000 extends StatefulWidget {
   const SignIn0000({super.key});
@@ -37,9 +38,9 @@ class _SignIn0000State extends State<SignIn0000> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TitleText(
-                mainTitle: '파티괌과 함께\n파티에 참여할 준비가 되셨나요?',
-                subTitle: '소셜 로그인으로 편하게 이용해보세요.',
+              buildTitleText(
+                '파티괌과 함께\n파티에 참여할 준비가 되셨나요?',
+                '소셜 로그인으로 편하게 이용해보세요.',
               ),
               _buildSocialLoginButton(
                 '카카오톡 로그인',
@@ -82,22 +83,10 @@ class _SignIn0000State extends State<SignIn0000> {
           backgroundColor: backgroundColor,
           elevation: 1.0,
           foregroundColor: AppColors.greyColors.shade700,
-          padding: const EdgeInsets.only(
-            left: 20.0,
-          ),
-          minimumSize: const Size(
-            335.0,
-            52.0,
-          ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(16.0),
-            ),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14.0,
-            fontWeight: FontWeight.w600,
-          ),
+          padding: const EdgeInsets.only(left: 20.0),
+          minimumSize: const Size(335.0, 52.0),
+          shape: SignIn0000Styles.socialButtonBorder,
+          textStyle: SignIn0000Styles.socialButtonText,
         ),
         icon: icon,
         label: Text(text),
@@ -109,21 +98,13 @@ class _SignIn0000State extends State<SignIn0000> {
     return RichText(
       text: TextSpan(
         text: '소셜 로그인 가입 시 ',
-        style: TextStyle(
-          color: AppColors.greyColors.shade700,
-          fontSize: 12.0,
-          fontWeight: FontWeight.normal,
-        ),
-        children: const [
+        style: SignIn0000Styles.termText1,
+        children: [
           TextSpan(
             text: '이용약관 개인정보처리방침 전자금융거래약관 \n결제/환불약관',
-            style: TextStyle(
-              fontSize: 12.0,
-              fontWeight: FontWeight.normal,
-              decoration: TextDecoration.underline,
-            ),
+            style: SignIn0000Styles.termText2,
           ),
-          TextSpan(text: '에 동의한 것으로 간주합니다.')
+          const TextSpan(text: '에 동의한 것으로 간주합니다.')
         ],
       ),
     );
@@ -137,11 +118,7 @@ class _SignIn0000State extends State<SignIn0000> {
           onPressed: () {},
           child: Text(
             '문의하기',
-            style: TextStyle(
-              color: AppColors.greyColors.shade500,
-              fontSize: 12.0,
-              fontWeight: FontWeight.normal,
-            ),
+            style: SignIn0000Styles.inquiryText,
           ),
         ),
       ],

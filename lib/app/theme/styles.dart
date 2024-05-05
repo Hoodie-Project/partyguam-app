@@ -1,50 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/colors.dart';
+import 'colors.dart';
 
-class TextFormBorderStyles {
-  static final OutlineInputBorder enabledBorder = OutlineInputBorder(
-    borderSide: BorderSide(
-      color: AppColors.greyColors.shade200,
-      width: 1.0,
-    ),
-    borderRadius: const BorderRadius.all(
-      Radius.circular(16.0),
-    ),
-  );
-
-  static const OutlineInputBorder focusedBorder = OutlineInputBorder(
-    borderSide: BorderSide(
-      color: AppColors.primaryLightColors,
-      width: 1.0,
-    ),
-    borderRadius: BorderRadius.all(
-      Radius.circular(16.0),
-    ),
-  );
-
-  static final OutlineInputBorder errorBorder = OutlineInputBorder(
-    borderSide: BorderSide(
-      color: AppColors.systemColors.shade100,
-      width: 1.0,
-    ),
-    borderRadius: const BorderRadius.all(
-      Radius.circular(16.0),
-    ),
-  );
-
-  static final OutlineInputBorder focusedErrorBorder = OutlineInputBorder(
-    borderSide: BorderSide(
-      color: AppColors.systemColors.shade100,
-      width: 1.0,
-    ),
-    borderRadius: const BorderRadius.all(
-      Radius.circular(16.0),
-    ),
-  );
-}
-
-class ButtonStyles {
+class CommonButtonStyles {
   static final ButtonStyle filledLongStyle = ElevatedButton.styleFrom(
     backgroundColor: AppColors.primaryLightColors,
     elevation: 1,
@@ -103,5 +61,29 @@ class ButtonStyles {
       fontSize: 14.0,
       fontWeight: FontWeight.w700,
     ),
+  );
+}
+
+class CustomFontStyle {
+  static const TextStyle loginMainTitle = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w700,
+    height: 1.4,
+    letterSpacing: -0.25,
+  );
+
+  static const TextStyle loginSubTitle = TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.normal,
+    height: 1.4,
+    letterSpacing: -0.25,
+  );
+
+  static TextStyle validationErrorMessage = TextStyle(
+    color: AppColors.systemColors.shade100,
+    fontSize: 12.0,
+    fontWeight: FontWeight.normal,
+    height: 1.4,
+    letterSpacing: -0.25,
   );
 }
