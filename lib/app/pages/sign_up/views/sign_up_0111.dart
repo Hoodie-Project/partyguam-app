@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../domain/usecases/user_usecase.dart';
 import '../../../theme/colors.dart';
+import '../../../widgets/button.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/buttons.dart';
 import '../widgets/text.dart';
 
 class SignUp0111 extends StatefulWidget {
@@ -54,13 +54,14 @@ class _SignUp0111State extends State<SignUp0111> {
                 mainTitle: '가입을 축하드려요!\n이메일 정보가 맞나요?',
                 subTitle: '나중에 변경할 수 없어요.',
               ),
-              _emailConfirmForm(email),
+              _buildEmailConfirmForm(email),
               const Expanded(
                 child: SizedBox(),
               ),
-              const MainHorizontalButton(
-                content: '네, 맞아요',
-                route: '/sign_up/0112',
+              filledLongButton(
+                context,
+                '네, 맞아요',
+                '/sign_up/0112',
               ),
             ],
           ),
@@ -69,7 +70,7 @@ class _SignUp0111State extends State<SignUp0111> {
     );
   }
 
-  Widget _emailConfirmForm(String? email) {
+  Widget _buildEmailConfirmForm(String? email) {
     return SizedBox(
       width: double.infinity,
       child: Material(

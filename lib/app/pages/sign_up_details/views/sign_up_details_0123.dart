@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../../theme/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/snack_bar.dart';
+import '../../sign_up/views/styles.dart';
 import '../../sign_up/widgets/app_bar.dart';
-import '../../sign_up/widgets/styles.dart';
 import '../../sign_up/widgets/text.dart';
 import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
@@ -25,7 +25,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
   final timeLabelList = Time.values.map((element) => element.label).toList();
   final timeHoursList = Time.values.map((element) => element.hours).toList();
 
-  void _selectItem(int index) {
+  void _selectTiles(int index) {
     setState(() {
       // 빈 배열 인경우 (아무 것도 선택 안 했을 때)
       if (selectedItems.isEmpty) {
@@ -45,7 +45,6 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
     });
   }
 
-  /// TODO: 버튼 활성화 로직 필요
   void _navigateToNextPage() {
     if (selectedItems.isNotEmpty) {
       context.push('/sign_up/detail/0124');
@@ -55,7 +54,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const LoginAppBar(title: '세부프로필'),
+      appBar: const SignInAppBar(title: '세부프로필'),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -69,7 +68,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
                   mainTitle: '주로 작업하는 시간대는\n어떻게 되시나요?',
                   subTitle: '비슷한 성향의 파티원을 추천해 드려요. (최대 2개)',
                 ),
-                _timeListView(),
+                _buildListView(),
               ],
             ),
           ),
@@ -80,19 +79,22 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: _buildNextButton(context),
           ),
-          const SkipButton(route: '/sign_up/detail/0124'),
+          buildSkipButton(
+            context,
+            '/sign_up/detail/0124',
+          ),
         ],
       ),
     );
   }
 
-  Widget _timeListView() {
+  Widget _buildListView() {
     return SizedBox(
       height: 350.0,
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          return _timeListTile(index);
+          return _buildListTiles(index);
         },
         separatorBuilder: (BuildContext context, int index) {
           return const SizedBox(height: 8.0);
@@ -102,7 +104,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
     );
   }
 
-  Widget _timeListTile(int index) {
+  Widget _buildListTiles(int index) {
     final timeLabel = timeLabelList[index];
     final timeHours = timeHoursList[index];
     final bool isSelected = selectedItems.contains(index);
@@ -122,7 +124,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         selected: isSelected,
         onTap: () {
           setState(() {
-            _selectItem(index);
+            _selectTiles(index);
           });
         },
         leading: isSelected

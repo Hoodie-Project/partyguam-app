@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../domain/usecases/validation.dart';
 import '../../../theme/colors.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/styles.dart';
 import '../widgets/text.dart';
+import 'styles.dart';
 
 class SignUp0112 extends StatefulWidget {
   const SignUp0112({super.key});
@@ -17,7 +17,7 @@ class SignUp0112 extends StatefulWidget {
 
 class _SignUp0112State extends State<SignUp0112> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
   bool _showClearIcon = false;
   bool _isButtonDisabled = true;
@@ -27,57 +27,40 @@ class _SignUp0112State extends State<SignUp0112> {
   void initState() {
     super.initState();
 
-    textController.addListener(_updateClearIconVisibility);
-    textController.addListener(_isTextFormEmpty);
+    _textController.addListener(_updateClearIconVisibility);
+    _textController.addListener(_isTextFormEmpty);
   }
 
   @override
   void dispose() {
-    textController.removeListener(_updateClearIconVisibility);
-    textController.dispose();
+    _textController.removeListener(_updateClearIconVisibility);
+    _textController.dispose();
+
     super.dispose();
   }
 
   void _updateClearIconVisibility() {
     setState(() {
-      _showClearIcon = textController.text.isNotEmpty;
+      _showClearIcon = _textController.text.isNotEmpty;
     });
   }
 
   void _clearText() {
     setState(() {
-      textController.clear();
+      _textController.clear();
     });
   }
 
   void _isTextFormEmpty() {
     setState(() {
-      _isButtonDisabled = textController.text.isEmpty;
+      _isButtonDisabled = _textController.text.isEmpty;
     });
   }
 
-  void _submitForm() {
+  void _navigateToNextPage() {
     if (_formKey.currentState!.validate()) {
       context.push('/sign_up/0113');
     }
-  }
-
-  Widget _buildCounter(
-    BuildContext context, {
-    required int currentLength,
-    required int? maxLength,
-    required bool isFocused,
-  }) {
-    Color textColor = currentLength > maxLength! ? Colors.red : Colors.black;
-
-    return Text(
-      '$currentLength / $maxLength',
-      style: TextStyle(
-        color: textColor,
-        fontSize: 12.0,
-        fontWeight: FontWeight.normal,
-      ),
-    );
   }
 
   @override
@@ -98,11 +81,11 @@ class _SignUp0112State extends State<SignUp0112> {
                 mainTitle: '어떻게 불러드리면 될까요?\n닉네임을 입력해 주세요',
                 subTitle: '닉네임은 나중에 변경할 수 없어요.',
               ),
-              _nickNameForm(),
+              _buikdNickNameForm(),
               const Expanded(
                 child: SizedBox(),
               ),
-              _button(context),
+              _buildNextButton(context),
             ],
           ),
         ),
@@ -110,7 +93,7 @@ class _SignUp0112State extends State<SignUp0112> {
     );
   }
 
-  Widget _nickNameForm() {
+  Widget _buikdNickNameForm() {
     return SizedBox(
       width: double.infinity,
       child: Form(
@@ -118,10 +101,10 @@ class _SignUp0112State extends State<SignUp0112> {
         child: TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           autofocus: true,
-          controller: textController,
+          buildCounter: _buildCounter,
+          controller: _textController,
           maxLength: 15,
           maxLengthEnforcement: MaxLengthEnforcement.none,
-          buildCounter: _buildCounter,
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
@@ -162,7 +145,25 @@ class _SignUp0112State extends State<SignUp0112> {
     );
   }
 
-  Widget _button(BuildContext context) {
+  Widget _buildCounter(
+    BuildContext context, {
+    required int currentLength,
+    required int? maxLength,
+    required bool isFocused,
+  }) {
+    Color textColor = currentLength > maxLength! ? Colors.red : Colors.black;
+
+    return Text(
+      '$currentLength / $maxLength',
+      style: TextStyle(
+        color: textColor,
+        fontSize: 12.0,
+        fontWeight: FontWeight.normal,
+      ),
+    );
+  }
+
+  Widget _buildNextButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: Material(
@@ -172,7 +173,7 @@ class _SignUp0112State extends State<SignUp0112> {
           Radius.circular(16.0),
         ),
         child: ElevatedButton(
-          onPressed: _isButtonDisabled ? null : _submitForm,
+          onPressed: _isButtonDisabled ? null : _navigateToNextPage,
           style: ButtonStyles.filledLongStyle,
           child: const Text('다음'),
         ),

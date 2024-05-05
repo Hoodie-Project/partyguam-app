@@ -7,18 +7,28 @@ import '../../../theme/icons.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/text.dart';
 
-class Login0000 extends StatefulWidget {
-  const Login0000({super.key});
+class SignIn0000 extends StatefulWidget {
+  const SignIn0000({super.key});
 
   @override
-  State<Login0000> createState() => _Login0000State();
+  State<SignIn0000> createState() => _SignIn0000State();
 }
 
-class _Login0000State extends State<Login0000> {
+class _SignIn0000State extends State<SignIn0000> {
+  dynamic _startSocialSignIn(String text) {
+    setState(() async {
+      if (text == '카카오톡 로그인') {
+        await signInWithKakao(context);
+      } else if (text == '구글 로그인') {
+        context.push('/sign_up/0111');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const LoginAppBar(
+      appBar: const SignInAppBar(
         title: '로그인',
       ),
       body: Padding(
@@ -65,16 +75,12 @@ class _Login0000State extends State<Login0000> {
       width: double.infinity,
       child: ElevatedButton.icon(
         onPressed: () async {
-          if (text == '카카오톡 로그인') {
-            await signInWithKakao(context);
-          } else if (text == '구글 로그인') {
-            context.push('/sign_up/0111');
-          }
+          await _startSocialSignIn(text);
         },
         style: ElevatedButton.styleFrom(
           alignment: Alignment.centerLeft,
           backgroundColor: backgroundColor,
-          elevation: 1,
+          elevation: 1.0,
           foregroundColor: AppColors.greyColors.shade700,
           padding: const EdgeInsets.only(
             left: 20.0,

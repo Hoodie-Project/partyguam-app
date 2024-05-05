@@ -5,8 +5,8 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../../domain/usecases/validation.dart';
 import '../../../theme/colors.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/styles.dart';
 import '../widgets/text.dart';
+import 'styles.dart';
 
 class SignUp0113 extends StatefulWidget {
   const SignUp0113({super.key});
@@ -17,8 +17,8 @@ class SignUp0113 extends StatefulWidget {
 
 class _SignUp0113State extends State<SignUp0113> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final textController = TextEditingController();
-  final maskFormatter = MaskTextInputFormatter(
+  final _textController = TextEditingController();
+  final _maskFormatter = MaskTextInputFormatter(
     mask: '####-##-##',
     filter: {"#": RegExp(r'[0-9]')},
     type: MaskAutoCompletionType.lazy,
@@ -30,36 +30,38 @@ class _SignUp0113State extends State<SignUp0113> {
   @override
   void initState() {
     super.initState();
-    textController.addListener(_updateClearIconVisibility);
-    textController.addListener(_isTextFormEmpty);
+
+    _textController.addListener(_updateClearIconVisibility);
+    _textController.addListener(_isTextFormEmpty);
   }
 
   @override
   void dispose() {
-    textController.removeListener(_updateClearIconVisibility);
-    textController.dispose();
+    _textController.removeListener(_updateClearIconVisibility);
+    _textController.dispose();
+
     super.dispose();
   }
 
   void _updateClearIconVisibility() {
     setState(() {
-      _showClearIcon = textController.text.isNotEmpty;
+      _showClearIcon = _textController.text.isNotEmpty;
     });
   }
 
   void _clearText() {
     setState(() {
-      textController.clear();
+      _textController.clear();
     });
   }
 
   void _isTextFormEmpty() {
     setState(() {
-      _isButtonDisabled = textController.text.isEmpty;
+      _isButtonDisabled = _textController.text.isEmpty;
     });
   }
 
-  void _submitForm() {
+  void _navigateToNextPage() {
     if (_formKey.currentState!.validate()) {
       context.push('/sign_up/0114');
     }
@@ -81,18 +83,18 @@ class _SignUp0113State extends State<SignUp0113> {
             const TitleText(
                 mainTitle: '***님의\n생년월일을 알려주세요.',
                 subTitle: '프로필에서 노출 여부를 설정할 수 있어요.'),
-            _birthdayForm(),
+            _buildBirthDateForm(),
             const Expanded(
               child: SizedBox(),
             ),
-            _button(context),
+            _buildNextButton(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _birthdayForm() {
+  Widget _buildBirthDateForm() {
     return SizedBox(
       width: double.infinity,
       child: Form(
@@ -100,8 +102,8 @@ class _SignUp0113State extends State<SignUp0113> {
         child: TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           autofocus: true,
-          controller: textController,
-          inputFormatters: [maskFormatter],
+          controller: _textController,
+          inputFormatters: [_maskFormatter],
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
@@ -145,7 +147,7 @@ class _SignUp0113State extends State<SignUp0113> {
     );
   }
 
-  Widget _button(BuildContext context) {
+  Widget _buildNextButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: Material(
@@ -155,7 +157,7 @@ class _SignUp0113State extends State<SignUp0113> {
           Radius.circular(16.0),
         ),
         child: ElevatedButton(
-          onPressed: _isButtonDisabled ? null : _submitForm,
+          onPressed: _isButtonDisabled ? null : _navigateToNextPage,
           style: ButtonStyles.filledLongStyle,
           child: const Text('다음'),
         ),

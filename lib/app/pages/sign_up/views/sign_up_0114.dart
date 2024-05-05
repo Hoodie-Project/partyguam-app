@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../theme/colors.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/styles.dart';
 import '../widgets/text.dart';
+import 'styles.dart';
 
 class SignUp0114 extends StatefulWidget {
   const SignUp0114({super.key});
@@ -33,6 +33,7 @@ class _SignUp0114State extends State<SignUp0114> {
           ? _borderColor2
           : _tappedBorderColor;
       _borderColor2 = AppColors.greyColors.shade200;
+
       _checkButtonState();
     });
   }
@@ -85,7 +86,7 @@ class _SignUp0114State extends State<SignUp0114> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: GestureDetector(
+                    child: InkWell(
                       onTap: () {
                         _changeColor1();
                       },
@@ -100,7 +101,7 @@ class _SignUp0114State extends State<SignUp0114> {
                     width: 8.0,
                   ),
                   Expanded(
-                    child: GestureDetector(
+                    child: InkWell(
                       onTap: () {
                         _changeColor2();
                       },
