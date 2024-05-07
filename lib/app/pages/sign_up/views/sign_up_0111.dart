@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/widgets/buttons.dart';
 
 import '../../../../domain/usecases/user_usecase.dart';
 import '../../../theme/colors.dart';
 import '../../../widgets/app_bar.dart';
+import '../../../widgets/buttons.dart';
 import '../../../widgets/text.dart';
 import 'styles.dart';
 

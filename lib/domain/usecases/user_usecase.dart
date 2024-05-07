@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
+/// repostiory로 이동
 Future<void> signInWithKakao(BuildContext context) async {
   // 카카오톡 실행 가능 여부 확인
   if (await isKakaoTalkInstalled()) {
@@ -46,9 +47,10 @@ Future<void> signInWithKakao(BuildContext context) async {
     try {
       await UserApi.instance.loginWithKakaoAccount().then(
         (value) {
-          print(value);
+          print('Kakao login: $value');
 
           if (context.mounted) {
+            ///
             navigateToNextPage(context);
           }
         },
@@ -64,7 +66,7 @@ Future<void> navigateToNextPage(BuildContext context) async {
     context.push('/sign_up/0111');
   }
 
-  debugPrint('Kakao login success');
+  debugPrint('Navigate to next page');
 }
 
 Future<String?> getKakaoUserInfo() async {
@@ -77,7 +79,7 @@ Future<String?> getKakaoUserInfo() async {
       throw Exception('No email provided');
     }
 
-    await encryptUserId(userId);
+    // await encryptUserId(userId);
 
     return email;
   } catch (error) {
@@ -90,19 +92,27 @@ Future<encrypt.Encrypted> encryptUserId(int userId) async {
   final key =
       encrypt.Key.fromUtf8(dotenv.env['APP_CIPHERIV_KEY_SECRET'] as String);
   final iv = encrypt.IV.fromLength(16);
-  final encrypter = encrypt.Encrypter(
+  final cbcEncryptor = encrypt.Encrypter(
     encrypt.AES(
       key,
       mode: encrypt.AESMode.cbc,
     ),
   );
 
-  final encrypted = encrypter.encrypt(
+  final encryptedData = cbcEncryptor.encrypt(
     userIdToString,
     iv: iv,
   );
 
-  return encrypted;
+  print(encryptedData);
+
+  // await checkUserSignIn(encryptedData);
+
+  return encryptedData;
+}
+
+checkUserSignIn(encrypt.Encrypted encryptedData) async {
+  // await sendUserInfo(encryptedData);
 }
 
 Future<void> kakaoLogOut() async {
@@ -113,3 +123,7 @@ Future<void> kakaoLogOut() async {
     print('Kakao logout failure, SDK에서 토큰 삭제: $error');
   }
 }
+
+// abstract class AuthUseCase {
+//   Future<Auth>
+// }
