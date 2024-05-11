@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
@@ -15,6 +16,10 @@ class SignUpDetail0121 extends StatefulWidget {
 }
 
 class _SignUpDetail0121State extends State<SignUpDetail0121> {
+  void _navigateToNextPage() {
+    context.push('/sign_up/detail/0122');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,14 +43,14 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: _buildListView(),
+                      child: _buildProvinceListView(),
                     ),
                     const SizedBox(
                       width: 12.0,
                     ),
                     Expanded(
                       flex: 2,
-                      child: _buildListView(),
+                      child: _buildCityListTiles(),
                     ),
                   ],
                 ),
@@ -55,38 +60,20 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
           const Expanded(
             child: SizedBox(),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5), // 그림자 색상과 투명도
-                  spreadRadius: 5, // 그림자가 퍼지는 범위
-                  blurRadius: 7, // 그림자의 흐림 정도
-                  offset: const Offset(0, 3), // 그림자가 떨어지는 방향
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-                  child: _buildNextButton(context),
-                ),
-                buildSkipButton(
-                  context,
-                  '/sign_up/detail/0123',
-                )
-              ],
-            ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+            child: _buildNextButton(context),
+          ),
+          buildSkipButton(
+            context,
+            '/sign_up/detail/0123',
           ),
         ],
       ),
     );
   }
 
-  Widget _buildListView() {
+  Widget _buildProvinceListView() {
     return SingleChildScrollView(
       child: Container(
         height: 312.0,
@@ -99,9 +86,6 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
           itemBuilder: (BuildContext context, int index) {
             return _buildListTiles(index);
           },
-          // separatorBuilder: (BuildContext context, int index) {
-          //   return Container();
-          // },
           itemCount: 10,
         ),
       ),
@@ -112,7 +96,6 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
     return Container(
       height: 52.0,
       decoration: BoxDecoration(
-        color: Colors.transparent,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(color: Colors.transparent),
       ),
@@ -130,21 +113,90 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
     );
   }
 
+  _buildCityListTiles() {
+    return SizedBox(
+      child: Container(
+        height: 312.0,
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.greyColors.shade200),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // 2열로 설정
+            childAspectRatio: 2.3, // 각 그리드 항목의 가로 세로 비율을 1.0으로 설정
+          ),
+          itemCount: 20, // 그리드 아이템의 총 개수
+          itemBuilder: (BuildContext context, int index) {
+            return GridTile(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  border: Border.all(color: Colors.transparent),
+                ),
+                child: Center(
+                  child: Text(
+                    '전체',
+                    style: TextStyle(
+                      color: AppColors.greyColors.shade600,
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+
+    // return Container(
+    //   height: 52.0,
+    //   decoration: BoxDecoration(
+    //     color: Colors.transparent,
+    //     borderRadius: BorderRadius.circular(16.0),
+    //     border: Border.all(color: Colors.transparent),
+    //   ),
+    //   child: Row(
+    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //     children: [
+    //       Text(
+    //         '전체',
+    //         style: TextStyle(
+    //           color: AppColors.greyColors.shade600,
+    //           fontSize: 14.0,
+    //           fontWeight: FontWeight.normal,
+    //         ),
+    //       ),
+    //       Text(
+    //         '강남구',
+    //         style: TextStyle(
+    //           color: AppColors.greyColors.shade600,
+    //           fontSize: 14.0,
+    //           fontWeight: FontWeight.normal,
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
+  }
+
   Widget _buildNextButton(BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: double.infinity,
-        child: Material(
-          color: AppColors.greyColors.shade50,
-          elevation: 1.0,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(16.0),
-          ),
-          child: ElevatedButton(
-            onPressed: () {},
-            style: CommonButtonStyles.filledLongStyle,
-            child: const Text('다음'),
-          ),
+    return SizedBox(
+      width: double.infinity,
+      child: Material(
+        color: AppColors.greyColors.shade50,
+        elevation: 1.0,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16.0),
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            _navigateToNextPage();
+          },
+          style: CommonButtonStyles.filledLongStyle,
+          child: const Text('다음'),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:partyguam/app/pages/sign_up_details/views/sign_up_details_0122.dart';
 
 import '../pages/main/main_1100.dart';
 import '../pages/sign_up/views/sign_in_0000.dart';
@@ -52,6 +53,11 @@ final navigator = GoRouter(
     GoRoute(
       path: '/sign_up/detail/0121',
       builder: (context, state) => const SignUpDetail0121(),
+    ),
+    GoRoute(
+      name: 'signUpDetail0122',
+      path: '/sign_up/detail/0122',
+      builder: (context, state) => const SignUpDetail0122(),
     ),
     GoRoute(
       name: 'signUpDetail0123',
