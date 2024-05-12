@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/app/widgets/snack_bar.dart';
 
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/app_bar.dart';
+import '../../../widgets/snack_bar.dart';
 import '../../../widgets/text.dart';
 import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
@@ -90,14 +90,15 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
           const Expanded(
             child: SizedBox(),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-            child: _buildNextButton(context),
-          ),
-          buildSkipButton(
-            context,
-            '/sign_up/detail/0123',
-          ),
+          _buttomSheet(),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+          //   child: _buildNextButton(context),
+          // ),
+          // buildSkipButton(
+          //   context,
+          //   '/sign_up/detail/0123',
+          // ),
         ],
       ),
     );
@@ -250,6 +251,71 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
           style: CommonButtonStyles.filledLongStyle,
           child: const Text('다음'),
         ),
+      ),
+    );
+  }
+
+  Widget _buttomSheet() {
+    return SingleChildScrollView(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5), // 그림자 색상과 투명도
+              spreadRadius: 5, // 그림자가 퍼지는 범위
+              blurRadius: 7, // 그림자의 흐림 정도
+              offset: const Offset(0, 3), // 그림자가 떨어지는 방향
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 60,
+              // child: _buildAddressChip(),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+              child: _buildNextButton(context),
+            ),
+            buildSkipButton(
+              context,
+              '/sign_up/detail/0123',
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAddressChip(int index) {
+    final province = _selectedProvinces[index];
+    return Chip(
+      backgroundColor: AppColors.greyColors.shade50,
+      deleteIcon: const Icon(
+        Icons.clear_rounded,
+        size: 12.0,
+      ),
+      label: const Text('서울 종로구'),
+      labelStyle: TextStyle(
+        color: AppColors.greyColors.shade700,
+        fontSize: 14.0,
+        fontWeight: FontWeight.normal,
+      ),
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          color: AppColors.primaryLightColors,
+        ),
+        borderRadius: BorderRadius.circular(999.0),
+      ),
+      onDeleted: () {},
+      // padding:
+      //     EdgeInsets.only(top: 8.0, bottom: 8.0, left: 12.0, right: 12.0),
+      visualDensity: const VisualDensity(
+        horizontal: 2.0,
+        vertical: -1.0,
       ),
     );
   }

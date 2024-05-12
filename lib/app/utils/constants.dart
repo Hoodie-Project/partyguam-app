@@ -82,3 +82,27 @@ enum City {
 
   final String option;
 }
+
+enum Address {
+  option1('서울', '전체'),
+  option2('서울', '강북구'),
+  option3('서울', '강남구'),
+  option4('서울', '강서구'),
+  option5('서울', '관악구'),
+  option6('서울', '광진구'),
+  option7('서울', '구로구'),
+  option8('서울', '노원구'),
+  option9('서울', '도봉구'),
+  option10('서울', '동작구'),
+  option11('서울', '동대문구'),
+  option12('서울', '사상구'),
+  option13('서울', '사하구'),
+  option14('서울', '중구'),
+  option15('서울', '동구'),
+  option16('서울', '서구');
+
+  const Address(this.province, this.city);
+
+  final String province;
+  final String city;
+}
