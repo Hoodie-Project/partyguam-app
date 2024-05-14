@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/constants.dart';
+import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
-import '../../../utils/constants.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/snack_bar.dart';
 import '../../../widgets/text.dart';
@@ -11,27 +12,26 @@ import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
 import 'styles.dart';
 
-class SignUpDetail0123 extends StatefulWidget {
-  const SignUpDetail0123({super.key});
+class SignUpDetail0125 extends StatefulWidget {
+  const SignUpDetail0125({super.key});
 
   @override
-  State<SignUpDetail0123> createState() => _SignUpDetail0121State();
+  State<SignUpDetail0125> createState() => _SignUpDetail0125State();
 }
 
-class _SignUpDetail0121State extends State<SignUpDetail0123> {
+class _SignUpDetail0125State extends State<SignUpDetail0125> {
   bool _isButtonDisabled = true;
   final List<int> selectedItems = [];
 
-  final timeLabelList = Time.values.map((element) => element.label).toList();
-  final timeHoursList = Time.values.map((element) => element.hours).toList();
+  final List<String> confidentList =
+      ConfidentList.values.map((element) => element.option).toList();
 
+  /// TODO: 20240505 선택된 타일 제거시 다음 버튼 비활성화 안되는 버그 수정 필요
   void _selectTiles(int index) {
     setState(() {
-      // 빈 배열 인경우 (아무 것도 선택 안 했을 때)
       if (selectedItems.isEmpty) {
         _isButtonDisabled = false;
         selectedItems.add(index);
-        // 요소가 하나 있는 경우 (한 개 선택 했을 때)
       } else if (selectedItems.length == 1) {
         if (selectedItems.contains(index)) {
           selectedItems.remove(index);
@@ -39,7 +39,6 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         } else {
           selectedItems.add(index);
         }
-        // 요소가 두개 있는 경우 (모두 선택 했을 때)
       } else if (selectedItems.length == 2) {
         if (selectedItems.contains(index)) {
           selectedItems.remove(index);
@@ -53,7 +52,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
 
   void _navigateToNextPage() {
     if (selectedItems.isNotEmpty) {
-      context.push('/sign_up/detail/0124');
+      context.push('${RouterPath.signUp}/detail/0126');
     }
   }
 
@@ -66,7 +65,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         children: [
           const SignUpDetailsStepper(
             currentStep: 2,
-            stage: '성향선택(1/4)',
+            stage: '성향선택(3/4)',
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
@@ -74,8 +73,8 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 buildTitleText(
-                  '주로 작업하는 시간대는\n어떻게 되시나요?',
-                  '비슷한 성향의 파티원을 추천해 드려요. (최대 2개)',
+                  '아래 항목 중\n자신있는 것은 무엇인가요?',
+                  '최대 2개까지 선택할 수 있어요.',
                 ),
                 _buildListView(),
               ],
@@ -90,7 +89,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
           ),
           buildSkipButton(
             context,
-            '/sign_up/detail/0124',
+            '${RouterPath.signUp}/detail/0126',
           ),
         ],
       ),
@@ -99,7 +98,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
 
   Widget _buildListView() {
     return SizedBox(
-      height: 350.0,
+      height: 400.0,
       child: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           return _buildListTiles(index);
@@ -107,14 +106,13 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
         separatorBuilder: (BuildContext context, int index) {
           return const SizedBox(height: 8.0);
         },
-        itemCount: timeLabelList.length,
+        itemCount: confidentList.length,
       ),
     );
   }
 
   Widget _buildListTiles(int index) {
-    final timeLabel = timeLabelList[index];
-    final timeHours = timeHoursList[index];
+    final confidentOption = confidentList[index];
     final bool isSelected = selectedItems.contains(index);
 
     return Material(
@@ -124,7 +122,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0123> {
           : SignUpDetailsListStyle.unselectedBorder,
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 20),
-        title: Text('$timeLabel $timeHours'),
+        title: Text(confidentOption),
         titleTextStyle: isSelected
             ? SignUpDetailsListStyle.selectedText
             : SignUpDetailsListStyle.unselectedText,

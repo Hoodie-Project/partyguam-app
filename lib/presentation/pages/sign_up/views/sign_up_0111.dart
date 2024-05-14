@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/usecases/user_usecase.dart';
+import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/buttons.dart';
@@ -62,7 +63,7 @@ class _SignUp0111State extends State<SignUp0111> {
               buildFilledLongButton(
                 context,
                 '네, 맞아요',
-                '/sign_up/0112',
+                '${RouterPath.signUp}/0112',
               ),
             ],
           ),

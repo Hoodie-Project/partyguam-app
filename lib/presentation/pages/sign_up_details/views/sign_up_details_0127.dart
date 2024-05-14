@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../routes/route_path.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/buttons.dart';
 import '../../sign_up/views/styles.dart';
@@ -53,7 +54,7 @@ class _SignUpDetail0127State extends State<SignUpDetail0127> {
                   child: buildFilledLongButton(
                     context,
                     '확인',
-                    '/main/1100',
+                    RouterPath.main,
                   ),
                 ),
               ],

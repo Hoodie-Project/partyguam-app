@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/constants.dart';
+import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
-import '../../../utils/constants.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/snack_bar.dart';
 import '../../../widgets/text.dart';
@@ -11,21 +12,20 @@ import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
 import 'styles.dart';
 
-class SignUpDetail0125 extends StatefulWidget {
-  const SignUpDetail0125({super.key});
+class SignUpDetail0126 extends StatefulWidget {
+  const SignUpDetail0126({super.key});
 
   @override
-  State<SignUpDetail0125> createState() => _SignUpDetail0125State();
+  State<SignUpDetail0126> createState() => _SignUpDetail0126State();
 }
 
-class _SignUpDetail0125State extends State<SignUpDetail0125> {
+class _SignUpDetail0126State extends State<SignUpDetail0126> {
   bool _isButtonDisabled = true;
   final List<int> selectedItems = [];
 
-  final List<String> confidentList =
-      ConfidentList.values.map((element) => element.option).toList();
+  final List<String> challengeList =
+      ChallengeList.values.map((element) => element.option).toList();
 
-  /// TODO: 20240505 선택된 타일 제거시 다음 버튼 비활성화 안되는 버그 수정 필요
   void _selectTiles(int index) {
     setState(() {
       if (selectedItems.isEmpty) {
@@ -51,7 +51,7 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
 
   void _navigateToNextPage() {
     if (selectedItems.isNotEmpty) {
-      context.push('/sign_up/detail/0126');
+      context.push('${RouterPath.signUp}/detail/0127');
     }
   }
 
@@ -64,7 +64,7 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
         children: [
           const SignUpDetailsStepper(
             currentStep: 2,
-            stage: '성향선택(3/4)',
+            stage: '성향선택(4/4)',
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
@@ -72,7 +72,7 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 buildTitleText(
-                  '아래 항목 중\n자신있는 것은 무엇인가요?',
+                  '아래 항목 중\n도전하고 싶은 것은 무엇인가요?',
                   '최대 2개까지 선택할 수 있어요.',
                 ),
                 _buildListView(),
@@ -88,7 +88,7 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
           ),
           buildSkipButton(
             context,
-            '/sign_up/detail/0126',
+            '${RouterPath.signUp}/detail/0125',
           ),
         ],
       ),
@@ -97,7 +97,7 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
 
   Widget _buildListView() {
     return SizedBox(
-      height: 400.0,
+      height: 350.0,
       child: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           return _buildListTiles(index);
@@ -105,13 +105,13 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
         separatorBuilder: (BuildContext context, int index) {
           return const SizedBox(height: 8.0);
         },
-        itemCount: confidentList.length,
+        itemCount: challengeList.length,
       ),
     );
   }
 
   Widget _buildListTiles(int index) {
-    final confidentOption = confidentList[index];
+    final personality = challengeList[index];
     final bool isSelected = selectedItems.contains(index);
 
     return Material(
@@ -121,11 +121,10 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
           : SignUpDetailsListStyle.unselectedBorder,
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 20),
-        title: Text(confidentOption),
+        title: Text(personality),
         titleTextStyle: isSelected
             ? SignUpDetailsListStyle.selectedText
             : SignUpDetailsListStyle.unselectedText,
-        // 클릭한 타일 (타일 5개 중에 무엇이 selected 됐는지 확인)
         selected: isSelected,
         onTap: () {
           setState(() {
@@ -141,7 +140,9 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
         selectedTileColor: AppColors.primaryLightColors.shade300,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
-          side: BorderSide(color: AppColors.greyColors.shade200),
+          side: BorderSide(
+            color: AppColors.greyColors.shade200,
+          ),
         ),
       ),
     );

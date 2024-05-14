@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/widgets/buttons.dart';
 
+import '../../../routes/route_path.dart';
 import '../../../widgets/app_bar.dart';
+import '../../../widgets/buttons.dart';
 import '../widgets/steppers.dart';
 
 class SignUpDetail0121 extends StatefulWidget {
@@ -25,7 +26,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0121> {
           buildFilledLongButton(
             context,
             '다음',
-            '/sign_up/detail/0123',
+            '${RouterPath.signUp}/detail/0123',
           ),
         ],
       ),

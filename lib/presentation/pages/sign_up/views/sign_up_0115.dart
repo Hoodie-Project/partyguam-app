@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../routes/route_path.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/buttons.dart';
 import 'styles.dart';
@@ -48,7 +49,7 @@ class SignUp0115 extends StatelessWidget {
                   child: buildFilledLongButton(
                     context,
                     '작성하기',
-                    '/sign_up/detail/0121',
+                    '${RouterPath.signUp}/detail/0121',
                   ),
                 ),
               ],

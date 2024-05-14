@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../domain/usecases/user_usecase.dart';
+import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/icons.dart';
 import '../../../widgets/app_bar.dart';
@@ -21,7 +22,7 @@ class _SignIn0000State extends State<SignIn0000> {
       if (text == '카카오톡 로그인') {
         await signInWithKakao(context);
       } else if (text == '구글 로그인') {
-        context.push('/sign_up/0111');
+        context.push('${RouterPath.signUp}/0111');
       }
     });
   }

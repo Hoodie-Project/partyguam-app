@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../routes/route_path.dart';
 import '../theme/colors.dart';
 import 'alert_dialog.dart';
 
@@ -122,7 +123,7 @@ class DialogAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: const Icon(Icons.navigate_before),
         onPressed: () {
-          showExitDialog(context, '/');
+          showExitDialog(context, RouterPath.signUp);
         },
       ),
       title: Text(title),

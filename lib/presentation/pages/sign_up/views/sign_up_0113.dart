@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../domain/usecases/validation.dart';
+import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
 import 'styles.dart';
 
-class SignUp0112 extends StatefulWidget {
-  const SignUp0112({super.key});
+class SignUp0113 extends StatefulWidget {
+  const SignUp0113({super.key});
 
   @override
-  State<SignUp0112> createState() => _SignUp0112State();
+  State<SignUp0113> createState() => _SignUp0113State();
 }
 
-class _SignUp0112State extends State<SignUp0112> {
+class _SignUp0113State extends State<SignUp0113> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _textController = TextEditingController();
+  final _textController = TextEditingController();
+  final _maskFormatter = MaskTextInputFormatter(
+    mask: '####-##-##',
+    filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
 
   bool _showClearIcon = false;
   bool _isButtonDisabled = true;
-  int maxLength = 15;
 
   @override
   void initState() {
@@ -60,7 +65,7 @@ class _SignUp0112State extends State<SignUp0112> {
 
   void _navigateToNextPage() {
     if (_formKey.currentState!.validate()) {
-      context.push('/sign_up/0113');
+      context.push('${RouterPath.signUp}/0114');
     }
   }
 
@@ -69,32 +74,30 @@ class _SignUp0112State extends State<SignUp0112> {
     return Scaffold(
       appBar: const SignUpAppBar(
         title: '가입하기',
-        pageCount: '2/4',
+        pageCount: '3/4',
       ),
       body: Padding(
         padding: const EdgeInsets.only(
             left: 20.0, top: 40.0, right: 20.0, bottom: 12.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildTitleText(
-                '어떻게 불러드리면 될까요?\n닉네임을 입력해 주세요',
-                '닉네임은 나중에 변경할 수 없어요.',
-              ),
-              _buildNickNameForm(),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              _buildNextButton(context),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildTitleText(
+              '***님의\n생년월일을 알려주세요.',
+              '프로필에서 노출 여부를 설정할 수 있어요.',
+            ),
+            _buildBirthDateForm(),
+            const Expanded(
+              child: SizedBox(),
+            ),
+            _buildNextButton(context),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildNickNameForm() {
+  Widget _buildBirthDateForm() {
     return SizedBox(
       width: double.infinity,
       child: Form(
@@ -102,14 +105,13 @@ class _SignUp0112State extends State<SignUp0112> {
         child: TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           autofocus: true,
-          buildCounter: _buildCounter,
           controller: _textController,
-          maxLength: 15,
-          maxLengthEnforcement: MaxLengthEnforcement.none,
+          inputFormatters: [_maskFormatter],
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
-            hintText: '15자 이내로 입력해 주세요. (영문/숫자/한글)',
+            counterText: '',
+            hintText: '8자리를 입력해 주세요. (ex. 1990-12-31)',
             hintStyle: SignUpTextFormStyles.hintText,
             suffixIcon: _showClearIcon
                 ? IconButton(
@@ -125,34 +127,18 @@ class _SignUp0112State extends State<SignUp0112> {
                     },
                   )
                 : null,
-            enabledBorder: SignUpTextFormStyles.enabledBorder,
-            errorBorder: SignUpTextFormStyles.errorBorder,
             errorStyle: SignUpTextFormStyles.errorStyle,
+            enabledBorder: SignUpTextFormStyles.enabledBorder,
             focusedBorder: SignUpTextFormStyles.focusedBorder,
+            errorBorder: SignUpTextFormStyles.errorBorder,
             focusedErrorBorder: SignUpTextFormStyles.focusedErrorBorder,
           ),
+          maxLength: 10,
+          keyboardType: TextInputType.datetime,
           validator: (String? value) {
-            return nicknameValidation(value);
+            return birthDateValidation(value);
           },
         ),
-      ),
-    );
-  }
-
-  Widget _buildCounter(
-    BuildContext context, {
-    required int currentLength,
-    required int? maxLength,
-    required bool isFocused,
-  }) {
-    Color textColor = currentLength > maxLength! ? Colors.red : Colors.black;
-
-    return Text(
-      '$currentLength / $maxLength',
-      style: TextStyle(
-        color: textColor,
-        fontSize: 12.0,
-        fontWeight: FontWeight.normal,
       ),
     );
   }
@@ -163,7 +149,9 @@ class _SignUp0112State extends State<SignUp0112> {
       child: Material(
         color: AppColors.greyColors.shade50,
         elevation: 1.0,
-        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16.0),
+        ),
         child: ElevatedButton(
           onPressed: _isButtonDisabled ? null : _navigateToNextPage,
           style: CommonButtonStyles.filledLongStyle,

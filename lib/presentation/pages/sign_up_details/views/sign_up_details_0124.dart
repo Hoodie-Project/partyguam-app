@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/constants.dart';
+import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
-import '../../../utils/constants.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
 import '../widgets/buttons.dart';
@@ -41,7 +42,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0124> {
 
   void _navigateToNextPage() {
     if (selectedItems.isNotEmpty) {
-      context.push('/sign_up/detail/0125');
+      context.push('${RouterPath.signUp}/detail/0125');
     }
   }
 
@@ -78,7 +79,7 @@ class _SignUpDetail0121State extends State<SignUpDetail0124> {
           ),
           buildSkipButton(
             context,
-            '/sign_up/detail/0125',
+            '${RouterPath.signUp}/detail/0125',
           ),
         ],
       ),

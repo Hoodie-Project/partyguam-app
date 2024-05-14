@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
@@ -62,7 +63,7 @@ class _SignUp0114State extends State<SignUp0114> {
   }
 
   void _navigateToNextPage() {
-    context.push('/sign_up/0115');
+    context.push('${RouterPath.signUp}/0115');
   }
 
   @override
