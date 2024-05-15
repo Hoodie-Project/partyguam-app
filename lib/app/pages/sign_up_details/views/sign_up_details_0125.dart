@@ -23,9 +23,8 @@ class _SignUpDetail0125State extends State<SignUpDetail0125> {
   final List<int> selectedItems = [];
 
   final List<String> confidentList =
-      ConfidentList.values.map((element) => element.option).toList();
+      Confident.values.map((element) => element.option).toList();
 
-  /// TODO: 20240505 선택된 타일 제거시 다음 버튼 비활성화 안되는 버그 수정 필요
   void _selectTiles(int index) {
     setState(() {
       if (selectedItems.isEmpty) {
