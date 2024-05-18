@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:partyguam/app/theme/colors.dart';
-import 'package:partyguam/app/widgets/app_bar.dart';
-import 'package:partyguam/app/widgets/text.dart';
 
+import '../../../theme/colors.dart';
+import '../../../widgets/app_bar.dart';
 import '../../../widgets/buttons.dart';
+import '../../../widgets/text.dart';
 import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
+import 'experience_view.dart';
 
 class SignUpDetail0122 extends StatefulWidget {
   const SignUpDetail0122({super.key});
@@ -80,7 +81,9 @@ class _SignUpDetail0122State extends State<SignUpDetail0122> {
           height: 12.0,
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            _buildExperienceDialog(context);
+          },
           borderRadius: BorderRadius.circular(16.0),
           child: Material(
             elevation: 1.0,
@@ -114,6 +117,15 @@ class _SignUpDetail0122State extends State<SignUpDetail0122> {
           ),
         ),
       ],
+    );
+  }
+
+  _buildExperienceDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const ExperienceView();
+      },
     );
   }
 }

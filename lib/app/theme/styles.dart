@@ -3,23 +3,38 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 class CommonButtonStyles {
-  static final ButtonStyle filledLongStyle = ElevatedButton.styleFrom(
-    backgroundColor: AppColors.primaryLightColors,
-    elevation: 1,
-    foregroundColor: AppColors.greyColors.shade700,
-    minimumSize: const Size(
-      335.0,
-      52.0,
-    ),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(
-        Radius.circular(16.0),
+  static final ButtonStyle filledLongStyle = ButtonStyle(
+    backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return AppColors.primaryLightColors.shade400;
+      }
+      return AppColors.primaryLightColors;
+    }),
+    elevation: WidgetStateProperty.all<double>(1.0),
+    foregroundColor:
+        WidgetStateProperty.all<Color>(AppColors.greyColors.shade700),
+    minimumSize: WidgetStateProperty.all<Size>(const Size(335.0, 52.0)),
+    shape: WidgetStateProperty.all<OutlinedBorder>(
+      const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16.0),
+        ),
       ),
     ),
-    textStyle: const TextStyle(
-      fontSize: 14.0,
-      fontWeight: FontWeight.w700,
-    ),
+    textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return TextStyle(
+          color: AppColors.greyColors.shade400,
+          fontSize: 14.0,
+          fontWeight: FontWeight.w700,
+        );
+      }
+      return TextStyle(
+        color: AppColors.greyColors.shade700,
+        fontSize: 14.0,
+        fontWeight: FontWeight.w700,
+      );
+    }),
   );
 
   static final ButtonStyle filledShortStyle = FilledButton.styleFrom(

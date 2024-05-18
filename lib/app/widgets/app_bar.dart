@@ -192,3 +192,37 @@ class ExitIconAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(56);
 }
+
+class NoLeadingIconAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const NoLeadingIconAppBar({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            context.pop();
+          },
+        )
+      ],
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leading: const Text(''),
+      title: Text(title),
+      titleTextStyle: const TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+      ),
+      centerTitle: true,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(56);
+}
