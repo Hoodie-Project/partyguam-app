@@ -11,8 +11,12 @@ class CommonButtonStyles {
       return AppColors.primaryLightColors;
     }),
     elevation: WidgetStateProperty.all<double>(1.0),
-    foregroundColor:
-        WidgetStateProperty.all<Color>(AppColors.greyColors.shade700),
+    foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return AppColors.greyColors.shade400;
+      }
+      return AppColors.greyColors.shade700;
+    }),
     minimumSize: WidgetStateProperty.all<Size>(const Size(335.0, 52.0)),
     shape: WidgetStateProperty.all<OutlinedBorder>(
       const RoundedRectangleBorder(
@@ -23,14 +27,12 @@ class CommonButtonStyles {
     ),
     textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
       if (states.contains(WidgetState.disabled)) {
-        return TextStyle(
-          color: AppColors.greyColors.shade400,
+        return const TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.w700,
         );
       }
-      return TextStyle(
-        color: AppColors.greyColors.shade700,
+      return const TextStyle(
         fontSize: 14.0,
         fontWeight: FontWeight.w700,
       );
