@@ -6,6 +6,24 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
+import '../../core/index.dart';
+import '../index.dart';
+
+class SendUserCredential {
+  const SendUserCredential(this._repository);
+
+  final UserCredentialRepository _repository;
+
+  ApiResult<UserCredential> sendUserCredential({
+    required String uid,
+    required String idToken,
+  }) async =>
+      _repository.sendUserCredential(
+        uid: uid,
+        idToken: idToken,
+      );
+}
+
 /// repostiory로 이동
 Future<void> signInWithKakao(BuildContext context) async {
   // 카카오톡 실행 가능 여부 확인
