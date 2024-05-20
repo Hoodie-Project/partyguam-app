@@ -3,7 +3,7 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 
 import '../config/dio.dart';
 import '../config/path.dart';
-import '../entities/auth.dart';
+import '../dto/auth.dart';
 
 abstract class UserRepository {
   Future<Auth> sendUserInfo(encrypt.Encrypted encryptedData);
