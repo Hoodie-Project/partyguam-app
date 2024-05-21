@@ -3,8 +3,8 @@
  * blueprint of data.
  * define the core data of the application.
  */
-export 'entities/user_credential.dart';
-export 'entities/user_nickname.dart';
+export 'entities/users/user_credential.dart';
+export 'entities/users/user_nickname.dart';
 
 /**
  * Repository
@@ -14,6 +14,9 @@ export 'entities/user_nickname.dart';
  */
 export 'repositories/user_repository.dart';
 
+/// types
+export 'types/usecase.dart';
+
 /**
  * Usecase
  * business logic of application.
@@ -21,3 +24,10 @@ export 'repositories/user_repository.dart';
  * it depends on repository and call its methods to perform data operations (loosely coupled)
  */
 export 'usecases/user_usecase.dart';
+
+/*
+* abstract class
+* EXTENDS the abstract class, doesn't have to implement all the methods.
+* However, if there are abstract methods in the class, the subclass must implement
+* all abstract methods from the abstract class.
+* */

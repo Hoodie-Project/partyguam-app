@@ -1,4 +1,5 @@
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -9,11 +10,18 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import '../../core/index.dart';
 import '../index.dart';
 
-class SendUserCredential {
+class SendUserCredential
+    extends UsecaseWithParams<void, SendUserCredentialParams> {
   const SendUserCredential(this._repository);
 
   final UserCredentialRepository _repository;
 
+  /**
+   * implement an abstract class for usecase to make an return type identical.
+   * the below code is the same as @override call().
+   * */
+
+  /*
   ApiResult<UserCredential> sendUserCredential({
     required String uid,
     required String idToken,
@@ -22,6 +30,27 @@ class SendUserCredential {
         uid: uid,
         idToken: idToken,
       );
+   */
+
+  @override
+  ApiResult<void> call(SendUserCredentialParams params) async =>
+      _repository.sendUserCredential(
+        uid: params.uid,
+        idToken: params.idToken,
+      );
+}
+
+class SendUserCredentialParams extends Equatable {
+  const SendUserCredentialParams({
+    required this.uid,
+    required this.idToken,
+  });
+
+  final String uid;
+  final String idToken;
+
+  @override
+  List<Object?> get props => [uid];
 }
 
 /// repostiory로 이동
