@@ -3,7 +3,7 @@ import 'package:partyguam/core/index.dart';
 abstract class UsecaseWithParams<Type, Params> {
   const UsecaseWithParams();
 
-  ApiResult<Type> call(Params params);
+  ApiAuthResult<Type> call(Params params);
 }
 
 abstract class UsecaseWithoutParams<Type> {

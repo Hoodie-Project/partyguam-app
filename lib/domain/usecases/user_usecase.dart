@@ -6,12 +6,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:partyguam/domain/entities/auth/auth_tokens.dart';
 
 import '../../core/index.dart';
 import '../index.dart';
 
 class SendUserCredential
-    extends UsecaseWithParams<void, SendUserCredentialParams> {
+    extends UsecaseWithParams<AuthTokens, SendUserCredentialParams> {
   const SendUserCredential(this._repository);
 
   final UserCredentialRepository _repository;
@@ -33,7 +34,7 @@ class SendUserCredential
    */
 
   @override
-  ApiResult<void> call(SendUserCredentialParams params) async =>
+  ApiAuthResult<AuthTokens> call(SendUserCredentialParams params) async =>
       _repository.sendUserCredential(
         uid: params.uid,
         idToken: params.idToken,

@@ -1,11 +1,12 @@
-import 'package:partyguam/domain/index.dart';
+import 'package:partyguam/domain/entities/auth/auth_tokens.dart';
 
 import '../../core/index.dart';
+import '../index.dart';
 
 abstract class UserCredentialRepository {
   const UserCredentialRepository();
 
-  ApiResult<UserCredential> sendUserCredential({
+  ApiAuthResult<AuthTokens> sendUserCredential({
     required String uid,
     required String idToken,
   });
@@ -17,4 +18,6 @@ abstract class UserRepository {
   ApiResult<UserNickname> checkNickname({
     required String nickname,
   });
+
+  ApiResult<UserInformation> getUserInformation();
 }
