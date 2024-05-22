@@ -1,23 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_dto.dart';
+part of 'auth_tokens_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthDto _$AuthDtoFromJson(Map<String, dynamic> json) {
+AuthTokensDto _$AuthTokensDtoFromJson(Map<String, dynamic> json) {
   $checkKeys(
     json,
     requiredKeys: const ['accessToken', 'refreshToken'],
   );
-  return AuthDto(
+  return AuthTokensDto(
     accessToken: json['accessToken'] as String,
     refreshToken: json['refreshToken'] as String,
   );
 }
 
-Map<String, dynamic> _$AuthDtoToJson(AuthDto instance) => <String, dynamic>{
+Map<String, dynamic> _$AuthTokensDtoToJson(AuthTokensDto instance) =>
+    <String, dynamic>{
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
     };

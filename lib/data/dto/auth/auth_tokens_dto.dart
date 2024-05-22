@@ -1,9 +1,14 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'auth_dto.g.dart';
+part 'auth_tokens_dto.g.dart';
 
 @JsonSerializable()
-class AuthDto {
+class AuthTokensDto {
+  AuthTokensDto({
+    required this.accessToken,
+    required this.refreshToken,
+  });
+
   /// The generated code assumes these values exist in JSON.
   @JsonKey(required: true)
   final String accessToken;
@@ -11,15 +16,13 @@ class AuthDto {
   @JsonKey(required: true)
   final String refreshToken;
 
-  AuthDto({required this.accessToken, required this.refreshToken});
-
   /// Connect the generated [_$PersonFromJson] function to the `fromJson`
   /// factory.
-  factory AuthDto.fromJson(Map<String, dynamic> json) =>
-      _$AuthDtoFromJson(json);
+  factory AuthTokensDto.fromJson(Map<String, dynamic> json) =>
+      _$AuthTokensDtoFromJson(json);
 
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
-  Map<String, dynamic> toJson() => _$AuthDtoToJson(this);
+  Map<String, dynamic> toJson() => _$AuthTokensDtoToJson(this);
 }
 
 // dart run build_runner build --delete-conflicting-outputs
