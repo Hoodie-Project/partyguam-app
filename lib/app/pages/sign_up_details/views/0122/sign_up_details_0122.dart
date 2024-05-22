@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/colors.dart';
-import '../../../widgets/app_bar.dart';
-import '../../../widgets/buttons.dart';
-import '../../../widgets/text.dart';
-import '../widgets/buttons.dart';
-import '../widgets/steppers.dart';
+import '../../../../theme/colors.dart';
+import '../../../../widgets/app_bar.dart';
+import '../../../../widgets/buttons.dart';
+import '../../../../widgets/text.dart';
+import '../../widgets/buttons.dart';
+import '../../widgets/steppers.dart';
 import 'experience_view.dart';
 
 class SignUpDetail0122 extends StatefulWidget {
