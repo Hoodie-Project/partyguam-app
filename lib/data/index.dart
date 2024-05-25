@@ -1,3 +1,7 @@
+/// config
+export 'config/dio.dart';
+export 'config/path.dart';
+
 /// datasource
 export 'datasources/remote/user_datasource.dart';
 
@@ -14,4 +18,4 @@ export 'repositories/user_repository_impl.dart';
  * interact with dataSource to retrieve data
  * ex) there is a change made in the server, we only need to modify the datasource
  * as the data still have to return the required data that is defined as a model.
- * /
+ */

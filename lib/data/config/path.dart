@@ -9,9 +9,9 @@ abstract class ApiConfigPath {
 }
 
 abstract class ApiAuthPath {
-  static const encryptedUserId = String.fromEnvironment(
-    'encryptedUserId',
-    defaultValue: '/users/app/kakao/login',
+  static const userCredentials = String.fromEnvironment(
+    'userCredentials',
+    defaultValue: '/users/kakao/app/login',
   );
 }
 
