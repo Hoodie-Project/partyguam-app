@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
+import 'package:partyguam/core/services/injection_container.dart';
 
 import 'presentation/routes/route.dart';
 import 'presentation/theme/theme.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // runApp() 호출 전 Flutter SDK 초기화
+  await dotenv.load(fileName: ".env");
+  await init();
+
+  // Flutter SDK 초기화
   KakaoSdk.init(
     nativeAppKey: dotenv.env['NATIVE_APP_KEY'],
   );
