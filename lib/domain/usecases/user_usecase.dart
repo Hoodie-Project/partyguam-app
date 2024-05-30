@@ -5,15 +5,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:injectable/injectable.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:partyguam/domain/entities/auth/auth_tokens.dart';
 
 import '../../core/index.dart';
 import '../index.dart';
 
-class SendUserCredential
-    extends UsecaseWithParams<AuthTokens, SendUserCredentialParams> {
-  const SendUserCredential(this._repository);
+@Injectable()
+class SendUserCredentials {
+  const SendUserCredentials(this._repository);
 
   final UserCredentialRepository _repository;
 
@@ -34,11 +34,7 @@ class SendUserCredential
    */
 
   @override
-  ApiAuthResult<AuthTokens> call(SendUserCredentialParams params) async =>
-      _repository.sendUserCredential(
-        uid: params.uid,
-        idToken: params.idToken,
-      );
+  ApiAuthResult<AuthTokens> call() async => _repository.sendUserCredential();
 }
 
 class SendUserCredentialParams extends Equatable {
@@ -117,51 +113,43 @@ Future<void> navigateToNextPage(BuildContext context) async {
   debugPrint('Navigate to next page');
 }
 
-Future<String?> getKakaoUserInfo() async {
+Future<User?> getKakaoUserInfo() async {
   try {
     User user = await UserApi.instance.me();
-    String? email = user.kakaoAccount?.email;
-    int userId = user.id;
 
-    if (email == null) {
-      throw Exception('No email provided');
-    }
-
-    // await encryptUserId(userId);
-
-    return email;
+    return user;
   } catch (error) {
     print('Failed to fetch kakaouser info: $error');
   }
 }
 
-Future<encrypt.Encrypted> encryptUserId(int userId) async {
-  final userIdToString = userId.toString();
-  final key =
-      encrypt.Key.fromUtf8(dotenv.env['APP_CIPHERIV_KEY_SECRET'] as String);
-  final iv = encrypt.IV.fromLength(16);
-  final cbcEncryptor = encrypt.Encrypter(
-    encrypt.AES(
-      key,
-      mode: encrypt.AESMode.cbc,
-    ),
-  );
+Future<String?> encryptUserId(int uid) async {
+  try {
+    // final user = await getKakaoUserInfo();
+    // final userId = user?.id;
 
-  final encryptedData = cbcEncryptor.encrypt(
-    userIdToString,
-    iv: iv,
-  );
+    final userIdToString = uid.toString();
+    final key =
+        encrypt.Key.fromUtf8(dotenv.env['APP_CIPHERIV_KEY_SECRET'] as String);
+    final iv = encrypt.IV.fromLength(16);
+    final cbcEncryptor =
+        encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
 
-  print(encryptedData);
+    final encryptedData = cbcEncryptor.encrypt(userIdToString, iv: iv);
 
-  // await checkUserSignIn(encryptedData);
+    print(encryptedData.base64);
 
-  return encryptedData;
+    return encryptedData.base64;
+  } on FlutterException catch (e) {
+    FlutterFailure.fromException(
+      FlutterException(message: e.message, statusCode: e.statusCode),
+    );
+  }
 }
 
-checkUserSignIn(encrypt.Encrypted encryptedData) async {
-  // await sendUserInfo(encryptedData);
-}
+// checkUserSignIn(encrypt.Encrypted encryptedData) async {
+//   // await sendUserInfo(encryptedData);
+// }
 
 Future<void> kakaoLogOut() async {
   try {

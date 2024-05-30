@@ -12,6 +12,7 @@ export 'entities/users/user_nickname.dart';
 /// a format, contact of how domain layer and data layer will be interact.
 /// there is no body/implementation part.
 /// use abstract class.
+export 'repositories/auth_repository.dart';
 export 'repositories/user_repository.dart';
 
 /// types
