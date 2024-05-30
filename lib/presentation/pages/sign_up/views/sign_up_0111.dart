@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import '../../../../domain/usecases/user_usecase.dart';
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
+import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
-import '../../../widgets/buttons.dart';
 import '../../../widgets/text.dart';
+import '../auth_cubit.dart';
 import 'styles.dart';
 
 class SignUp0111 extends StatefulWidget {
@@ -20,8 +24,8 @@ class _SignUp0111State extends State<SignUp0111> {
 
   Future<void> getUserEmail() async {
     try {
-      String? userEmail = await getKakaoUserInfo();
-      print(userEmail);
+      User? userInfo = await getKakaoUserInfo();
+      final userEmail = userInfo?.kakaoAccount?.email;
 
       setState(() {
         email = userEmail;
@@ -30,6 +34,10 @@ class _SignUp0111State extends State<SignUp0111> {
       print(error);
     }
   }
+
+  // checkUserSignIn(OAuthToken value) {
+  //   final idToken = value.idToken;
+  // }
 
   @override
   void initState() {
@@ -60,11 +68,7 @@ class _SignUp0111State extends State<SignUp0111> {
               const Expanded(
                 child: SizedBox(),
               ),
-              buildFilledLongButton(
-                context,
-                '네, 맞아요',
-                '${RouterPath.signUp}/0112',
-              ),
+              _buildNextButton(context),
             ],
           ),
         ),
@@ -92,6 +96,29 @@ class _SignUp0111State extends State<SignUp0111> {
                   style: SignUp0111Styles.emailText,
                 )
               : const Text(''),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNextButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Material(
+        color: AppColors.greyColors.shade50,
+        elevation: 1.0,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16.0),
+        ),
+        child: ElevatedButton(
+          onPressed: () {
+            setState(() {
+              GetIt.instance<AuthCubit>().sendUserCredentials();
+              context.push('${RouterPath.signUp}/0112');
+            });
+          },
+          style: CommonButtonStyles.filledLongStyle,
+          child: const Text('네, 맞아요'),
         ),
       ),
     );

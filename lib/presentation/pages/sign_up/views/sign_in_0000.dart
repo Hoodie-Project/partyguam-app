@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../domain/usecases/user_usecase.dart';
+import '../../../../domain/index.dart';
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/icons.dart';
@@ -17,7 +17,7 @@ class SignIn0000 extends StatefulWidget {
 }
 
 class _SignIn0000State extends State<SignIn0000> {
-  dynamic _startSocialSignIn(String text) {
+  _startSocialSignIn(String text) {
     setState(() async {
       if (text == '카카오톡 로그인') {
         await signInWithKakao(context);
