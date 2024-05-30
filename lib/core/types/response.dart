@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:dartz/dartz.dart';
 
-import '../../domain/entities/auth/sign_up_auth_token.dart';
+import '../../domain/index.dart';
 import 'error.dart';
 
 typedef ApiResult<T> = Future<Either<Failure, T>>;

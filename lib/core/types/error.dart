@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:partyguam/core/index.dart';
+
+import '../index.dart';
 
 abstract class Failure extends Equatable {
   const Failure({
@@ -21,5 +22,15 @@ class ApiFailure extends Failure {
   });
 
   ApiFailure.fromException(ApiException exception)
+      : this(message: exception.message, statusCode: exception.statusCode);
+}
+
+class FlutterFailure extends Failure {
+  const FlutterFailure({
+    required super.message,
+    required super.statusCode,
+  });
+
+  FlutterFailure.fromException(FlutterException exception)
       : this(message: exception.message, statusCode: exception.statusCode);
 }

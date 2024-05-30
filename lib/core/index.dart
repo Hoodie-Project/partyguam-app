@@ -1,3 +1,6 @@
+/// services
+export 'services/injection.dart';
+
 /// types
 export 'types/error.dart';
 export 'types/exception.dart';
