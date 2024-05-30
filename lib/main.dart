@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
-import 'package:partyguam/core/services/injection_container.dart';
 
+import 'core/services/injection.dart';
 import 'presentation/routes/route.dart';
 import 'presentation/theme/theme.dart';
 
@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
-  await init();
+  configureDependencies();
 
   // Flutter SDK 초기화
   KakaoSdk.init(
