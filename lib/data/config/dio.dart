@@ -1,13 +1,27 @@
 import 'package:dio/dio.dart';
-import 'package:partyguam/data/config/path.dart';
+import 'package:injectable/injectable.dart';
+
+import 'path.dart';
+
+final options = BaseOptions(
+  baseUrl: ApiConfigPath.hostUri,
+  connectTimeout: const Duration(seconds: 60),
+  receiveTimeout: const Duration(seconds: 60),
+  responseType: ResponseType.json,
+);
 
 /// a singleton class to contain all Dio methods and helper functions
+@lazySingleton
 class DioClient {
-  DioClient._();
+  // static final instance = DioClient._internal();
 
-  static final instance = DioClient._();
+  // factory DioClient() => instance;
 
-  final Dio _dio = Dio(options);
+  // DioClient._internal();
+
+  final Dio _dio;
+
+  DioClient() : _dio = Dio(options);
 
   /// GET
   Future<Map<String, dynamic>> get(String path,
@@ -113,10 +127,3 @@ class DioClient {
     }
   }
 }
-
-final options = BaseOptions(
-  baseUrl: ApiConfigPath.hostUri,
-  connectTimeout: const Duration(seconds: 60),
-  receiveTimeout: const Duration(seconds: 60),
-  responseType: ResponseType.json,
-);

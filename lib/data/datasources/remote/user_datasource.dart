@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+
 import '../../../core/index.dart';
 import '../../index.dart';
 
@@ -9,6 +12,7 @@ abstract class UserCredentialDataSource {
 }
 
 /// https://youtu.be/_E3EF1jPumM?si=C237xCkb43LXiI4I&t=16311
+@LazySingleton(as: UserCredentialDataSource)
 class UserCredentialDataSourceImpl implements UserCredentialDataSource {
   UserCredentialDataSourceImpl(this._dioClient);
 
@@ -26,13 +30,18 @@ class UserCredentialDataSourceImpl implements UserCredentialDataSource {
 
     try {
       final data = {
-        uid: 'uid',
-        idToken: 'idToken',
+        uid: uid,
+        idToken: idToken,
       };
 
       final response = await _dioClient.post(
         ApiAuthPath.userCredentials,
         data: data,
+        options: Options(
+          headers: {
+            Headers.contentTypeHeader: 'application/json',
+          },
+        ),
       );
 
       return AuthTokensDto.fromJson(response);

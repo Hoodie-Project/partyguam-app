@@ -3,6 +3,7 @@ export 'config/dio.dart';
 export 'config/path.dart';
 
 /// datasource
+export 'datasources/remote/auth_datasource.dart';
 export 'datasources/remote/user_datasource.dart';
 
 /// dto
@@ -10,6 +11,7 @@ export 'dto/auth/auth_tokens_dto.dart';
 export 'dto/user/user_credential_dto.dart';
 
 /// repository
+export 'repositories/auth_respository_impl.dart';
 export 'repositories/user_repository_impl.dart';
 
 /*
