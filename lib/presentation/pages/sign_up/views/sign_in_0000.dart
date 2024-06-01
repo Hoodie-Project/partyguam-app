@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../domain/index.dart';
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/icons.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
+import '../cubit/auth_cubit.dart';
 import 'styles.dart';
 
 class SignIn0000 extends StatefulWidget {
@@ -17,10 +18,10 @@ class SignIn0000 extends StatefulWidget {
 }
 
 class _SignIn0000State extends State<SignIn0000> {
-  _startSocialSignIn(String text) {
-    setState(() async {
+  void _startSocialSignIn(String text) {
+    setState(() {
       if (text == '카카오톡 로그인') {
-        await signInWithKakao(context);
+        GetIt.instance<AuthCubit>().signInWithKakao();
       } else if (text == '구글 로그인') {
         context.push('${RouterPath.signUp}/0111');
       }
@@ -76,8 +77,8 @@ class _SignIn0000State extends State<SignIn0000> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        onPressed: () async {
-          await _startSocialSignIn(text);
+        onPressed: () {
+          _startSocialSignIn(text);
         },
         style: ElevatedButton.styleFrom(
           alignment: Alignment.centerLeft,

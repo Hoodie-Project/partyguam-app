@@ -12,19 +12,39 @@ final class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
+//
+class SignInWithKakaoPending extends AuthState {
+  const SignInWithKakaoPending();
+}
+
+class SignInWithKakaoComplete extends AuthState {
+  const SignInWithKakaoComplete();
+}
+
+//
+class GetKakaoUserInfoPending extends AuthState {
+  const GetKakaoUserInfoPending();
+}
+
+class GetKakaoUserInfoComplete extends AuthState {
+  const GetKakaoUserInfoComplete();
+}
+
+//
 /// loading state before the event begins
-class SendingUserCredentials extends AuthState {
-  const SendingUserCredentials();
+class SendUserCredentialsPending extends AuthState {
+  const SendUserCredentialsPending();
 }
 
 /// loading state after the event done
-class UserCredentialsSent extends AuthState {
-  const UserCredentialsSent();
+class SendUserCredentialsComplete extends AuthState {
+  const SendUserCredentialsComplete();
 }
 
 class AuthError extends AuthState {
   const AuthError(this.message);
 
+  // only need a message as it will be displayed on the screen
   final String message;
 
   @override
