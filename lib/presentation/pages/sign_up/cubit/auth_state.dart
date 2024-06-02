@@ -12,13 +12,12 @@ final class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
-//
-class SignInWithKakaoPending extends AuthState {
-  const SignInWithKakaoPending();
+class UnAuthenticatedStatus extends AuthState {
+  const UnAuthenticatedStatus();
 }
 
-class SignInWithKakaoComplete extends AuthState {
-  const SignInWithKakaoComplete();
+class AuthenticatedStatus extends AuthState {
+  const AuthenticatedStatus();
 }
 
 //

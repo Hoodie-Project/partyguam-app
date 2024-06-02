@@ -25,19 +25,36 @@ class AuthCubit extends Cubit<AuthState> {
   final GetKakaoUserInfo _getKakaoUserInfo;
   final SendUserCredentials _sendUserCredentials;
 
-  Future<void> signInWithKakao() async {
-    emit(const SignInWithKakaoPending());
+  void isAuthenticated() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('com.kakao.token.OAuthToken');
 
+    if (token != null && token.isNotEmpty) {
+      if (state is UnAuthenticatedStatus) {
+        return;
+      } else {
+        emit(const AuthenticatedStatus());
+      }
+    } else {
+      emit(const AuthInitial());
+    }
+  }
+
+  void resetAuthenticationStatus() {
+    emit(const AuthInitial());
+  }
+
+  Future<void> signInWithKakao() async {
     final result = await _signInWithKakao();
 
     result.fold(
       (failure) => emit(AuthError(failure.message)),
-      (success) => emit(const SignInWithKakaoComplete()),
+      (success) => emit(const AuthenticatedStatus()),
     );
   }
 
   Future<User?> getKakaoUserInfo() async {
-    emit(const GetKakaoUserInfoPending());
+    emit(const UnAuthenticatedStatus());
 
     final result = await _getKakaoUserInfo();
 
@@ -59,18 +76,6 @@ class AuthCubit extends Cubit<AuthState> {
       (failure) => emit(AuthRegisteredToken(failure.signUpAccessToken)),
       (success) => emit(const SendUserCredentialsComplete()),
     );
-  }
-
-  void checkSignInStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('OAuthToken');
-
-    if (token != null && token.isNotEmpty) {
-      return;
-      emit(const SignInWithKakaoComplete());
-    } else {
-      emit(const AuthError("Login failed"));
-    }
   }
 }
 

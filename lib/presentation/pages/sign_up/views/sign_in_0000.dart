@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/index.dart';
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/icons.dart';
@@ -11,23 +11,50 @@ import '../../../widgets/text.dart';
 import '../cubit/auth_cubit.dart';
 import 'styles.dart';
 
-class SignIn0000 extends StatelessWidget {
+class SignIn0000 extends StatefulWidget {
   const SignIn0000({super.key});
 
   @override
+  State<SignIn0000> createState() => _SignIn0000State();
+}
+
+class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<AuthCubit>().isAuthenticated();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SignInAppBar(
-        title: '로그인',
-      ),
-      body: BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is SignInWithKakaoComplete) {
-            print('이 안에 들어와!!!');
-            context.push('${RouterPath.signUp}/0111');
-          } else if (state is AuthError) {}
-        },
-        child: Padding(
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthenticatedStatus) {
+          context.push('${RouterPath.signUp}/0111');
+        } else if (state is UnAuthenticatedStatus) {
+          context.read<AuthCubit>().isAuthenticated();
+        } else {
+          return;
+        }
+      },
+      child: Scaffold(
+        appBar: const SignInAppBar(
+          title: '로그인',
+        ),
+        body: Padding(
           padding: const EdgeInsets.only(left: 20.0, top: 40.0, right: 20.0),
           child: Center(
             child: Column(
@@ -41,7 +68,7 @@ class SignIn0000 extends StatelessWidget {
                   '카카오톡 로그인',
                   const Color(0XFFFEE500),
                   kakaoIcon,
-                  () => GetIt.instance<AuthCubit>().signInWithKakao(),
+                  () => getIt<AuthCubit>().signInWithKakao(),
                 ),
                 const SizedBox(
                   height: 8.0,
@@ -50,7 +77,7 @@ class SignIn0000 extends StatelessWidget {
                   '구글 로그인',
                   AppColors.greyColors.shade50,
                   googleIcon,
-                  () => GetIt.instance<AuthCubit>().signInWithKakao(),
+                  () => getIt<AuthCubit>().signInWithKakao(),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 32.0),
