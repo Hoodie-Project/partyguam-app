@@ -30,8 +30,8 @@ class UserCredentialDataSourceImpl implements UserCredentialDataSource {
 
     try {
       final data = {
-        uid: uid,
-        idToken: idToken,
+        'uid': uid,
+        'idToken': idToken,
       };
 
       final response = await _dioClient.post(
@@ -43,6 +43,8 @@ class UserCredentialDataSourceImpl implements UserCredentialDataSource {
           },
         ),
       );
+
+      print(response.values);
 
       return AuthTokensDto.fromJson(response);
 
