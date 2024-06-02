@@ -21,5 +21,5 @@ class GetKakaoUserInfo extends UsecaseWithoutParams {
   final AuthRepository _repository;
 
   @override
-  ApiResult call() async => _repository.getKakaoUserInfo();
+  ApiResult<User?> call() async => _repository.getKakaoUserInfo();
 }

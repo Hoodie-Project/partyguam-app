@@ -125,19 +125,16 @@ Future<User?> getKakaoUserInfo() async {
 
 Future<String?> encryptUserId(int uid) async {
   try {
-    // final user = await getKakaoUserInfo();
-    // final userId = user?.id;
-
     final userIdToString = uid.toString();
     final key =
         encrypt.Key.fromUtf8(dotenv.env['APP_CIPHERIV_KEY_SECRET'] as String);
-    final iv = encrypt.IV.fromLength(16);
+    final iv =
+        encrypt.IV.fromUtf8(dotenv.env['APP_CIPHERIV_IV_SECRET'] as String);
+
     final cbcEncryptor =
         encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
 
     final encryptedData = cbcEncryptor.encrypt(userIdToString, iv: iv);
-
-    print(encryptedData.base64);
 
     return encryptedData.base64;
   } on FlutterException catch (e) {
