@@ -6,6 +6,6 @@ import 'injection.config.dart';
 final getIt = GetIt.instance;
 
 @InjectableInit()
-void configureDependencies() => getIt.init();
+void initializeGetIt() => getIt.init();
 
 // dart run build_runner build

@@ -10,16 +10,17 @@ import 'presentation/theme/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // dotenv
   await dotenv.load(fileName: ".env");
+  debugPrint('hosturl: ${dotenv.env['HOST_URL']}');
+
+  // GetIt
+  initializeGetIt();
+
+  // KakaoSDK
   KakaoSdk.init(
     nativeAppKey: dotenv.env['NATIVE_APP_KEY'],
   );
-
-  configureDependencies();
-
-  debugPrint('hosturl: ${dotenv.env['HOST_URL']}');
-
-  // Flutter SDK 초기화
 
   runApp(const MyApp());
 }
@@ -27,6 +28,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
