@@ -30,10 +30,10 @@ class AuthCubit extends Cubit<AuthState> {
     final token = prefs.getString('com.kakao.token.OAuthToken');
 
     if (token != null && token.isNotEmpty) {
-      if (state is UnAuthenticatedStatus) {
+      if (state is UnAuthenticated) {
         return;
       } else {
-        emit(const AuthenticatedStatus());
+        emit(const Authenticated());
       }
     } else {
       emit(const AuthInitial());
@@ -49,12 +49,12 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) => emit(AuthError(failure.message)),
-      (success) => emit(const AuthenticatedStatus()),
+      (success) => emit(const Authenticated()),
     );
   }
 
   Future<User?> getKakaoUserInfo() async {
-    emit(const UnAuthenticatedStatus());
+    // emit(const UnAuthenticatedStatus());
 
     final result = await _getKakaoUserInfo();
 

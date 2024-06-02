@@ -12,12 +12,12 @@ final class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
-class UnAuthenticatedStatus extends AuthState {
-  const UnAuthenticatedStatus();
+class UnAuthenticated extends AuthState {
+  const UnAuthenticated();
 }
 
-class AuthenticatedStatus extends AuthState {
-  const AuthenticatedStatus();
+class Authenticated extends AuthState {
+  const Authenticated();
 }
 
 //
