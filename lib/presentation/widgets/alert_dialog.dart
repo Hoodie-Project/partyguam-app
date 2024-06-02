@@ -80,7 +80,7 @@ Future<Widget?> showExitDialog(BuildContext context, String exitRoute) {
                             context
                                 .read<AuthCubit>()
                                 .resetAuthenticationStatus();
-                            context.push(exitRoute);
+                            context.go(exitRoute);
                           },
                           child: Container(
                             alignment: Alignment.center,

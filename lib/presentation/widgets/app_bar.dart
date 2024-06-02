@@ -170,23 +170,30 @@ class NoIconsAppBar extends StatelessWidget implements PreferredSizeWidget {
 class ExitIconAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ExitIconAppBar({
     super.key,
+    this.title,
   });
+
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.clear),
-          onPressed: () {
-            context.go('/');
-          },
-        )
-      ],
+      // actions: Text
       backgroundColor: Colors.white,
       centerTitle: true,
       elevation: 0,
-      leading: const Text(''),
+      leading: IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          context.go(RouterPath.main);
+        },
+      ),
+      title: Text(title ?? ''),
+      titleTextStyle: const TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+      ),
     );
   }
 

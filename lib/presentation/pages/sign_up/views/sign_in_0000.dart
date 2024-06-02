@@ -51,7 +51,7 @@ class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
         }
       },
       child: Scaffold(
-        appBar: const SignInAppBar(
+        appBar: const ExitIconAppBar(
           title: '로그인',
         ),
         body: Padding(
