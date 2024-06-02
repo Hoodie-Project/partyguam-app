@@ -29,12 +29,13 @@ dependencies:
   get_it: ^7.7.0
   injectable: ^2.4.2
   injectable_generator: ^2.6.1
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^3.0.0
+  flutter_lints: 4.0.0
   commitlint_cli: ^0.7.1
   husky: ^0.1.7
 
