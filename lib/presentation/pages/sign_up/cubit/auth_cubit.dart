@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-import 'package:partyguam/domain/usecases/auth_usecase.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../domain/index.dart';
+import '../../../../domain/usecases/auth_usecase.dart';
 
 part 'auth_state.dart';
 
@@ -34,7 +36,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> getKakaoUserInfo() async {
+  Future<User?> getKakaoUserInfo() async {
     emit(const GetKakaoUserInfoPending());
 
     final result = await _getKakaoUserInfo();
@@ -57,6 +59,18 @@ class AuthCubit extends Cubit<AuthState> {
       (failure) => emit(AuthRegisteredToken(failure.signUpAccessToken)),
       (success) => emit(const SendUserCredentialsComplete()),
     );
+  }
+
+  void checkSignInStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('OAuthToken');
+
+    if (token != null && token.isNotEmpty) {
+      return;
+      emit(const SignInWithKakaoComplete());
+    } else {
+      emit(const AuthError("Login failed"));
+    }
   }
 }
 

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:partyguam/core/index.dart';
 
-import '../../../../domain/usecases/user_usecase.dart';
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
-import '../auth_cubit.dart';
+import '../cubit/auth_cubit.dart';
 import 'styles.dart';
 
 class SignUp0111 extends StatefulWidget {
@@ -24,11 +22,10 @@ class _SignUp0111State extends State<SignUp0111> {
 
   Future<void> getUserEmail() async {
     try {
-      User? userInfo = await getKakaoUserInfo();
-      final userEmail = userInfo?.kakaoAccount?.email;
+      final userInfo = await getIt<AuthCubit>().getKakaoUserInfo();
 
       setState(() {
-        email = userEmail;
+        email = userInfo?.kakaoAccount?.email;
       });
     } catch (error) {
       print(error);
@@ -113,7 +110,7 @@ class _SignUp0111State extends State<SignUp0111> {
         child: ElevatedButton(
           onPressed: () {
             setState(() {
-              GetIt.instance<AuthCubit>().sendUserCredentials();
+              getIt<AuthCubit>().sendUserCredentials();
               context.push('${RouterPath.signUp}/0112');
             });
           },
