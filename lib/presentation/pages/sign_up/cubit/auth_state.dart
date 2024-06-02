@@ -26,7 +26,9 @@ class GetKakaoUserInfoPending extends AuthState {
 }
 
 class GetKakaoUserInfoComplete extends AuthState {
-  const GetKakaoUserInfoComplete();
+  const GetKakaoUserInfoComplete(this.email);
+
+  final String? email;
 }
 
 //

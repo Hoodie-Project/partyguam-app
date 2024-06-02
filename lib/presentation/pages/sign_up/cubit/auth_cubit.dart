@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../domain/index.dart';
@@ -53,14 +52,15 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<User?> getKakaoUserInfo() async {
-    // emit(const UnAuthenticatedStatus());
-
+  Future<void> getKakaoUserInfo() async {
     final result = await _getKakaoUserInfo();
 
     result.fold(
       (failure) => emit(AuthError(failure.message)),
-      (success) => emit(const GetKakaoUserInfoComplete()),
+      (success) {
+        final email = success?.kakaoAccount?.email;
+        emit(GetKakaoUserInfoComplete(email));
+      },
     );
   }
 
