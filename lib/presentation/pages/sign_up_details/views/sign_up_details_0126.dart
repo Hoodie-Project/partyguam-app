@@ -24,7 +24,7 @@ class _SignUpDetail0126State extends State<SignUpDetail0126> {
   final List<int> selectedItems = [];
 
   final List<String> challengeList =
-      ChallengeList.values.map((element) => element.option).toList();
+      Challenge.values.map((element) => element.option).toList();
 
   void _selectTiles(int index) {
     setState(() {
