@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:partyguam/main.dart';
 
 import '../../../core/index.dart';
 
@@ -41,11 +42,18 @@ class AuthDataSourceImpl implements AuthDataSource {
       // 카카오톡이 설치 되어있지 않은 경우, 카카오 계정으로 로그인
       try {
         tokens = await UserApi.instance.loginWithKakaoAccount();
+
         print(tokens);
       } catch (error) {
         debugPrint('KakaoAccount login failure: $error');
       }
     }
+
+    /// TODO (20240603): 더 좋은 방법 고민 해보기
+    await localStorage.setString('accessToken', tokens.accessToken);
+    await localStorage.setString('refreshToken', tokens.refreshToken ?? '');
+    await localStorage.setString('idToken', tokens.idToken ?? '');
+
     return tokens;
   }
 
