@@ -17,7 +17,10 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
   final AuthDataSource _oauthDataSource;
 
   @override
-  ApiAuthResult<AuthTokens> sendUserCredential() async {
+  ApiAuthResult<AuthTokens> sendUserCredential({
+    required String uid,
+    required String idToken,
+  }) async {
     try {
       // TDD
       // 1. call the remote data source.
@@ -25,15 +28,11 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
       // 3. make sure that it returns the proper data if there is no exception.
       // 4. check if when the remote data source throws an exception, return a failure.
 
-      final kakao = await _oauthDataSource.signInWithKakao();
-      final user = await _oauthDataSource.getKakaoUserInfo();
-      final uid = user?.id;
-
-      final encryptedUid = await encryptUserId(uid!);
+      final encryptedUid = await encryptUserId(uid);
 
       final response = await _remoteDataSource.sendUserCredential(
         uid: encryptedUid!,
-        idToken: kakao!.idToken!,
+        idToken: idToken,
       );
 
       /// when the return type is void, return Right(null);

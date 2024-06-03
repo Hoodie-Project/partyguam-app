@@ -42,16 +42,16 @@ class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthenticatedStatus) {
+        if (state is Authenticated) {
           context.push('${RouterPath.signUp}/0111');
-        } else if (state is UnAuthenticatedStatus) {
+        } else if (state is UnAuthenticated) {
           context.read<AuthCubit>().isAuthenticated();
         } else {
           return;
         }
       },
       child: Scaffold(
-        appBar: const SignInAppBar(
+        appBar: const ExitIconAppBar(
           title: '로그인',
         ),
         body: Padding(

@@ -12,12 +12,12 @@ final class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
-class UnAuthenticatedStatus extends AuthState {
-  const UnAuthenticatedStatus();
+class UnAuthenticated extends AuthState {
+  const UnAuthenticated();
 }
 
-class AuthenticatedStatus extends AuthState {
-  const AuthenticatedStatus();
+class Authenticated extends AuthState {
+  const Authenticated();
 }
 
 //
@@ -26,7 +26,16 @@ class GetKakaoUserInfoPending extends AuthState {
 }
 
 class GetKakaoUserInfoComplete extends AuthState {
-  const GetKakaoUserInfoComplete();
+  const GetKakaoUserInfoComplete({
+    required this.uid,
+    this.email,
+  });
+
+  final String uid;
+  final String? email;
+
+  @override
+  List<Object> get props => [uid];
 }
 
 //

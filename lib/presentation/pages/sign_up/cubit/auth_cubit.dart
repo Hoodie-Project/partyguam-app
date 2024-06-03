@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:partyguam/main.dart';
 
 import '../../../../domain/index.dart';
 import '../../../../domain/usecases/auth_usecase.dart';
@@ -26,14 +25,13 @@ class AuthCubit extends Cubit<AuthState> {
   final SendUserCredentials _sendUserCredentials;
 
   void isAuthenticated() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('com.kakao.token.OAuthToken');
+    final token = localStorage.getString('com.kakao.token.OAuthToken');
 
     if (token != null && token.isNotEmpty) {
-      if (state is UnAuthenticatedStatus) {
+      if (state is UnAuthenticated) {
         return;
       } else {
-        emit(const AuthenticatedStatus());
+        emit(const Authenticated());
       }
     } else {
       emit(const AuthInitial());
@@ -49,27 +47,33 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) => emit(AuthError(failure.message)),
-      (success) => emit(const AuthenticatedStatus()),
+      (success) => emit(const Authenticated()),
     );
   }
 
-  Future<User?> getKakaoUserInfo() async {
-    emit(const UnAuthenticatedStatus());
-
+  Future<void> getKakaoUserInfo() async {
     final result = await _getKakaoUserInfo();
 
     result.fold(
       (failure) => emit(AuthError(failure.message)),
-      (success) => emit(const GetKakaoUserInfoComplete()),
+      (success) {
+        final uid = success?.id.toString();
+        final email = success?.kakaoAccount?.email;
+
+        emit(GetKakaoUserInfoComplete(uid: uid!, email: email));
+      },
     );
   }
 
-  Future<void> sendUserCredentials() async {
+  Future<void> sendUserCredentials(String uid) async {
     /// set loading state
-    emit(const SendUserCredentialsPending());
+    // emit(const SendUserCredentialsPending());
+
+    final idToken = localStorage.getString('idToken');
 
     /// invoke the usecase
-    final result = await _sendUserCredentials();
+    final result = await _sendUserCredentials(
+        SendUserCredentialParams(uid: uid, idToken: idToken!));
 
     /// equatable syntax: result.fold(L,R)
     result.fold(

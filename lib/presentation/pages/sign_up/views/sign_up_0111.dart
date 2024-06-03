@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/core/index.dart';
 
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
@@ -18,58 +18,66 @@ class SignUp0111 extends StatefulWidget {
 }
 
 class _SignUp0111State extends State<SignUp0111> {
-  String? email;
-
-  Future<void> getUserEmail() async {
-    try {
-      final userInfo = await getIt<AuthCubit>().getKakaoUserInfo();
-
-      setState(() {
-        email = userInfo?.kakaoAccount?.email;
-      });
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  // checkUserSignIn(OAuthToken value) {
-  //   final idToken = value.idToken;
-  // }
+  late String uid;
 
   @override
   void initState() {
     super.initState();
 
-    getUserEmail();
+    context.read<AuthCubit>().getKakaoUserInfo();
+  }
+
+  @override
+  void dispose() {
+    context.read<AuthCubit>().getKakaoUserInfo();
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const DialogAppBar(
-        title: '가입하기',
-        pageCount: '1/4',
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-            left: 20.0, top: 40.0, right: 20.0, bottom: 12.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildTitleText(
-                '가입을 축하드려요!\n이메일 정보가 맞나요?',
-                '나중에 변경할 수 없어요.',
-              ),
-              _buildEmailConfirmForm(email),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              _buildNextButton(context),
-            ],
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is UnAuthenticated) {
+          /// TODO (20240602): 예상하지 못한 오류 발생 팝업 디자인 필요
+          context.go(RouterPath.main);
+        }
+      },
+      builder: (context, state) {
+        String? email;
+
+        if (state is GetKakaoUserInfoComplete) {
+          email = state.email;
+          uid = state.uid;
+        }
+
+        return Scaffold(
+          appBar: const DialogAppBar(
+            title: '가입하기',
+            pageCount: '1/4',
           ),
-        ),
-      ),
+          body: Padding(
+            padding: const EdgeInsets.only(
+                left: 20.0, top: 40.0, right: 20.0, bottom: 12.0),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildTitleText(
+                    '가입을 축하드려요!\n이메일 정보가 맞나요?',
+                    '나중에 변경할 수 없어요.',
+                  ),
+                  _buildEmailConfirmForm(email),
+                  const Expanded(
+                    child: SizedBox(),
+                  ),
+                  _buildNextButton(context),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -110,7 +118,7 @@ class _SignUp0111State extends State<SignUp0111> {
         child: ElevatedButton(
           onPressed: () {
             setState(() {
-              getIt<AuthCubit>().sendUserCredentials();
+              context.read<AuthCubit>().sendUserCredentials(uid);
               context.push('${RouterPath.signUp}/0112');
             });
           },
