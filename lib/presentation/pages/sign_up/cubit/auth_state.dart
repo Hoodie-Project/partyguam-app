@@ -26,9 +26,16 @@ class GetKakaoUserInfoPending extends AuthState {
 }
 
 class GetKakaoUserInfoComplete extends AuthState {
-  const GetKakaoUserInfoComplete(this.email);
+  const GetKakaoUserInfoComplete({
+    required this.uid,
+    this.email,
+  });
 
+  final String uid;
   final String? email;
+
+  @override
+  List<Object> get props => [uid];
 }
 
 //

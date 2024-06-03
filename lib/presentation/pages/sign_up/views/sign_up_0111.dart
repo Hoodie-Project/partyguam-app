@@ -18,6 +18,8 @@ class SignUp0111 extends StatefulWidget {
 }
 
 class _SignUp0111State extends State<SignUp0111> {
+  late String uid;
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +48,7 @@ class _SignUp0111State extends State<SignUp0111> {
 
         if (state is GetKakaoUserInfoComplete) {
           email = state.email;
+          uid = state.uid;
         }
 
         return Scaffold(
@@ -115,7 +118,7 @@ class _SignUp0111State extends State<SignUp0111> {
         child: ElevatedButton(
           onPressed: () {
             setState(() {
-              context.read<AuthCubit>().sendUserCredentials();
+              context.read<AuthCubit>().sendUserCredentials(uid);
               context.push('${RouterPath.signUp}/0112');
             });
           },
