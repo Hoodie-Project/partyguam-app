@@ -1,10 +1,6 @@
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -12,7 +8,8 @@ import '../../core/index.dart';
 import '../index.dart';
 
 @Injectable()
-class SendUserCredentials {
+class SendUserCredentials
+    extends UsecaseWithParams<void, SendUserCredentialParams> {
   const SendUserCredentials(this._repository);
 
   final UserCredentialRepository _repository;
@@ -34,7 +31,11 @@ class SendUserCredentials {
    */
 
   @override
-  ApiAuthResult<AuthTokens> call() async => _repository.sendUserCredential();
+  ApiAuthResult<AuthTokens> call(SendUserCredentialParams params) async =>
+      _repository.sendUserCredential(
+        uid: params.uid,
+        idToken: params.idToken,
+      );
 }
 
 class SendUserCredentialParams extends Equatable {
@@ -50,82 +51,8 @@ class SendUserCredentialParams extends Equatable {
   List<Object?> get props => [uid];
 }
 
-/// repostiory로 이동
-Future<void> signInWithKakao(BuildContext context) async {
-  // 카카오톡 실행 가능 여부 확인
-  if (await isKakaoTalkInstalled()) {
-    try {
-      await UserApi.instance.loginWithKakaoTalk().then((value) {
-        print(value);
-        if (context.mounted) {
-          navigateToNextPage(context);
-        } else {
-          throw Exception('Mounted Error');
-        }
-      });
-    } catch (error) {
-      debugPrint('KakaoTalk login failure: $error');
-
-      // 사용자의 의도적인 로그인 취소 (예: 뒤로가기)
-      if (error is PlatformException && error.code == 'CANCELED') {
-        return;
-      }
-      // 카카오톡에 연결된 카카오 계정이 없는 경우, 카카오 계정으로 로그인
-      try {
-        await UserApi.instance.loginWithKakaoAccount().then(
-          (value) {
-            print(value);
-            if (context.mounted) {
-              navigateToNextPage(context);
-            } else {
-              throw Exception('Mounted Error');
-            }
-          },
-        );
-      } catch (error) {
-        debugPrint('KakaoAccount login failure: $error');
-      }
-    }
-  } else {
-    // 카카오톡이 설치 되어있지 않은 경우, 카카오 계정으로 로그인
-    try {
-      await UserApi.instance.loginWithKakaoAccount().then(
-        (value) {
-          print('Kakao login: $value');
-
-          if (context.mounted) {
-            ///
-            navigateToNextPage(context);
-          }
-        },
-      );
-    } catch (error) {
-      print('KakaoAccount login failure: $error');
-    }
-  }
-}
-
-Future<void> navigateToNextPage(BuildContext context) async {
-  if (context.mounted) {
-    context.push('/sign_up/0111');
-  }
-
-  debugPrint('Navigate to next page');
-}
-
-Future<User?> getKakaoUserInfo() async {
+Future<String?> encryptUserId(String uid) async {
   try {
-    User user = await UserApi.instance.me();
-
-    return user;
-  } catch (error) {
-    print('Failed to fetch kakaouser info: $error');
-  }
-}
-
-Future<String?> encryptUserId(int uid) async {
-  try {
-    final userIdToString = uid.toString();
     final key =
         encrypt.Key.fromUtf8(dotenv.env['APP_CIPHERIV_KEY_SECRET'] as String);
     final iv =
@@ -134,7 +61,7 @@ Future<String?> encryptUserId(int uid) async {
     final cbcEncryptor =
         encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
 
-    final encryptedData = cbcEncryptor.encrypt(userIdToString, iv: iv);
+    final encryptedData = cbcEncryptor.encrypt(uid, iv: iv);
 
     return encryptedData.base64;
   } on FlutterException catch (e) {
@@ -144,10 +71,6 @@ Future<String?> encryptUserId(int uid) async {
   }
 }
 
-// checkUserSignIn(encrypt.Encrypted encryptedData) async {
-//   // await sendUserInfo(encryptedData);
-// }
-
 Future<void> kakaoLogOut() async {
   try {
     await UserApi.instance.logout();
@@ -156,7 +79,3 @@ Future<void> kakaoLogOut() async {
     print('Kakao logout failure, SDK에서 토큰 삭제: $error');
   }
 }
-
-// abstract class AuthUseCase {
-//   Future<Auth>
-// }
