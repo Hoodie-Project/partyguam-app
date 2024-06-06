@@ -78,7 +78,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     /// equatable syntax: result.fold(L,R)
     result.fold(
-      (failure) => emit(AuthError(failure.message)),
+      (failure) => emit(const AuthInitial()),
       (success) => emit(const SendUserCredentialsComplete()),
     );
   }
