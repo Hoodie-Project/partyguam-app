@@ -4,7 +4,7 @@ import '../index.dart';
 abstract class UserCredentialRepository {
   const UserCredentialRepository();
 
-  ApiAuthResult<AuthTokens> sendUserCredential({
+  ApiResult<void> sendUserCredential({
     required String uid,
     required String idToken,
   });

@@ -3,7 +3,7 @@ import '../../core/index.dart';
 abstract class UsecaseWithParams<Type, Params> {
   const UsecaseWithParams();
 
-  ApiAuthResult<Type> call(Params params);
+  ApiResult<Type> call(Params params);
 }
 
 // abstract class UsecaseWithoutParams<Type> {

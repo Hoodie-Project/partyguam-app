@@ -5,14 +5,10 @@ part 'auth_tokens_dto.g.dart';
 @JsonSerializable()
 class AuthTokensDto {
   AuthTokensDto({
-    required this.accessToken,
     required this.refreshToken,
   });
 
   /// The generated code assumes these values exist in JSON.
-  @JsonKey(required: true)
-  final String accessToken;
-
   @JsonKey(required: true)
   final String refreshToken;
 

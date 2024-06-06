@@ -1,4 +1,6 @@
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:injectable/injectable.dart';
 
 import 'path.dart';
@@ -13,15 +15,12 @@ final options = BaseOptions(
 /// a singleton class to contain all Dio methods and helper functions
 @lazySingleton
 class DioClient {
-  // static final instance = DioClient._internal();
-
-  // factory DioClient() => instance;
-
-  // DioClient._internal();
-
   final Dio _dio;
 
-  DioClient() : _dio = Dio(options);
+  DioClient() : _dio = Dio(options) {
+    final cookieJar = CookieJar();
+    _dio.interceptors.add(CookieManager(cookieJar));
+  }
 
   /// GET
   Future<Map<String, dynamic>> get(String path,
