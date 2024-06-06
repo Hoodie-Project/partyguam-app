@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 
 class SignUpAuthToken extends Equatable {
   const SignUpAuthToken({
-    required this.signUpAccessToken,
+    required this.signUpToken,
   });
 
-  final String signUpAccessToken;
+  final String signUpToken;
 
   @override
-  List<Object?> get props => [signUpAccessToken];
+  List<Object?> get props => [signUpToken];
 }

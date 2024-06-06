@@ -17,7 +17,7 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
   final AuthDataSource _oauthDataSource;
 
   @override
-  ApiAuthResult<AuthTokens> sendUserCredential({
+  ApiResult<void> sendUserCredential({
     required String uid,
     required String idToken,
   }) async {
@@ -35,16 +35,10 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
         idToken: idToken,
       );
 
-      /// when the return type is void, return Right(null);
       /// https://youtu.be/_E3EF1jPumM?si=QHdkpZkNTqzk9al3
-      return Right(response as AuthTokens);
+      return const Right(null);
     } on ApiException catch (e) {
-      return const Left(
-        // 변경 필요
-        SignUpAuthToken(
-          signUpAccessToken: 'signUpAccessToken 반환',
-        ),
-      );
+      return Left(ApiFailure.fromException(e));
     }
   }
 }

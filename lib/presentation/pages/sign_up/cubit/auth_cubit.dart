@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-import 'package:partyguam/main.dart';
 
 import '../../../../domain/index.dart';
 import '../../../../domain/usecases/auth_usecase.dart';
+import '../../../../main.dart';
 
 part 'auth_state.dart';
 
@@ -73,11 +73,12 @@ class AuthCubit extends Cubit<AuthState> {
 
     /// invoke the usecase
     final result = await _sendUserCredentials(
-        SendUserCredentialParams(uid: uid, idToken: idToken!));
+      SendUserCredentialParams(uid: uid, idToken: idToken!),
+    );
 
     /// equatable syntax: result.fold(L,R)
     result.fold(
-      (failure) => emit(AuthRegisteredToken(failure.signUpAccessToken)),
+      (failure) => emit(AuthError(failure.message)),
       (success) => emit(const SendUserCredentialsComplete()),
     );
   }

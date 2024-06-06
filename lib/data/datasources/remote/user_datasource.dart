@@ -5,7 +5,7 @@ import '../../../core/index.dart';
 import '../../index.dart';
 
 abstract class UserCredentialDataSource {
-  Future<AuthTokensDto> sendUserCredential({
+  Future<void> sendUserCredential({
     required String uid,
     required String idToken,
   });
@@ -19,7 +19,7 @@ class UserCredentialDataSourceImpl implements UserCredentialDataSource {
   final DioClient _dioClient;
 
   @override
-  Future<AuthTokensDto> sendUserCredential({
+  Future<void> sendUserCredential({
     required String uid,
     required String idToken,
   }) async {
@@ -34,7 +34,7 @@ class UserCredentialDataSourceImpl implements UserCredentialDataSource {
         'idToken': idToken,
       };
 
-      final response = await _dioClient.post(
+      await _dioClient.post(
         ApiAuthPath.userCredentials,
         data: data,
         options: Options(
@@ -43,10 +43,6 @@ class UserCredentialDataSourceImpl implements UserCredentialDataSource {
           },
         ),
       );
-
-      print(response.values);
-
-      return AuthTokensDto.fromJson(response);
 
       /// https://youtu.be/_E3EF1jPumM?si=Bq7ovtYzj46WizbJ&t=18712
       /// when you throw an error inside of try phrase, make sure rethrow the error between try - catch phrase.

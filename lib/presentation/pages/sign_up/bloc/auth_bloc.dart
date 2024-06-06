@@ -34,8 +34,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     /// equatable syntax: result.fold(L,R)
 
     result.fold(
-        (registered) => emit(AuthRegisteredToken(registered.signUpAccessToken)),
-        (r) => emit(const UserCredentialsSent()));
+      (registered) => emit(UserCredentialsSent()),
+      (r) => emit(const UserCredentialsSent()),
+    );
   }
 }
 
