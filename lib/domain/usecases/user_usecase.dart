@@ -1,108 +1,74 @@
 import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:go_router/go_router.dart';
+import 'package:injectable/injectable.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-Future<void> signInWithKakao(BuildContext context) async {
-  // 카카오톡 실행 가능 여부 확인
-  if (await isKakaoTalkInstalled()) {
-    try {
-      await UserApi.instance.loginWithKakaoTalk().then((value) {
-        print(value);
-        if (context.mounted) {
-          navigateToNextPage(context);
-        } else {
-          throw Exception('Mounted Error');
-        }
-      });
-    } catch (error) {
-      debugPrint('KakaoTalk login failure: $error');
+import '../../core/index.dart';
+import '../index.dart';
 
-      // 사용자의 의도적인 로그인 취소 (예: 뒤로가기)
-      if (error is PlatformException && error.code == 'CANCELED') {
-        return;
-      }
-      // 카카오톡에 연결된 카카오 계정이 없는 경우, 카카오 계정으로 로그인
-      try {
-        await UserApi.instance.loginWithKakaoAccount().then(
-          (value) {
-            print(value);
-            if (context.mounted) {
-              navigateToNextPage(context);
-            } else {
-              throw Exception('Mounted Error');
-            }
-          },
-        );
-      } catch (error) {
-        debugPrint('KakaoAccount login failure: $error');
-      }
-    }
-  } else {
-    // 카카오톡이 설치 되어있지 않은 경우, 카카오 계정으로 로그인
-    try {
-      await UserApi.instance.loginWithKakaoAccount().then(
-        (value) {
-          print(value);
+@Injectable()
+class SendUserCredentials
+    extends UsecaseWithParams<void, SendUserCredentialParams> {
+  const SendUserCredentials(this._repository);
 
-          if (context.mounted) {
-            navigateToNextPage(context);
-          }
-        },
+  final UserCredentialRepository _repository;
+
+  /**
+   * implement an abstract class for usecase to make an return type identical.
+   * the below code is the same as @override call().
+   * */
+
+  /*
+  ApiResult<UserCredential> sendUserCredential({
+    required String uid,
+    required String idToken,
+  }) async =>
+      _repository.sendUserCredential(
+        uid: uid,
+        idToken: idToken,
       );
-    } catch (error) {
-      print('KakaoAccount login failure: $error');
-    }
-  }
+   */
+
+  @override
+  ApiResult<void> call(SendUserCredentialParams params) async =>
+      _repository.sendUserCredential(
+        uid: params.uid,
+        idToken: params.idToken,
+      );
 }
 
-Future<void> navigateToNextPage(BuildContext context) async {
-  if (context.mounted) {
-    context.push('/sign_up/0111');
-  }
+class SendUserCredentialParams extends Equatable {
+  const SendUserCredentialParams({
+    required this.uid,
+    required this.idToken,
+  });
 
-  debugPrint('Kakao login success');
+  final String uid;
+  final String idToken;
+
+  @override
+  List<Object?> get props => [uid];
 }
 
-Future<String?> getKakaoUserInfo() async {
+Future<String?> encryptUserId(String uid) async {
   try {
-    User user = await UserApi.instance.me();
-    String? email = user.kakaoAccount?.email;
-    int userId = user.id;
+    final key =
+        encrypt.Key.fromUtf8(dotenv.env['APP_CIPHERIV_KEY_SECRET'] as String);
+    final iv =
+        encrypt.IV.fromUtf8(dotenv.env['APP_CIPHERIV_IV_SECRET'] as String);
 
-    if (email == null) {
-      throw Exception('No email provided');
-    }
+    final cbcEncryptor =
+        encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
 
-    await encryptUserId(userId);
+    final encryptedData = cbcEncryptor.encrypt(uid, iv: iv);
 
-    return email;
-  } catch (error) {
-    print('Failed to fetch kakaouser info: $error');
+    return encryptedData.base64;
+  } on FlutterException catch (e) {
+    FlutterFailure.fromException(
+      FlutterException(message: e.message, statusCode: e.statusCode),
+    );
   }
-}
-
-Future<encrypt.Encrypted> encryptUserId(int userId) async {
-  final userIdToString = userId.toString();
-  final key =
-      encrypt.Key.fromUtf8(dotenv.env['APP_CIPHERIV_KEY_SECRET'] as String);
-  final iv = encrypt.IV.fromLength(16);
-  final encrypter = encrypt.Encrypter(
-    encrypt.AES(
-      key,
-      mode: encrypt.AESMode.cbc,
-    ),
-  );
-
-  final encrypted = encrypter.encrypt(
-    userIdToString,
-    iv: iv,
-  );
-
-  return encrypted;
 }
 
 Future<void> kakaoLogOut() async {
