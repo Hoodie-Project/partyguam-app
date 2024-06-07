@@ -19,6 +19,11 @@ class Main1100 extends StatelessWidget {
             '회원가입 페이지',
             RouterPath.signUp,
           ),
+          buildFilledLongButton(
+            context,
+            '세부 프로필 페이지',
+            '${RouterPath.signUp}/detail/0122',
+          ),
         ],
       ),
     );
