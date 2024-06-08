@@ -48,11 +48,12 @@ class UserSignUpRepositoryImpl implements UserSignUpRepository {
   final UserDataSource _remoteDataSource;
 
   @override
-  ApiResult<void> checkUserNickname({required String nickname}) async {
+  ApiResult<SuccessDto> checkUserNickname({required String nickname}) async {
     try {
-      await _remoteDataSource.checkUserNickname(nickname: nickname);
+      final response =
+          await _remoteDataSource.checkUserNickname(nickname: nickname);
 
-      return const Right(null);
+      return Right(response);
     } on ApiException catch (e) {
       return Left(ApiFailure.fromException(e));
     }

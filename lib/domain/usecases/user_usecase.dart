@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import '../../core/index.dart';
+import '../../data/index.dart';
 import '../index.dart';
 
 // SendUserCredentials
@@ -81,7 +82,7 @@ class CheckUserNickname
   final UserSignUpRepository _repository;
 
   @override
-  ApiResult<void> call(CheckUserNicknameParams params) async =>
+  ApiResult<SuccessDto> call(CheckUserNicknameParams params) async =>
       _repository.checkUserNickname(nickname: params.nickname);
 }
 

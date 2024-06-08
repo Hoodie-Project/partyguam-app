@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../core/index.dart';
@@ -11,7 +10,7 @@ abstract class UserDataSource {
     required String idToken,
   });
 
-  Future<void> checkUserNickname({
+  Future<SuccessDto> checkUserNickname({
     required String nickname,
   });
 }
@@ -42,11 +41,6 @@ class UserDataSourceImpl implements UserDataSource {
       await _dioClient.post(
         ApiAuthPath.userCredentials,
         data: data,
-        options: Options(
-          headers: {
-            Headers.contentTypeHeader: 'application/json',
-          },
-        ),
       );
 
       /// https://youtu.be/_E3EF1jPumM?si=Bq7ovtYzj46WizbJ&t=18712
@@ -61,21 +55,18 @@ class UserDataSourceImpl implements UserDataSource {
   }
 
   @override
-  Future<void> checkUserNickname({required String nickname}) async {
+  Future<SuccessDto> checkUserNickname({required String nickname}) async {
     try {
       // check cookie
 
-      final data = {'nickname': nickname};
+      final params = {'nickname': nickname};
 
-      await _dioClient.post(
+      final response = await _dioClient.get(
         ApiUserPath.nickName,
-        data: data,
-        options: Options(
-          headers: {
-            Headers.contentTypeHeader: 'application/json',
-          },
-        ),
+        queryParameters: params,
       );
+
+      return SuccessDto.fromJson(response);
     } on ApiException {
       rethrow;
     } catch (e) {

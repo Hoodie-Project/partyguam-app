@@ -1,4 +1,5 @@
 import '../../core/index.dart';
+import '../../data/index.dart';
 import '../index.dart';
 
 abstract class UserCredentialRepository {
@@ -13,7 +14,7 @@ abstract class UserCredentialRepository {
 abstract class UserSignUpRepository {
   const UserSignUpRepository();
 
-  ApiResult<void> checkUserNickname({
+  ApiResult<SuccessDto> checkUserNickname({
     required String nickname,
   });
 
