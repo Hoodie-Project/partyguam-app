@@ -20,6 +20,8 @@ import 'package:partyguam/domain/index.dart' as _i5;
 import 'package:partyguam/domain/usecases/auth_usecase.dart' as _i11;
 import 'package:partyguam/domain/usecases/user_usecase.dart' as _i10;
 import 'package:partyguam/presentation/pages/sign_up/cubit/auth_cubit.dart'
+    as _i13;
+import 'package:partyguam/presentation/pages/sign_up/cubit/user_cubit.dart'
     as _i12;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -49,9 +51,11 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i11.SignInWithKakao(gh<_i5.AuthRepository>()));
     gh.factory<_i11.GetKakaoUserInfo>(
         () => _i11.GetKakaoUserInfo(gh<_i5.AuthRepository>()));
+    gh.factory<_i12.UserCubit>(
+        () => _i12.UserCubit(checkUserNickname: gh<_i5.CheckUserNickname>()));
     gh.factory<_i10.SendUserCredentials>(
         () => _i10.SendUserCredentials(gh<_i5.UserCredentialRepository>()));
-    gh.factory<_i12.AuthCubit>(() => _i12.AuthCubit(
+    gh.factory<_i13.AuthCubit>(() => _i13.AuthCubit(
           signInWithKakao: gh<_i11.SignInWithKakao>(),
           getKakaoUserInfo: gh<_i11.GetKakaoUserInfo>(),
           sendUserCredentials: gh<_i5.SendUserCredentials>(),
