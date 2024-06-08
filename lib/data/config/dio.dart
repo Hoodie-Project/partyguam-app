@@ -1,7 +1,9 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:partyguam/core/index.dart';
 
 import 'path.dart';
 
@@ -23,7 +25,7 @@ class DioClient {
   }
 
   /// GET
-  Future<Map<String, dynamic>> get(String path,
+  Future<Data> get(String path,
       {Map<String, dynamic>? queryParameters,
       Options? options,
       CancelToken? cancelToken,
@@ -38,7 +40,10 @@ class DioClient {
       );
 
       if (response.statusCode == 200) {
-        return response.data;
+        debugPrint('dio response ${response.data}');
+
+        /// TODO: need to create a response type
+        return {'response': response.data};
       }
 
       throw "something went wrong";
@@ -48,7 +53,7 @@ class DioClient {
   }
 
   ///POST
-  Future<Map<String, dynamic>> post(String path,
+  Future<Data> post(String path,
       {data,
       Map<String, dynamic>? queryParameters,
       Options? options,
@@ -66,6 +71,7 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
+        debugPrint('dio response  ${response.data}');
         return response.data;
       }
       throw "something went wrong";
@@ -75,7 +81,7 @@ class DioClient {
   }
 
   /// PUT
-  Future<Map<String, dynamic>> put(String path,
+  Future<Data> put(String path,
       {data,
       Map<String, dynamic>? queryParameters,
       Options? options,
@@ -93,6 +99,7 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       if (response.statusCode == 200) {
+        debugPrint('dio response  ${response.data}');
         return response.data;
       }
       throw "something went wrong";
@@ -118,6 +125,7 @@ class DioClient {
         cancelToken: cancelToken,
       );
       if (response.statusCode == 204) {
+        debugPrint('dio response ${response.data}');
         return response.data;
       }
       throw "something went wrong";

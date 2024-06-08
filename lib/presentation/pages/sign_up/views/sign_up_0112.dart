@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/index.dart';
 import '../../../../domain/usecases/validation.dart';
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
+import '../cubit/user_cubit.dart';
 import 'styles.dart';
 
 class SignUp0112 extends StatefulWidget {
@@ -23,6 +26,7 @@ class _SignUp0112State extends State<SignUp0112> {
 
   bool _showClearIcon = false;
   bool _isButtonDisabled = true;
+  String? error;
   int maxLength = 15;
 
   @override
@@ -31,14 +35,6 @@ class _SignUp0112State extends State<SignUp0112> {
 
     _textController.addListener(_updateClearIconVisibility);
     _textController.addListener(_isTextFormEmpty);
-  }
-
-  @override
-  void dispose() {
-    _textController.removeListener(_updateClearIconVisibility);
-    _textController.dispose();
-
-    super.dispose();
   }
 
   void _updateClearIconVisibility() {
@@ -53,16 +49,27 @@ class _SignUp0112State extends State<SignUp0112> {
     });
   }
 
-  void _isTextFormEmpty() {
+  _isTextFormEmpty() {
     setState(() {
       _isButtonDisabled = _textController.text.isEmpty;
     });
   }
 
-  void _navigateToNextPage() {
+  _navigateToNextPage() {
+    final nickname = _textController.text;
+
     if (_formKey.currentState!.validate()) {
-      context.push('${RouterPath.signUp}/0113');
+      context.read<UserCubit>().checkUserNickname(nickname);
     }
+  }
+
+  @override
+  void dispose() {
+    _textController.removeListener(_updateClearIconVisibility);
+    _textController.removeListener(_isTextFormEmpty);
+    _textController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -72,25 +79,40 @@ class _SignUp0112State extends State<SignUp0112> {
         title: '가입하기',
         pageCount: '2/4',
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-            left: 20.0, top: 40.0, right: 20.0, bottom: 12.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildTitleText(
-                '어떻게 불러드리면 될까요?\n닉네임을 입력해 주세요',
-                '닉네임은 나중에 변경할 수 없어요.',
+      body: BlocConsumer<UserCubit, UserState>(
+        listener: (context, state) {
+          if (state is NicknameUnavailable) {
+            error = NicknameError.duplicate.error;
+            _formKey.currentState!.validate();
+          } else if (state is NicknameAvailable) {
+            context.push('${RouterPath.signUp}/0113');
+          } else if (state is UserInitial) {
+            error = null;
+            return;
+          }
+        },
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.only(
+                left: 20.0, top: 40.0, right: 20.0, bottom: 12.0),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildTitleText(
+                    '어떻게 불러드리면 될까요?\n닉네임을 입력해 주세요',
+                    '닉네임은 나중에 변경할 수 없어요.',
+                  ),
+                  _buildNickNameForm(),
+                  const Expanded(
+                    child: SizedBox(),
+                  ),
+                  _buildNextButton(context),
+                ],
               ),
-              _buildNickNameForm(),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              _buildNextButton(context),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -121,6 +143,7 @@ class _SignUp0112State extends State<SignUp0112> {
                     ),
                     onPressed: () {
                       setState(() {
+                        context.read<UserCubit>().resetUserCubitStatus();
                         _clearText();
                       });
                     },
@@ -133,7 +156,7 @@ class _SignUp0112State extends State<SignUp0112> {
             focusedErrorBorder: SignUpTextFormStyles.focusedErrorBorder,
           ),
           validator: (String? value) {
-            return nicknameValidation(value);
+            return nicknameValidation(value, error);
           },
         ),
       ),

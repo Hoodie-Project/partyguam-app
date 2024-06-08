@@ -106,3 +106,14 @@ enum Address {
   final String province;
   final String city;
 }
+
+enum NicknameError {
+  duplicate('duplicate', '중복된 닉네임 이에요.'),
+  specialCharacter('specialCharacter', '특수문자는 사용할 수 없어요.'),
+  length('length', '닉네임은 2자 이상 15자 이내로 입력해주세요.');
+
+  const NicknameError(this.error, this.description);
+
+  final String error;
+  final String description;
+}

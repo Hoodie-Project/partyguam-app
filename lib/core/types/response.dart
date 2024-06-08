@@ -11,4 +11,4 @@ typedef ApiResultVoid = ApiResult<void>;
 
 typedef ApiAuthResult<T> = Future<Either<SignUpAuthToken, T>>;
 
-typedef DataMap = Map<String, dynamic>;
+typedef Data = Map<String, dynamic>;

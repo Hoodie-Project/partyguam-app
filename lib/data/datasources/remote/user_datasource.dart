@@ -1,20 +1,24 @@
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../core/index.dart';
 import '../../index.dart';
 
-abstract class UserCredentialDataSource {
+//
+abstract class UserDataSource {
   Future<void> sendUserCredential({
     required String uid,
     required String idToken,
   });
+
+  Future<SuccessDto> checkUserNickname({
+    required String nickname,
+  });
 }
 
 /// https://youtu.be/_E3EF1jPumM?si=C237xCkb43LXiI4I&t=16311
-@LazySingleton(as: UserCredentialDataSource)
-class UserCredentialDataSourceImpl implements UserCredentialDataSource {
-  UserCredentialDataSourceImpl(this._dioClient);
+@LazySingleton(as: UserDataSource)
+class UserDataSourceImpl implements UserDataSource {
+  UserDataSourceImpl(this._dioClient);
 
   final DioClient _dioClient;
 
@@ -37,16 +41,32 @@ class UserCredentialDataSourceImpl implements UserCredentialDataSource {
       await _dioClient.post(
         ApiAuthPath.userCredentials,
         data: data,
-        options: Options(
-          headers: {
-            Headers.contentTypeHeader: 'application/json',
-          },
-        ),
       );
 
       /// https://youtu.be/_E3EF1jPumM?si=Bq7ovtYzj46WizbJ&t=18712
       /// when you throw an error inside of try phrase, make sure rethrow the error between try - catch phrase.
       /// because it will throw errors in catch phase, then we cannot indicate where this error occurs.
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      /// dart error
+      throw ApiException(message: e.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<SuccessDto> checkUserNickname({required String nickname}) async {
+    try {
+      // check cookie
+
+      final params = {'nickname': nickname};
+
+      final response = await _dioClient.get(
+        ApiUserPath.nickName,
+        queryParameters: params,
+      );
+
+      return SuccessDto.fromJson(response);
     } on ApiException {
       rethrow;
     } catch (e) {

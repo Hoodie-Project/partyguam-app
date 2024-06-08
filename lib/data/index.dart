@@ -8,6 +8,7 @@ export 'datasources/remote/user_datasource.dart';
 
 /// dto
 export 'dto/auth/auth_tokens_dto.dart';
+export 'dto/user/success_dto.dart';
 export 'dto/user/user_credential_dto.dart';
 
 /// repository
