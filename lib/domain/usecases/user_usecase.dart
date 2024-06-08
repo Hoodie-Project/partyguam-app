@@ -7,6 +7,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import '../../core/index.dart';
 import '../index.dart';
 
+// SendUserCredentials
 @Injectable()
 class SendUserCredentials
     extends UsecaseWithParams<void, SendUserCredentialParams> {
@@ -71,6 +72,31 @@ Future<String?> encryptUserId(String uid) async {
   }
 }
 
+// CheckUserNickname
+@Injectable()
+class CheckUserNickname
+    extends UsecaseWithParams<void, CheckUserNicknameParams> {
+  const CheckUserNickname(this._repository);
+
+  final UserSignUpRepository _repository;
+
+  @override
+  ApiResult<void> call(CheckUserNicknameParams params) async =>
+      _repository.checkUserNickname(nickname: params.nickname);
+}
+
+class CheckUserNicknameParams extends Equatable {
+  const CheckUserNicknameParams({
+    required this.nickname,
+  });
+
+  final String nickname;
+
+  @override
+  List<Object?> get props => [nickname];
+}
+
+//
 Future<void> kakaoLogOut() async {
   try {
     await UserApi.instance.logout();

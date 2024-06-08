@@ -9,12 +9,10 @@ import '../index.dart';
 class UserCredentialRepositoryImpl implements UserCredentialRepository {
   const UserCredentialRepositoryImpl(
     this._remoteDataSource,
-    this._oauthDataSource,
   );
 
   /// DI (Dependency Inversion)
-  final UserCredentialDataSource _remoteDataSource;
-  final AuthDataSource _oauthDataSource;
+  final UserDataSource _remoteDataSource;
 
   @override
   ApiResult<void> sendUserCredential({
@@ -30,7 +28,7 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
 
       final encryptedUid = await encryptUserId(uid);
 
-      final response = await _remoteDataSource.sendUserCredential(
+      await _remoteDataSource.sendUserCredential(
         uid: encryptedUid!,
         idToken: idToken,
       );
@@ -40,5 +38,29 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
     } on ApiException catch (e) {
       return Left(ApiFailure.fromException(e));
     }
+  }
+}
+
+@LazySingleton(as: UserSignUpRepository)
+class UserSignUpRepositoryImpl implements UserSignUpRepository {
+  const UserSignUpRepositoryImpl(this._remoteDataSource);
+
+  final UserDataSource _remoteDataSource;
+
+  @override
+  ApiResult<void> checkUserNickname({required String nickname}) async {
+    try {
+      await _remoteDataSource.checkUserNickname(nickname: nickname);
+
+      return const Right(null);
+    } on ApiException catch (e) {
+      return Left(ApiFailure.fromException(e));
+    }
+  }
+
+  @override
+  ApiResult<UserInformation> getUserInformation() {
+    // TODO: implement getUserInformation
+    throw UnimplementedError();
   }
 }

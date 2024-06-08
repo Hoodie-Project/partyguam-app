@@ -10,10 +10,10 @@ abstract class UserCredentialRepository {
   });
 }
 
-abstract class UserRepository {
-  const UserRepository();
+abstract class UserSignUpRepository {
+  const UserSignUpRepository();
 
-  ApiResult<UserNickname> checkNickname({
+  ApiResult<void> checkUserNickname({
     required String nickname,
   });
 
