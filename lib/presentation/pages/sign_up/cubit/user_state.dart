@@ -27,6 +27,10 @@ final class CheckUserNicknameComplete extends UserState {
   const CheckUserNicknameComplete();
 }
 
+final class CreateUserComplete extends UserState {
+  const CreateUserComplete();
+}
+
 class UserError extends UserState {
   const UserError(this.message);
 

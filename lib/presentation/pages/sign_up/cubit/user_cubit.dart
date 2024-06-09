@@ -15,7 +15,7 @@ class UserCubit extends Cubit<UserState> {
 
   final CheckUserNickname _checkUserNickname;
 
-  void resetUserCubitStatus() {
+  void resetUserCubitState() {
     emit(const UserInitial());
   }
 
