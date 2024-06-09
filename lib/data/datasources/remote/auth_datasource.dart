@@ -50,9 +50,10 @@ class AuthDataSourceImpl implements AuthDataSource {
     }
 
     /// TODO (20240603): 더 좋은 방법 고민 해보기
-    await localStorage.setString('accessToken', tokens.accessToken);
-    await localStorage.setString('refreshToken', tokens.refreshToken ?? '');
-    await localStorage.setString('idToken', tokens.idToken ?? '');
+    await localStorage.setString('kakaoAccessToken', tokens.accessToken);
+    await localStorage.setString(
+        'kakaoRefreshToken', tokens.refreshToken ?? '');
+    await localStorage.setString('kakaoIdToken', tokens.idToken ?? '');
 
     return tokens;
   }

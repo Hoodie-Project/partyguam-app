@@ -43,9 +43,12 @@ class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is Authenticated) {
+        if (state is OauthAuthenticated) {
+          if (state is Registered) {
+            context.go(RouterPath.main);
+          }
           context.push('${RouterPath.signUp}/0111');
-        } else if (state is UnAuthenticated) {
+        } else if (state is OauthUnAuthenticated) {
           context.read<AuthCubit>().isAuthenticated();
         } else {
           return;

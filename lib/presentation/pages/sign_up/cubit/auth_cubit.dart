@@ -24,10 +24,10 @@ class AuthCubit extends Cubit<AuthState> {
     final token = localStorage.getString('com.kakao.token.OAuthToken');
 
     if (token != null && token.isNotEmpty) {
-      if (state is UnAuthenticated) {
+      if (state is OauthUnAuthenticated) {
         return;
       } else {
-        emit(const Authenticated());
+        emit(const OauthAuthenticated());
       }
     } else {
       emit(const AuthInitial());
@@ -43,7 +43,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (failure) => emit(AuthError(failure.message)),
-      (success) => emit(const Authenticated()),
+      (success) => emit(const OauthAuthenticated()),
     );
   }
 

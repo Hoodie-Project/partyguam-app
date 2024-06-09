@@ -39,9 +39,10 @@ class _SignUp0111State extends State<SignUp0111> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
+        // signUp0112에서 접근 했을 때
         if (state is AuthInitial) {
           context.read<AuthCubit>().getKakaoUserInfo();
-        } else if (state is UnAuthenticated) {
+        } else if (state is OauthUnAuthenticated) {
           /// TODO (20240602): 예상하지 못한 오류 발생 팝업 디자인 필요
           debugPrint('예상치 못한 오류 발생;');
           context.go(RouterPath.main);

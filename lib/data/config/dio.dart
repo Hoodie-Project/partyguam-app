@@ -18,10 +18,24 @@ final options = BaseOptions(
 @lazySingleton
 class DioClient {
   final Dio _dio;
+  CookieJar _cookieJar = CookieJar();
 
   DioClient() : _dio = Dio(options) {
-    final cookieJar = CookieJar();
-    _dio.interceptors.add(CookieManager(cookieJar));
+    _initializeDio();
+  }
+
+  Future<void> _initializeDio() async {
+    _cookieJar = CookieJar();
+    _dio.interceptors.add(CookieManager(_cookieJar));
+    await _clearCookiesOnStart();
+  }
+
+  Future<void> deleteCookie(Uri uri) async {
+    await _cookieJar.delete(uri);
+  }
+
+  Future<void> _clearCookiesOnStart() async {
+    await _cookieJar.deleteAll();
   }
 
   /// GET
