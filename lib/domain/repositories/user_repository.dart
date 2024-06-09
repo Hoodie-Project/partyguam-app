@@ -18,5 +18,12 @@ abstract class UserSignUpRepository {
     required String nickname,
   });
 
+  ApiResult<AccessTokenDto> createUser({
+    required String email,
+    required String nickname,
+    required String birth,
+    required String gender,
+  });
+
   ApiResult<UserInformation> getUserInformation();
 }

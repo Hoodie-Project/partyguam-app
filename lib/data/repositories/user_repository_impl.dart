@@ -60,6 +60,27 @@ class UserSignUpRepositoryImpl implements UserSignUpRepository {
   }
 
   @override
+  ApiResult<AccessTokenDto> createUser({
+    required String email,
+    required String nickname,
+    required String birth,
+    required String gender,
+  }) async {
+    try {
+      final response = await _remoteDataSource.createUser(
+        email: email,
+        nickname: nickname,
+        birth: birth,
+        gender: gender,
+      );
+
+      return Right(response);
+    } on ApiException catch (e) {
+      return Left(ApiFailure.fromException(e));
+    }
+  }
+
+  @override
   ApiResult<UserInformation> getUserInformation() {
     // TODO: implement getUserInformation
     throw UnimplementedError();

@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:partyguam/domain/index.dart';
 
 import '../../../core/index.dart';
 import '../../index.dart';
@@ -12,6 +14,13 @@ abstract class UserDataSource {
 
   Future<SuccessDto> checkUserNickname({
     required String nickname,
+  });
+
+  Future<AccessTokenDto> createUser({
+    required String nickname,
+    required String email,
+    required String gender,
+    required String birth,
   });
 }
 
@@ -67,6 +76,39 @@ class UserDataSourceImpl implements UserDataSource {
       );
 
       return SuccessDto.fromJson(response);
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      /// dart error
+      throw ApiException(message: e.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<AccessTokenDto> createUser({
+    required String email,
+    required String nickname,
+    required String birth,
+    required String gender,
+  }) async {
+    try {
+      // check cookie
+
+      final data = CreateUserParams(
+        email: email,
+        nickname: nickname,
+        birth: birth,
+        gender: gender,
+      );
+
+      final response = await _dioClient.post(
+        ApiUserPath.user,
+        data: data,
+      );
+
+      debugPrint('here: ${AccessTokenDto.fromJson(response)}');
+
+      return AccessTokenDto.fromJson(response);
     } on ApiException {
       rethrow;
     } catch (e) {
