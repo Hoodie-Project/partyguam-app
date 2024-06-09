@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:partyguam/presentation/pages/sign_up/cubit/user_cubit.dart';
 
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
@@ -115,7 +116,7 @@ class _SignUp0111State extends State<SignUp0111> {
         child: ElevatedButton(
           onPressed: () {
             setState(() {
-              context.read<AuthCubit>().sendUserCredentials(uid);
+              context.read<UserCubit>().sendUserCredentials(uid);
               context.read<UserFormCubit>().setEmail(email);
               context.push('${RouterPath.signUp}/0112');
             });

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../domain/index.dart';
+import '../../../../main.dart';
 
 part 'user_state.dart';
 
@@ -10,13 +11,29 @@ part 'user_state.dart';
 class UserCubit extends Cubit<UserState> {
   UserCubit({
     required CheckUserNickname checkUserNickname,
+    required SendUserCredentials sendUserCredentials,
   })  : _checkUserNickname = checkUserNickname,
+        _sendUserCredentials = sendUserCredentials,
         super(const UserInitial());
 
   final CheckUserNickname _checkUserNickname;
+  final SendUserCredentials _sendUserCredentials;
 
   void resetUserCubitState() {
     emit(const UserInitial());
+  }
+
+  Future<void> sendUserCredentials(String uid) async {
+    final idToken = localStorage.getString('kakaoIdToken');
+
+    final result = await _sendUserCredentials(
+      SendUserCredentialParams(uid: uid, idToken: idToken!),
+    );
+
+    result.fold(
+      (failure) => emit(const UserInitial()),
+      (success) => emit(const SendUserCredentialsComplete()),
+    );
   }
 
   Future<String?> checkUserNickname(String nickname) async {
