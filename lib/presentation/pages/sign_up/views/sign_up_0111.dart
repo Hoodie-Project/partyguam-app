@@ -9,6 +9,7 @@ import '../../../widgets/app_bar.dart';
 import '../../../widgets/process_indicator.dart';
 import '../../../widgets/text.dart';
 import '../cubit/auth_cubit.dart';
+import '../cubit/user_form_cubit.dart';
 import 'styles.dart';
 
 class SignUp0111 extends StatefulWidget {
@@ -67,7 +68,7 @@ class _SignUp0111State extends State<SignUp0111> {
                           const Expanded(
                             child: SizedBox(),
                           ),
-                          _buildNextButton(context, state.uid),
+                          _buildNextButton(context, state.uid, state.email!),
                         ],
                       ),
                     ),
@@ -102,7 +103,7 @@ class _SignUp0111State extends State<SignUp0111> {
     );
   }
 
-  Widget _buildNextButton(BuildContext context, String uid) {
+  Widget _buildNextButton(BuildContext context, String uid, String email) {
     return SizedBox(
       width: double.infinity,
       child: Material(
@@ -115,6 +116,7 @@ class _SignUp0111State extends State<SignUp0111> {
           onPressed: () {
             setState(() {
               context.read<AuthCubit>().sendUserCredentials(uid);
+              context.read<UserFormCubit>().setEmail(email);
               context.push('${RouterPath.signUp}/0112');
             });
           },

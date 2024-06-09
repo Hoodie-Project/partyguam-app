@@ -117,3 +117,12 @@ enum NicknameError {
   final String error;
   final String description;
 }
+
+enum Gender {
+  man('남자'),
+  woman('여자');
+
+  const Gender(this.gender);
+
+  final String gender;
+}

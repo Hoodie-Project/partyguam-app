@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:partyguam/domain/index.dart';
 
 import '../../../core/index.dart';
 import '../../index.dart';
@@ -68,6 +67,10 @@ class UserDataSourceImpl implements UserDataSource {
     try {
       // check cookie
 
+      // await _dioClient.deleteCookie((Uri.parse(ApiConfigPath.hostUri)));
+
+      // debugPrint(_dioClient().)
+
       final params = {'nickname': nickname};
 
       final response = await _dioClient.get(
@@ -94,12 +97,12 @@ class UserDataSourceImpl implements UserDataSource {
     try {
       // check cookie
 
-      final data = CreateUserParams(
-        email: email,
-        nickname: nickname,
-        birth: birth,
-        gender: gender,
-      );
+      final data = {
+        'email': email,
+        'nickname': nickname,
+        'birth': birth,
+        'gender': gender,
+      };
 
       final response = await _dioClient.post(
         ApiUserPath.user,
