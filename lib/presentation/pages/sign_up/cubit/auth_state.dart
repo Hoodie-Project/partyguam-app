@@ -12,12 +12,16 @@ final class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
-class UnAuthenticated extends AuthState {
-  const UnAuthenticated();
+class OauthUnAuthenticated extends AuthState {
+  const OauthUnAuthenticated();
 }
 
-class Authenticated extends AuthState {
-  const Authenticated();
+class OauthAuthenticated extends AuthState {
+  const OauthAuthenticated();
+}
+
+class Registered extends AuthState {
+  const Registered();
 }
 
 //
@@ -38,15 +42,13 @@ class GetKakaoUserInfoComplete extends AuthState {
   List<Object> get props => [uid];
 }
 
-//
-/// loading state before the event begins
-class SendUserCredentialsPending extends AuthState {
-  const SendUserCredentialsPending();
-}
+class AuthRegisteredToken extends AuthState {
+  const AuthRegisteredToken(this.registeredAccessToken);
 
-/// loading state after the event done
-class SendUserCredentialsComplete extends AuthState {
-  const SendUserCredentialsComplete();
+  final String registeredAccessToken;
+
+  @override
+  List<String> get props => [registeredAccessToken];
 }
 
 class AuthError extends AuthState {
@@ -57,13 +59,4 @@ class AuthError extends AuthState {
 
   @override
   List<String> get props => [message];
-}
-
-class AuthRegisteredToken extends AuthState {
-  const AuthRegisteredToken(this.registeredAccessToken);
-
-  final String registeredAccessToken;
-
-  @override
-  List<String> get props => [registeredAccessToken];
 }

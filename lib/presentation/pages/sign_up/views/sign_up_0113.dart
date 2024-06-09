@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -8,6 +9,7 @@ import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
+import '../cubit/user_form_cubit.dart';
 import 'styles.dart';
 
 class SignUp0113 extends StatefulWidget {
@@ -40,6 +42,7 @@ class _SignUp0113State extends State<SignUp0113> {
   @override
   void dispose() {
     _textController.removeListener(_updateClearIconVisibility);
+    _textController.addListener(_isTextFormEmpty);
     _textController.dispose();
 
     super.dispose();
@@ -65,6 +68,7 @@ class _SignUp0113State extends State<SignUp0113> {
 
   void _navigateToNextPage() {
     if (_formKey.currentState!.validate()) {
+      context.read<UserFormCubit>().setBirth(_textController.text);
       context.push('${RouterPath.signUp}/0114');
     }
   }

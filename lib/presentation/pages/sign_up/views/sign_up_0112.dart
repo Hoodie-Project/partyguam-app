@@ -11,6 +11,7 @@ import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
 import '../cubit/user_cubit.dart';
+import '../cubit/user_form_cubit.dart';
 import 'styles.dart';
 
 class SignUp0112 extends StatefulWidget {
@@ -60,6 +61,7 @@ class _SignUp0112State extends State<SignUp0112> {
 
     if (_formKey.currentState!.validate()) {
       context.read<UserCubit>().checkUserNickname(nickname);
+      context.read<UserFormCubit>().setNickname(nickname);
     }
   }
 
@@ -143,7 +145,7 @@ class _SignUp0112State extends State<SignUp0112> {
                     ),
                     onPressed: () {
                       setState(() {
-                        context.read<UserCubit>().resetUserCubitStatus();
+                        context.read<UserCubit>().resetUserCubitState();
                         _clearText();
                       });
                     },

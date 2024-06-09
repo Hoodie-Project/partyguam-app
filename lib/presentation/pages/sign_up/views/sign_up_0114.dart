@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/index.dart';
 import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
+import '../cubit/user_form_cubit.dart';
 import 'styles.dart';
 
 class SignUp0114 extends StatefulWidget {
@@ -17,6 +20,9 @@ class SignUp0114 extends StatefulWidget {
 
 class _SignUp0114State extends State<SignUp0114> {
   bool _isButtonEnabled = false;
+
+  List<String> genderList =
+      Gender.values.map((element) => element.gender).toList();
 
   Color _containerColor1 = AppColors.greyColors.shade50;
   Color _containerColor2 = AppColors.greyColors.shade50;
@@ -55,10 +61,14 @@ class _SignUp0114State extends State<SignUp0114> {
   }
 
   void _checkButtonState() {
-    if (_containerColor1 == _tappedColor || _containerColor2 == _tappedColor) {
+    if (_containerColor1 == _tappedColor) {
       setState(() {
         _isButtonEnabled = true;
+        context.read<UserFormCubit>().setGender('M');
       });
+    } else if (_containerColor2 == _tappedColor) {
+      _isButtonEnabled = true;
+      context.read<UserFormCubit>().setGender('F');
     }
   }
 
@@ -88,30 +98,22 @@ class _SignUp0114State extends State<SignUp0114> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        _changeColor1();
-                      },
-                      child: _buildSquareButton(
-                        _containerColor1,
-                        _borderColor1,
-                        '남자',
-                      ),
+                    child: _buildSquareButton(
+                      _changeColor1,
+                      _containerColor1,
+                      _borderColor1,
+                      genderList[0],
                     ),
                   ),
                   const SizedBox(
                     width: 8.0,
                   ),
                   Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        _changeColor2();
-                      },
-                      child: _buildSquareButton(
-                        _containerColor2,
-                        _borderColor2,
-                        '여자',
-                      ),
+                    child: _buildSquareButton(
+                      _changeColor2,
+                      _containerColor2,
+                      _borderColor2,
+                      genderList[1],
                     ),
                   ),
                 ],
@@ -128,28 +130,36 @@ class _SignUp0114State extends State<SignUp0114> {
   }
 
   Widget _buildSquareButton(
-      Color containerColor, Color borderColor, String content) {
-    return Material(
-      color: containerColor,
-      elevation: 1.0,
-      borderRadius: const BorderRadius.all(
-        Radius.circular(16.0),
-      ),
-      child: Container(
-        height: 163.0,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: borderColor,
-            width: 1.0,
-          ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(16.0),
-          ),
+    VoidCallback changeColor,
+    Color containerColor,
+    Color borderColor,
+    String text,
+  ) {
+    return InkWell(
+      splashFactory: NoSplash.splashFactory,
+      onTap: changeColor,
+      child: Material(
+        color: containerColor,
+        elevation: 1.0,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16.0),
         ),
-        child: Center(
-          child: Text(
-            content,
-            style: SignUp0114Styles.squareButtonText,
+        child: Container(
+          height: 163.0,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: borderColor,
+              width: 1.0,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16.0),
+            ),
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: SignUp0114Styles.squareButtonText,
+            ),
           ),
         ),
       ),

@@ -97,6 +97,39 @@ class CheckUserNicknameParams extends Equatable {
   List<Object?> get props => [nickname];
 }
 
+// CreateUser
+@Injectable()
+class CreateUser extends UsecaseWithParams<void, CreateUserParams> {
+  const CreateUser(this._repository);
+
+  final UserSignUpRepository _repository;
+
+  @override
+  ApiResult<void> call(CreateUserParams params) async => _repository.createUser(
+        email: params.email,
+        nickname: params.nickname,
+        birth: params.birth,
+        gender: params.gender,
+      );
+}
+
+class CreateUserParams extends Equatable {
+  const CreateUserParams({
+    required this.email,
+    required this.nickname,
+    required this.birth,
+    required this.gender,
+  });
+
+  final String email;
+  final String nickname;
+  final String birth;
+  final String gender;
+
+  @override
+  List<Object?> get props => [email];
+}
+
 //
 Future<void> kakaoLogOut() async {
   try {

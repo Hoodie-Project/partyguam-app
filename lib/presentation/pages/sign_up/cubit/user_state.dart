@@ -11,6 +11,10 @@ final class UserInitial extends UserState {
   const UserInitial();
 }
 
+class SendUserCredentialsComplete extends UserState {
+  const SendUserCredentialsComplete();
+}
+
 final class NicknameAvailable extends UserState {
   const NicknameAvailable();
 }
@@ -25,6 +29,10 @@ final class CheckUserNicknamePending extends UserState {
 
 final class CheckUserNicknameComplete extends UserState {
   const CheckUserNicknameComplete();
+}
+
+final class CreateUserComplete extends UserState {
+  const CreateUserComplete();
 }
 
 class UserError extends UserState {

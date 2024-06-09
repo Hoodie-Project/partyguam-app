@@ -20,4 +20,9 @@ abstract class ApiUserPath {
     'nickName',
     defaultValue: '/users/check-nickname',
   );
+
+  static const user = String.fromEnvironment(
+    'user',
+    defaultValue: '/users',
+  );
 }

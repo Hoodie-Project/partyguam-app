@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../core/index.dart';
@@ -12,6 +13,13 @@ abstract class UserDataSource {
 
   Future<SuccessDto> checkUserNickname({
     required String nickname,
+  });
+
+  Future<AccessTokenDto> createUser({
+    required String nickname,
+    required String email,
+    required String gender,
+    required String birth,
   });
 }
 
@@ -59,6 +67,10 @@ class UserDataSourceImpl implements UserDataSource {
     try {
       // check cookie
 
+      // await _dioClient.deleteCookie((Uri.parse(ApiConfigPath.hostUri)));
+
+      // debugPrint(_dioClient().)
+
       final params = {'nickname': nickname};
 
       final response = await _dioClient.get(
@@ -67,6 +79,39 @@ class UserDataSourceImpl implements UserDataSource {
       );
 
       return SuccessDto.fromJson(response);
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      /// dart error
+      throw ApiException(message: e.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<AccessTokenDto> createUser({
+    required String email,
+    required String nickname,
+    required String birth,
+    required String gender,
+  }) async {
+    try {
+      // check cookie
+
+      final data = {
+        'email': email,
+        'nickname': nickname,
+        'birth': birth,
+        'gender': gender,
+      };
+
+      final response = await _dioClient.post(
+        ApiUserPath.user,
+        data: data,
+      );
+
+      debugPrint('here: ${AccessTokenDto.fromJson(response)}');
+
+      return AccessTokenDto.fromJson(response);
     } on ApiException {
       rethrow;
     } catch (e) {

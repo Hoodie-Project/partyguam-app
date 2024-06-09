@@ -22,6 +22,8 @@ import 'package:partyguam/domain/usecases/user_usecase.dart' as _i10;
 import 'package:partyguam/presentation/pages/sign_up/cubit/auth_cubit.dart'
     as _i13;
 import 'package:partyguam/presentation/pages/sign_up/cubit/user_cubit.dart'
+    as _i14;
+import 'package:partyguam/presentation/pages/sign_up/cubit/user_form_cubit.dart'
     as _i12;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -47,17 +49,22 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i9.UserSignUpRepositoryImpl(gh<_i7.UserDataSource>()));
     gh.factory<_i10.CheckUserNickname>(
         () => _i10.CheckUserNickname(gh<_i5.UserSignUpRepository>()));
+    gh.factory<_i10.CreateUser>(
+        () => _i10.CreateUser(gh<_i5.UserSignUpRepository>()));
     gh.factory<_i11.SignInWithKakao>(
         () => _i11.SignInWithKakao(gh<_i5.AuthRepository>()));
     gh.factory<_i11.GetKakaoUserInfo>(
         () => _i11.GetKakaoUserInfo(gh<_i5.AuthRepository>()));
-    gh.factory<_i12.UserCubit>(
-        () => _i12.UserCubit(checkUserNickname: gh<_i5.CheckUserNickname>()));
     gh.factory<_i10.SendUserCredentials>(
         () => _i10.SendUserCredentials(gh<_i5.UserCredentialRepository>()));
+    gh.factory<_i12.UserFormCubit>(
+        () => _i12.UserFormCubit(createUser: gh<_i5.CreateUser>()));
     gh.factory<_i13.AuthCubit>(() => _i13.AuthCubit(
           signInWithKakao: gh<_i11.SignInWithKakao>(),
           getKakaoUserInfo: gh<_i11.GetKakaoUserInfo>(),
+        ));
+    gh.factory<_i14.UserCubit>(() => _i14.UserCubit(
+          checkUserNickname: gh<_i5.CheckUserNickname>(),
           sendUserCredentials: gh<_i5.SendUserCredentials>(),
         ));
     return this;
