@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/index.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
-import '../../../utils/constants.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/snack_bar.dart';
 import '../../../widgets/text.dart';
