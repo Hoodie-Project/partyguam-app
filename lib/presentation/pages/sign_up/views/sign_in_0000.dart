@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:partyguam/presentation/pages/sign_up/cubit/user_cubit.dart';
 
 import '../../../../core/index.dart';
 import '../../../routes/route_path.dart';
@@ -41,19 +42,39 @@ class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
-        if (state is OauthAuthenticated) {
-          if (state is Registered) {
-            context.go(RouterPath.main);
-          }
-          context.push('${RouterPath.signUp}/0111');
-        } else if (state is OauthUnAuthenticated) {
-          context.read<AuthCubit>().isAuthenticated();
-        } else {
-          return;
-        }
-      },
+    String? email;
+
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is OauthAuthenticated) {
+              context.read<AuthCubit>().getKakaoUserInfo();
+
+              if (state is Registered) {
+                context.go(RouterPath.main);
+              }
+            } else if (state is GetKakaoUserInfoComplete) {
+              email = state.email;
+              context.read<UserCubit>().sendUserCredentials(state.uid);
+            } else if (state is OauthUnAuthenticated) {
+              context.read<AuthCubit>().isAuthenticated();
+            } else {
+              return;
+            }
+          },
+        ),
+        BlocListener<UserCubit, UserState>(
+          listener: (context, state) {
+            if (state is SendUserCredentialsComplete) {
+              context.push(
+                '${RouterPath.signUp}/0111',
+                extra: {'email': email},
+              );
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: const ExitIconAppBar(
           title: '로그인',
