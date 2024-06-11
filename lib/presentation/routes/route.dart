@@ -29,9 +29,13 @@ final router = GoRouter(
       builder: (context, state) => const SignIn0000(),
       routes: [
         GoRoute(
-          path: '0111',
-          builder: (context, state) => const SignUp0111(),
-        ),
+            path: '0111',
+            builder: (context, state) {
+              final data = state.extra as Map<String, String?>;
+              final email = data['email'] ?? '';
+
+              return SignUp0111(email: email);
+            }),
         GoRoute(
           path: '0112',
           builder: (context, state) => const SignUp0112(),

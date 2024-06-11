@@ -20,7 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
   final SignInWithKakao _signInWithKakao;
   final GetKakaoUserInfo _getKakaoUserInfo;
 
-  void isAuthenticated() async {
+  Future<void> isAuthenticated() async {
     final token = localStorage.getString('com.kakao.token.OAuthToken');
 
     if (token != null && token.isNotEmpty) {

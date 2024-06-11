@@ -9,6 +9,7 @@ import '../../../theme/icons.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
 import '../cubit/auth_cubit.dart';
+import '../cubit/user_cubit.dart';
 import 'styles.dart';
 
 class SignIn0000 extends StatefulWidget {
@@ -41,19 +42,37 @@ class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
-        if (state is OauthAuthenticated) {
-          if (state is Registered) {
-            context.go(RouterPath.main);
-          }
-          context.push('${RouterPath.signUp}/0111');
-        } else if (state is OauthUnAuthenticated) {
-          context.read<AuthCubit>().isAuthenticated();
-        } else {
-          return;
-        }
-      },
+    String? email;
+
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is OauthAuthenticated) {
+              context.read<AuthCubit>().getKakaoUserInfo();
+            } else if (state is GetKakaoUserInfoComplete) {
+              email = state.email;
+              context.read<UserCubit>().sendUserCredentials(state.uid);
+            } else if (state is OauthUnAuthenticated) {
+              context.read<AuthCubit>().isAuthenticated();
+            } else {
+              return;
+            }
+          },
+        ),
+        BlocListener<UserCubit, UserState>(
+          listener: (context, state) {
+            if (state is SendUserCredentialsSuccess) {
+              context.read<UserCubit>().isUserRegistered();
+            } else if (state is Registered) {
+              context.go(RouterPath.main);
+            } else if (state is Unregistered) {
+              context
+                  .push('${RouterPath.signUp}/0111', extra: {'email': email});
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: const ExitIconAppBar(
           title: '로그인',

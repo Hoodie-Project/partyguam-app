@@ -20,10 +20,6 @@ class OauthAuthenticated extends AuthState {
   const OauthAuthenticated();
 }
 
-class Registered extends AuthState {
-  const Registered();
-}
-
 //
 class GetKakaoUserInfoPending extends AuthState {
   const GetKakaoUserInfoPending();

@@ -126,3 +126,13 @@ enum Gender {
 
   final String gender;
 }
+
+enum TokenTypes {
+  register('signupToken', '회원 가입'),
+  login('refreshToken', '로그인');
+
+  const TokenTypes(this.token, this.description);
+
+  final String token;
+  final String description;
+}
