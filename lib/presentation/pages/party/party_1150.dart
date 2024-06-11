@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:partyguam/presentation/routes/route_path.dart';
 import 'package:partyguam/presentation/theme/colors.dart';
+import 'package:partyguam/presentation/widgets/alert_dialog.dart';
 import 'package:partyguam/presentation/widgets/app_bar.dart';
-import 'package:partyguam/presentation/widgets/buttons.dart';
 import 'package:partyguam/presentation/widgets/text.dart';
+
+import '../../theme/styles.dart';
 
 class Party1150 extends StatefulWidget {
   const Party1150({super.key});
@@ -13,7 +15,32 @@ class Party1150 extends StatefulWidget {
 }
 
 class _Party1150State extends State<Party1150> {
-  final textController = TextEditingController();
+  final _textController = TextEditingController();
+  bool _isButtonDisabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _textController.addListener(_isTextFormEmpty);
+  }
+
+  void _navigateToNextPage() {
+    showExitDialog(context, RouterPath.main);
+  }
+
+  void _isTextFormEmpty() {
+    setState(() {
+      _isButtonDisabled = _textController.text.isEmpty;
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.removeListener(_isTextFormEmpty);
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +55,7 @@ class _Party1150State extends State<Party1150> {
             buildTitleText('지원 사유', '250자 이내로 자유롭게 작성해 주세요.'),
             _buildTextForm(),
             const Expanded(child: SizedBox()),
-            buildFilledLongButton(context, '지원하기', RouterPath.main),
+            _buildNextButton(context),
           ],
         ),
       ),
@@ -37,7 +64,7 @@ class _Party1150State extends State<Party1150> {
 
   Widget _buildTextForm() {
     return TextFormField(
-      controller: textController,
+      controller: _textController,
       onTapOutside: (PointerDownEvent event) {
         FocusScope.of(context).unfocus();
       },
@@ -93,7 +120,7 @@ class _Party1150State extends State<Party1150> {
         const SizedBox(width: 8.0),
         InkWell(
           onTap: () {
-            textController.clear();
+            _textController.clear();
           },
           child: Text(
             '전체삭제',
@@ -105,6 +132,24 @@ class _Party1150State extends State<Party1150> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildNextButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Material(
+        color: AppColors.greyColors.shade50,
+        elevation: 1.0,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16.0),
+        ),
+        child: ElevatedButton(
+          onPressed: _isButtonDisabled ? null : _navigateToNextPage,
+          style: CommonButtonStyles.filledLongStyle,
+          child: const Text('지원하기'),
+        ),
+      ),
     );
   }
 }
