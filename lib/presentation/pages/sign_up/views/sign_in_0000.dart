@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/presentation/pages/sign_up/cubit/user_cubit.dart';
 
 import '../../../../core/index.dart';
 import '../../../routes/route_path.dart';
@@ -10,6 +9,7 @@ import '../../../theme/icons.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/text.dart';
 import '../cubit/auth_cubit.dart';
+import '../cubit/user_cubit.dart';
 import 'styles.dart';
 
 class SignIn0000 extends StatefulWidget {
@@ -50,10 +50,6 @@ class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
           listener: (context, state) {
             if (state is OauthAuthenticated) {
               context.read<AuthCubit>().getKakaoUserInfo();
-
-              if (state is Registered) {
-                context.go(RouterPath.main);
-              }
             } else if (state is GetKakaoUserInfoComplete) {
               email = state.email;
               context.read<UserCubit>().sendUserCredentials(state.uid);
@@ -66,11 +62,13 @@ class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
         ),
         BlocListener<UserCubit, UserState>(
           listener: (context, state) {
-            if (state is SendUserCredentialsComplete) {
-              context.push(
-                '${RouterPath.signUp}/0111',
-                extra: {'email': email},
-              );
+            if (state is SendUserCredentialsSuccess) {
+              context.read<UserCubit>().isUserRegistered();
+            } else if (state is Registered) {
+              context.go(RouterPath.main);
+            } else if (state is Unregistered) {
+              context
+                  .push('${RouterPath.signUp}/0111', extra: {'email': email});
             }
           },
         ),
