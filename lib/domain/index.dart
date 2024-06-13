@@ -15,8 +15,11 @@ export 'entities/users/user_nickname.dart';
 export 'repositories/auth_repository.dart';
 export 'repositories/user_repository.dart';
 
-/// types
+/// Types
 export 'types/usecase.dart';
+
+/// Params
+export 'usecases/params/user_params.dart';
 
 /// Usecase
 /// business logic of application.

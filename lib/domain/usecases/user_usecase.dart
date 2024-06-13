@@ -1,5 +1,4 @@
 import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:equatable/equatable.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -40,19 +39,6 @@ class SendUserCredentials
       );
 }
 
-class SendUserCredentialParams extends Equatable {
-  const SendUserCredentialParams({
-    required this.uid,
-    required this.idToken,
-  });
-
-  final String uid;
-  final String idToken;
-
-  @override
-  List<Object?> get props => [uid];
-}
-
 Future<String?> encryptUserId(String uid) async {
   try {
     final key =
@@ -86,17 +72,6 @@ class CheckUserNickname
       _repository.checkUserNickname(nickname: params.nickname);
 }
 
-class CheckUserNicknameParams extends Equatable {
-  const CheckUserNicknameParams({
-    required this.nickname,
-  });
-
-  final String nickname;
-
-  @override
-  List<Object?> get props => [nickname];
-}
-
 // CreateUser
 @Injectable()
 class CreateUser extends UsecaseWithParams<void, CreateUserParams> {
@@ -113,21 +88,15 @@ class CreateUser extends UsecaseWithParams<void, CreateUserParams> {
       );
 }
 
-class CreateUserParams extends Equatable {
-  const CreateUserParams({
-    required this.email,
-    required this.nickname,
-    required this.birth,
-    required this.gender,
-  });
+@Injectable()
+class FetchLocations extends UsecaseWithoutParams {
+  const FetchLocations(this._repository);
 
-  final String email;
-  final String nickname;
-  final String birth;
-  final String gender;
+  final UserSignUpRepository _repository;
 
   @override
-  List<Object?> get props => [email];
+  ApiResult<LocationResponseDto> call() async =>
+      await _repository.fetchLocations();
 }
 
 //

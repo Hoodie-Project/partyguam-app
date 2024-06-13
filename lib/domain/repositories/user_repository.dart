@@ -2,6 +2,7 @@ import '../../core/index.dart';
 import '../../data/index.dart';
 import '../index.dart';
 
+/// TODO (20240613): change the name to UserRepository
 abstract class UserCredentialRepository {
   const UserCredentialRepository();
 
@@ -24,6 +25,8 @@ abstract class UserSignUpRepository {
     required String birth,
     required String gender,
   });
+
+  ApiResult<LocationResponseDto> fetchLocations();
 
   ApiResult<UserInformation> getUserInformation();
 }
