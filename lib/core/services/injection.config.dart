@@ -19,11 +19,9 @@ import 'package:partyguam/data/repositories/user_repository_impl.dart' as _i9;
 import 'package:partyguam/domain/index.dart' as _i5;
 import 'package:partyguam/domain/usecases/auth_usecase.dart' as _i11;
 import 'package:partyguam/domain/usecases/user_usecase.dart' as _i10;
-import 'package:partyguam/presentation/pages/sign_up/cubit/auth_cubit.dart'
-    as _i14;
-import 'package:partyguam/presentation/pages/sign_up/cubit/user_cubit.dart'
-    as _i12;
-import 'package:partyguam/presentation/pages/sign_up/cubit/user_form_cubit.dart'
+import 'package:partyguam/presentation/providers/cubit/auth_cubit.dart' as _i14;
+import 'package:partyguam/presentation/providers/cubit/user_cubit.dart' as _i12;
+import 'package:partyguam/presentation/providers/cubit/user_form_cubit.dart'
     as _i13;
 
 extension GetItInjectableX on _i1.GetIt {
