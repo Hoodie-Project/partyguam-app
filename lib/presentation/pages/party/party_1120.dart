@@ -75,6 +75,9 @@ class _Party1120State extends State<Party1120> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
+              _buildPartyImage(),
+              const SizedBox(height: 40),
               buildTitleText('파티명', '직관적인 파티명을 사용하시면 조회수가 올라가요.'),
               _buildPartyNameForm(),
               const SizedBox(height: 60),
@@ -88,6 +91,46 @@ class _Party1120State extends State<Party1120> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildPartyImage() {
+    return Center(
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            width: 160.0,
+            height: 120.0,
+            decoration: BoxDecoration(
+              color: AppColors.primaryLightColors,
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+          ),
+          Positioned(
+            bottom: -10,
+            right: -10,
+            child: Container(
+              width: 32.0,
+              height: 32.0,
+              padding: const EdgeInsets.all(2.0),
+              decoration: BoxDecoration(
+                color: AppColors.greyColors.shade100,
+                shape: BoxShape.circle,
+              ),
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: AppColors.primaryLightColors,
+                child: Icon(
+                  Icons.edit_outlined,
+                  color: AppColors.greyColors.shade100,
+                  size: 18.0,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
