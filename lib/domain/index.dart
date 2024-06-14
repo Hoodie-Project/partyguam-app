@@ -1,6 +1,7 @@
 /// Entity
 /// blueprint of data.
 /// define the core data of the application.
+library;
 export 'entities/auth/auth_tokens.dart';
 export 'entities/auth/sign_up_auth_token.dart';
 export 'entities/users/user_credential.dart';

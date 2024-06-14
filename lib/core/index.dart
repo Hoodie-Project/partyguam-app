@@ -1,4 +1,5 @@
 /// services
+library;
 export 'services/bloc_providers.dart';
 export 'services/injection.dart';
 

@@ -1,4 +1,5 @@
 /// config
+library;
 export 'config/dio.dart';
 export 'config/path.dart';
 

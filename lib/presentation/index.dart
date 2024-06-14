@@ -1,4 +1,5 @@
 /// Providers
+library;
 export 'providers/cubit/auth_cubit.dart';
 export 'providers/cubit/user_cubit.dart';
 export 'providers/cubit/user_form_cubit.dart';
