@@ -21,7 +21,7 @@ void main() async {
   localStorage = await SharedPreferences.getInstance();
 
   // GetIt
-  initializeGetIt();
+  initGetIt();
 
   // KakaoSDK
   KakaoSdk.init(
