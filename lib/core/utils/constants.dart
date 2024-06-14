@@ -107,6 +107,35 @@ enum Address {
   final String city;
 }
 
+enum Experience {
+  option1('신입'),
+  option2('1년'),
+  option3('2년'),
+  option4('3년'),
+  option5('4년'),
+  option6('5년'),
+  option7('6년'),
+  option8('7년'),
+  option9('8년'),
+  option10('9년'),
+  option11('10년 이상');
+
+  const Experience(this.option);
+
+  final String option;
+}
+
+enum Position {
+  option1('기획자'),
+  option2('디자이너'),
+  option3('개발자'),
+  option4('마케터/광고');
+
+  const Position(this.option);
+
+  final String option;
+}
+
 enum NicknameError {
   duplicate('duplicate', '중복된 닉네임 이에요.'),
   specialCharacter('specialCharacter', '특수문자는 사용할 수 없어요.'),

@@ -8,6 +8,7 @@ import '../pages/sign_up/views/sign_up_0112.dart';
 import '../pages/sign_up/views/sign_up_0113.dart';
 import '../pages/sign_up/views/sign_up_0114.dart';
 import '../pages/sign_up/views/sign_up_0115.dart';
+import '../pages/sign_up_details/views/0122/sign_up_details_0122.dart';
 import '../pages/sign_up_details/views/sign_up_details_0121.dart';
 import '../pages/sign_up_details/views/sign_up_details_0123.dart';
 import '../pages/sign_up_details/views/sign_up_details_0124.dart';
@@ -56,6 +57,10 @@ final router = GoRouter(
         GoRoute(
           path: 'detail/0121',
           builder: (context, state) => const SignUpDetail0121(),
+        ),
+        GoRoute(
+          path: 'detail/0122',
+          builder: (context, state) => const SignUpDetail0122(),
         ),
         GoRoute(
           name: 'signUpDetail0123',
