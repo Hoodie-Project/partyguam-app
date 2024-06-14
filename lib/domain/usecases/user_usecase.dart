@@ -71,6 +71,7 @@ Future<String?> encryptUserId(String uid) async {
       FlutterException(message: e.message, statusCode: e.statusCode),
     );
   }
+  return null;
 }
 
 // CheckUserNickname
