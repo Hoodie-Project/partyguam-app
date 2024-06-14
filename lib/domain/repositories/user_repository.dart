@@ -10,7 +10,7 @@ abstract class UserSignUpRepository {
     required String idToken,
   });
 
-  ApiResult<SuccessDto> checkUserNickname({
+  ApiResult<ResponseDto> checkUserNickname({
     required String nickname,
   });
 

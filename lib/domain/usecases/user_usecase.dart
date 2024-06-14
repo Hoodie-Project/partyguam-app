@@ -83,7 +83,7 @@ class CheckUserNickname
   final UserSignUpRepository _repository;
 
   @override
-  ApiResult<SuccessDto> call(CheckUserNicknameParams params) async =>
+  ApiResult<ResponseDto> call(CheckUserNicknameParams params) async =>
       _repository.checkUserNickname(nickname: params.nickname);
 }
 

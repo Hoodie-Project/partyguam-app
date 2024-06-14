@@ -11,7 +11,7 @@ abstract class UserDataSource {
     required String idToken,
   });
 
-  Future<SuccessDto> checkUserNickname({
+  Future<ResponseDto> checkUserNickname({
     required String nickname,
   });
 
@@ -63,7 +63,7 @@ class UserDataSourceImpl implements UserDataSource {
   }
 
   @override
-  Future<SuccessDto> checkUserNickname({required String nickname}) async {
+  Future<ResponseDto> checkUserNickname({required String nickname}) async {
     try {
       // check cookie
 
@@ -78,7 +78,7 @@ class UserDataSourceImpl implements UserDataSource {
         queryParameters: params,
       );
 
-      return SuccessDto.fromJson(response);
+      return ResponseDto.fromJson(response);
     } on ApiException {
       rethrow;
     } catch (e) {

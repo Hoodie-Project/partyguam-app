@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'success_dto.g.dart';
+part 'response_dto.g.dart';
 
 @JsonSerializable()
-class SuccessDto {
-  SuccessDto({
+class ResponseDto {
+  ResponseDto({
     required this.response,
   });
 
@@ -14,11 +14,11 @@ class SuccessDto {
 
   /// Connect the generated [_$PersonFromJson] function to the `fromJson`
   /// factory.
-  factory SuccessDto.fromJson(Map<String, dynamic> json) =>
-      _$SuccessDtoFromJson(json);
+  factory ResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$ResponseDtoFromJson(json);
 
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
-  Map<String, dynamic> toJson() => _$SuccessDtoToJson(this);
+  Map<String, dynamic> toJson() => _$ResponseDtoToJson(this);
 }
 
 // dart run build_runner build --delete-conflicting-outputs
