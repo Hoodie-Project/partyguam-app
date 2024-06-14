@@ -68,30 +68,37 @@ class _Party1120State extends State<Party1120> {
       appBar: const ExitIconAppBar(
         title: '파티 생성하기',
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              _buildPartyImage(),
-              const SizedBox(height: 40),
-              buildTitleText('파티명', '직관적인 파티명을 사용하시면 조회수가 올라가요.'),
-              _buildPartyNameForm(),
-              const SizedBox(height: 60),
-              buildTitleText('파티 유형', '파티가 목표로 하는 유형을 선택해 주세요.'),
-              const SizedBox(height: 60),
-              buildTitleText('파티 소개글', '파티의 방향성, 참고사항 등을 자유롭게 적어 주세요.'),
-              _buildIntroductionForm(),
-              const SizedBox(height: 20),
-              _buildNextButton(context),
-              const SizedBox(height: 20),
-            ],
+      body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        double screenHeight = constraints.maxHeight;
+        double screenWidth = constraints.maxWidth;
+
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                _buildPartyImage(),
+                const SizedBox(height: 40),
+                buildTitleText('파티명', '직관적인 파티명을 사용하시면 조회수가 올라가요.'),
+                _buildPartyNameForm(),
+                const SizedBox(height: 60),
+                buildTitleText('파티 유형', '파티가 목표로 하는 유형을 선택해 주세요.'),
+                _buildPartyTypeDropDownMenu(screenWidth),
+                const SizedBox(height: 60),
+                buildTitleText('파티 소개글', '파티의 방향성, 참고사항 등을 자유롭게 적어 주세요.'),
+                _buildPartyIntroductionForm(),
+                const SizedBox(height: 20),
+                _buildNextButton(context),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
@@ -189,7 +196,32 @@ class _Party1120State extends State<Party1120> {
     );
   }
 
-  Widget _buildIntroductionForm() {
+  Widget _buildPartyTypeDropDownMenu(double screenWidth) {
+    return Center(
+      child: DropdownMenu(
+        width: MediaQuery.of(context).size.width * 0.9,
+        menuStyle: MenuStyle(
+          shape: WidgetStatePropertyAll<OutlinedBorder>(
+            RoundedRectangleBorder(
+              side: BorderSide(
+                color: AppColors.primaryLightColors,
+              ),
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+          ),
+        ),
+        dropdownMenuEntries:
+            PartyTypes.values.map<DropdownMenuEntry<PartyTypes>>((element) {
+          return DropdownMenuEntry(
+            value: element,
+            label: element.option,
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildPartyIntroductionForm() {
     return TextFormField(
       scrollPadding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
