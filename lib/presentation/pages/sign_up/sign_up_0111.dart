@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../routes/route_path.dart';
-import '../../../theme/colors.dart';
-import '../../../theme/styles.dart';
-import '../../../widgets/app_bar.dart';
-import '../../../widgets/text.dart';
-import '../cubit/auth_cubit.dart';
-import '../cubit/user_form_cubit.dart';
+import '../../index.dart';
 import 'styles.dart';
 
 class SignUp0111 extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../routes/route_path.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/buttons.dart';
-import '../../sign_up/views/styles.dart';
+import '../../sign_up/styles.dart';
 
 class SignUpDetail0127 extends StatefulWidget {
   const SignUpDetail0127({super.key});
@@ -16,7 +16,7 @@ class _SignUpDetail0127State extends State<SignUpDetail0127> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ExitIconAppBar(),
+      appBar: const ExitIconAppBar(),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
         child: Column(
