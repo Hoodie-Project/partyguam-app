@@ -8,21 +8,19 @@ abstract class ApiConfigPath {
   );
 }
 
-abstract class ApiAuthPath {
+abstract class ApiUserPath {
   static const userCredentials = String.fromEnvironment(
     'userCredentials',
     defaultValue: '/users/kakao/app/login',
   );
-}
 
-abstract class ApiUserPath {
-  static const nickName = String.fromEnvironment(
-    'nickName',
+  static const nickname = String.fromEnvironment(
+    'nickname',
     defaultValue: '/users/check-nickname',
   );
 
-  static const user = String.fromEnvironment(
-    'user',
+  static const users = String.fromEnvironment(
+    'users',
     defaultValue: '/users',
   );
 }

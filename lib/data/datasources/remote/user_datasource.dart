@@ -47,7 +47,7 @@ class UserDataSourceImpl implements UserDataSource {
       };
 
       await _dioClient.post(
-        ApiAuthPath.userCredentials,
+        ApiUserPath.userCredentials,
         data: data,
       );
 
@@ -74,7 +74,7 @@ class UserDataSourceImpl implements UserDataSource {
       final params = {'nickname': nickname};
 
       final response = await _dioClient.get(
-        ApiUserPath.nickName,
+        ApiUserPath.nickname,
         queryParameters: params,
       );
 
@@ -105,7 +105,7 @@ class UserDataSourceImpl implements UserDataSource {
       };
 
       final response = await _dioClient.post(
-        ApiUserPath.user,
+        ApiUserPath.users,
         data: data,
       );
 
