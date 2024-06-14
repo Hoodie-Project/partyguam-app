@@ -135,3 +135,33 @@ enum Position {
 
   final String option;
 }
+
+enum NicknameError {
+  duplicate('duplicate', '중복된 닉네임 이에요.'),
+  specialCharacter('specialCharacter', '특수문자는 사용할 수 없어요.'),
+  length('length', '닉네임은 2자 이상 15자 이내로 입력해주세요.');
+
+  const NicknameError(this.error, this.description);
+
+  final String error;
+  final String description;
+}
+
+enum Gender {
+  man('남자'),
+  woman('여자');
+
+  const Gender(this.gender);
+
+  final String gender;
+}
+
+enum TokenTypes {
+  register('signupToken', '회원 가입'),
+  login('refreshToken', '로그인');
+
+  const TokenTypes(this.token, this.description);
+
+  final String token;
+  final String description;
+}

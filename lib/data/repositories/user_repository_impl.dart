@@ -9,12 +9,10 @@ import '../index.dart';
 class UserCredentialRepositoryImpl implements UserCredentialRepository {
   const UserCredentialRepositoryImpl(
     this._remoteDataSource,
-    this._oauthDataSource,
   );
 
   /// DI (Dependency Inversion)
-  final UserCredentialDataSource _remoteDataSource;
-  final AuthDataSource _oauthDataSource;
+  final UserDataSource _remoteDataSource;
 
   @override
   ApiResult<void> sendUserCredential({
@@ -30,7 +28,7 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
 
       final encryptedUid = await encryptUserId(uid);
 
-      final response = await _remoteDataSource.sendUserCredential(
+      await _remoteDataSource.sendUserCredential(
         uid: encryptedUid!,
         idToken: idToken,
       );
@@ -40,5 +38,51 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
     } on ApiException catch (e) {
       return Left(ApiFailure.fromException(e));
     }
+  }
+}
+
+@LazySingleton(as: UserSignUpRepository)
+class UserSignUpRepositoryImpl implements UserSignUpRepository {
+  const UserSignUpRepositoryImpl(this._remoteDataSource);
+
+  final UserDataSource _remoteDataSource;
+
+  @override
+  ApiResult<SuccessDto> checkUserNickname({required String nickname}) async {
+    try {
+      final response =
+          await _remoteDataSource.checkUserNickname(nickname: nickname);
+
+      return Right(response);
+    } on ApiException catch (e) {
+      return Left(ApiFailure.fromException(e));
+    }
+  }
+
+  @override
+  ApiResult<AccessTokenDto> createUser({
+    required String email,
+    required String nickname,
+    required String birth,
+    required String gender,
+  }) async {
+    try {
+      final response = await _remoteDataSource.createUser(
+        email: email,
+        nickname: nickname,
+        birth: birth,
+        gender: gender,
+      );
+
+      return Right(response);
+    } on ApiException catch (e) {
+      return Left(ApiFailure.fromException(e));
+    }
+  }
+
+  @override
+  ApiResult<UserInformation> getUserInformation() {
+    // TODO: implement getUserInformation
+    throw UnimplementedError();
   }
 }

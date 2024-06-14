@@ -1,20 +1,32 @@
-import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../core/index.dart';
 import '../../index.dart';
 
-abstract class UserCredentialDataSource {
+//
+abstract class UserDataSource {
   Future<void> sendUserCredential({
     required String uid,
     required String idToken,
   });
+
+  Future<SuccessDto> checkUserNickname({
+    required String nickname,
+  });
+
+  Future<AccessTokenDto> createUser({
+    required String nickname,
+    required String email,
+    required String gender,
+    required String birth,
+  });
 }
 
 /// https://youtu.be/_E3EF1jPumM?si=C237xCkb43LXiI4I&t=16311
-@LazySingleton(as: UserCredentialDataSource)
-class UserCredentialDataSourceImpl implements UserCredentialDataSource {
-  UserCredentialDataSourceImpl(this._dioClient);
+@LazySingleton(as: UserDataSource)
+class UserDataSourceImpl implements UserDataSource {
+  UserDataSourceImpl(this._dioClient);
 
   final DioClient _dioClient;
 
@@ -37,16 +49,69 @@ class UserCredentialDataSourceImpl implements UserCredentialDataSource {
       await _dioClient.post(
         ApiAuthPath.userCredentials,
         data: data,
-        options: Options(
-          headers: {
-            Headers.contentTypeHeader: 'application/json',
-          },
-        ),
       );
 
       /// https://youtu.be/_E3EF1jPumM?si=Bq7ovtYzj46WizbJ&t=18712
       /// when you throw an error inside of try phrase, make sure rethrow the error between try - catch phrase.
       /// because it will throw errors in catch phase, then we cannot indicate where this error occurs.
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      /// dart error
+      throw ApiException(message: e.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<SuccessDto> checkUserNickname({required String nickname}) async {
+    try {
+      // check cookie
+
+      // await _dioClient.deleteCookie((Uri.parse(ApiConfigPath.hostUri)));
+
+      // debugPrint(_dioClient().)
+
+      final params = {'nickname': nickname};
+
+      final response = await _dioClient.get(
+        ApiUserPath.nickName,
+        queryParameters: params,
+      );
+
+      return SuccessDto.fromJson(response);
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      /// dart error
+      throw ApiException(message: e.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<AccessTokenDto> createUser({
+    required String email,
+    required String nickname,
+    required String birth,
+    required String gender,
+  }) async {
+    try {
+      // check cookie
+
+      final data = {
+        'email': email,
+        'nickname': nickname,
+        'birth': birth,
+        'gender': gender,
+      };
+
+      final response = await _dioClient.post(
+        ApiUserPath.user,
+        data: data,
+      );
+
+      debugPrint('here: ${AccessTokenDto.fromJson(response)}');
+
+      return AccessTokenDto.fromJson(response);
     } on ApiException {
       rethrow;
     } catch (e) {

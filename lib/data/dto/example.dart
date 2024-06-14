@@ -12,15 +12,15 @@ class ExampleDto extends UserCredential {
   /// When it receives the data,
   /// it's in a form of JSON with data type String.
   factory ExampleDto.fromJson(String source) =>
-      ExampleDto.fromMap(jsonDecode(source) as DataMap);
+      ExampleDto.fromMap(jsonDecode(source) as Data);
 
-  ExampleDto.fromMap(DataMap map)
+  ExampleDto.fromMap(Data map)
       : this(
           uid: map['uid'] as String,
           idToken: map['idToken'] as String,
         );
 
-  DataMap toMap() => {
+  Data toMap() => {
         'uid': uid,
         'idToken': idToken,
       };

@@ -1,24 +1,24 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'auth_tokens_dto.g.dart';
+part 'response_wrapper.g.dart';
 
 @JsonSerializable()
-class AuthTokensDto {
-  AuthTokensDto({
-    required this.refreshToken,
+class ResponseWrapper {
+  ResponseWrapper({
+    required this.data,
   });
 
   /// The generated code assumes these values exist in JSON.
   @JsonKey(required: true)
-  final String refreshToken;
+  final Map<String, dynamic> data;
 
   /// Connect the generated [_$PersonFromJson] function to the `fromJson`
   /// factory.
-  factory AuthTokensDto.fromJson(Map<String, dynamic> json) =>
-      _$AuthTokensDtoFromJson(json);
+  factory ResponseWrapper.fromJson(Map<String, dynamic> json) =>
+      _$ResponseWrapperFromJson(json);
 
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
-  Map<String, dynamic> toJson() => _$AuthTokensDtoToJson(this);
+  Map<String, dynamic> toJson() => _$ResponseWrapperToJson(this);
 }
 
 // dart run build_runner build --delete-conflicting-outputs

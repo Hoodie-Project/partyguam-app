@@ -5,8 +5,10 @@ import 'package:injectable/injectable.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import '../../core/index.dart';
+import '../../data/index.dart';
 import '../index.dart';
 
+// SendUserCredentials
 @Injectable()
 class SendUserCredentials
     extends UsecaseWithParams<void, SendUserCredentialParams> {
@@ -71,6 +73,64 @@ Future<String?> encryptUserId(String uid) async {
   }
 }
 
+// CheckUserNickname
+@Injectable()
+class CheckUserNickname
+    extends UsecaseWithParams<void, CheckUserNicknameParams> {
+  const CheckUserNickname(this._repository);
+
+  final UserSignUpRepository _repository;
+
+  @override
+  ApiResult<SuccessDto> call(CheckUserNicknameParams params) async =>
+      _repository.checkUserNickname(nickname: params.nickname);
+}
+
+class CheckUserNicknameParams extends Equatable {
+  const CheckUserNicknameParams({
+    required this.nickname,
+  });
+
+  final String nickname;
+
+  @override
+  List<Object?> get props => [nickname];
+}
+
+// CreateUser
+@Injectable()
+class CreateUser extends UsecaseWithParams<void, CreateUserParams> {
+  const CreateUser(this._repository);
+
+  final UserSignUpRepository _repository;
+
+  @override
+  ApiResult<void> call(CreateUserParams params) async => _repository.createUser(
+        email: params.email,
+        nickname: params.nickname,
+        birth: params.birth,
+        gender: params.gender,
+      );
+}
+
+class CreateUserParams extends Equatable {
+  const CreateUserParams({
+    required this.email,
+    required this.nickname,
+    required this.birth,
+    required this.gender,
+  });
+
+  final String email;
+  final String nickname;
+  final String birth;
+  final String gender;
+
+  @override
+  List<Object?> get props => [email];
+}
+
+//
 Future<void> kakaoLogOut() async {
   try {
     await UserApi.instance.logout();

@@ -6,13 +6,15 @@ import '../../../routes/route_path.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
-import '../../../widgets/process_indicator.dart';
 import '../../../widgets/text.dart';
 import '../cubit/auth_cubit.dart';
+import '../cubit/user_form_cubit.dart';
 import 'styles.dart';
 
 class SignUp0111 extends StatefulWidget {
-  const SignUp0111({super.key});
+  const SignUp0111({super.key, required this.email});
+
+  final String email;
 
   @override
   State<SignUp0111> createState() => _SignUp0111State();
@@ -20,26 +22,10 @@ class SignUp0111 extends StatefulWidget {
 
 class _SignUp0111State extends State<SignUp0111> {
   @override
-  void initState() {
-    super.initState();
-
-    context.read<AuthCubit>().getKakaoUserInfo();
-  }
-
-  @override
-  void dispose() {
-    context.read<AuthCubit>().getKakaoUserInfo();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthInitial) {
-          context.read<AuthCubit>().getKakaoUserInfo();
-        } else if (state is UnAuthenticated) {
+        if (state is OauthUnAuthenticated) {
           /// TODO (20240602): 예상하지 못한 오류 발생 팝업 디자인 필요
           debugPrint('예상치 못한 오류 발생;');
           context.go(RouterPath.main);
@@ -47,37 +33,36 @@ class _SignUp0111State extends State<SignUp0111> {
       },
       builder: (context, state) {
         return Scaffold(
-            appBar: const DialogAppBar(
-              title: '가입하기',
-              pageCount: '1/4',
+          appBar: const DialogAppBar(
+            title: '가입하기',
+            pageCount: '1/4',
+          ),
+          body: Padding(
+            padding: const EdgeInsets.only(
+                left: 20.0, top: 40.0, right: 20.0, bottom: 12.0),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildTitleText(
+                    '가입을 축하드려요!\n이메일 정보가 맞나요?',
+                    '나중에 변경할 수 없어요.',
+                  ),
+                  _buildEmailConfirmForm(),
+                  const Expanded(
+                    child: SizedBox(),
+                  ),
+                  _buildNextButton(context),
+                ],
+              ),
             ),
-            body: state is GetKakaoUserInfoComplete
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, top: 40.0, right: 20.0, bottom: 12.0),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          buildTitleText(
-                            '가입을 축하드려요!\n이메일 정보가 맞나요?',
-                            '나중에 변경할 수 없어요.',
-                          ),
-                          _buildEmailConfirmForm(state.email),
-                          const Expanded(
-                            child: SizedBox(),
-                          ),
-                          _buildNextButton(context, state.uid),
-                        ],
-                      ),
-                    ),
-                  )
-                : Center(child: buildProgressIndicator()));
+          ),
+        );
       },
     );
   }
 
-  Widget _buildEmailConfirmForm(String? email) {
+  Widget _buildEmailConfirmForm() {
     return SizedBox(
       width: double.infinity,
       child: Material(
@@ -91,18 +76,16 @@ class _SignUp0111State extends State<SignUp0111> {
             color: AppColors.greyColors.shade100,
             borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           ),
-          child: email != null
-              ? Text(
-                  email,
-                  style: SignUp0111Styles.emailText,
-                )
-              : const Text(''),
+          child: Text(
+            widget.email,
+            style: SignUp0111Styles.emailText,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildNextButton(BuildContext context, String uid) {
+  Widget _buildNextButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: Material(
@@ -114,7 +97,7 @@ class _SignUp0111State extends State<SignUp0111> {
         child: ElevatedButton(
           onPressed: () {
             setState(() {
-              context.read<AuthCubit>().sendUserCredentials(uid);
+              context.read<UserFormCubit>().setEmail(widget.email);
               context.push('${RouterPath.signUp}/0112');
             });
           },

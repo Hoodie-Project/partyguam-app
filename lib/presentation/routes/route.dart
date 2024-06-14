@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:partyguam/presentation/pages/party/party_1150.dart';
 
 import '../pages/main/main_1100.dart';
 import '../pages/sign_up/views/sign_in_0000.dart';
@@ -30,9 +31,13 @@ final router = GoRouter(
       builder: (context, state) => const SignIn0000(),
       routes: [
         GoRoute(
-          path: '0111',
-          builder: (context, state) => const SignUp0111(),
-        ),
+            path: '0111',
+            builder: (context, state) {
+              final data = state.extra as Map<String, String?>;
+              final email = data['email'] ?? '';
+
+              return SignUp0111(email: email);
+            }),
         GoRoute(
           path: '0112',
           builder: (context, state) => const SignUp0112(),
@@ -83,6 +88,11 @@ final router = GoRouter(
           builder: (context, state) => const SignUpDetail0127(),
         ),
       ],
+    ),
+    GoRoute(
+      name: 'party1150',
+      path: '/party/1150',
+      builder: (context, state) => const Party1150(),
     ),
   ],
 );
