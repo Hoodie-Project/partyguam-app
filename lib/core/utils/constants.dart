@@ -165,3 +165,7 @@ enum TokenTypes {
   final String token;
   final String description;
 }
+
+String hintText() {
+  return '창의적인 아이디어와 열정이 가득한 분들과\n함꼐하는 시간을 가지려고 합니다.\n함께 모여 스터디를 시작하거나 프로젝트를 만들어서\n성장하는 즐거움을 함께 누려봐요!';
+}

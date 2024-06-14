@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:partyguam/presentation/pages/party/party_1120.dart';
 
 import '../pages/main/main_1100.dart';
 import '../pages/party/party_1150.dart';
@@ -93,6 +94,11 @@ final router = GoRouter(
       name: 'party1150',
       path: '/party/1150',
       builder: (context, state) => const Party1150(),
+    ),
+    GoRoute(
+      name: 'party1120',
+      path: '/party/1120',
+      builder: (context, state) => const Party1120(),
     ),
   ],
 );
