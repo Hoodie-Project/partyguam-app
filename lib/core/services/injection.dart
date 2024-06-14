@@ -6,6 +6,6 @@ import 'injection.config.dart';
 final getIt = GetIt.instance;
 
 @InjectableInit()
-void initializeGetIt() => getIt.init();
+void initGetIt() => getIt.init();
 
-// dart run build_runner build
+//dart run build_runner build --delete-conflicting-outputs

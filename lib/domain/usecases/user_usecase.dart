@@ -14,7 +14,7 @@ class SendUserCredentials
     extends UsecaseWithParams<void, SendUserCredentialParams> {
   const SendUserCredentials(this._repository);
 
-  final UserCredentialRepository _repository;
+  final UserSignUpRepository _repository;
 
   /**
    * implement an abstract class for usecase to make an return type identical.
@@ -71,6 +71,7 @@ Future<String?> encryptUserId(String uid) async {
       FlutterException(message: e.message, statusCode: e.statusCode),
     );
   }
+  return null;
 }
 
 // CheckUserNickname
@@ -82,7 +83,7 @@ class CheckUserNickname
   final UserSignUpRepository _repository;
 
   @override
-  ApiResult<SuccessDto> call(CheckUserNicknameParams params) async =>
+  ApiResult<ResponseDto> call(CheckUserNicknameParams params) async =>
       _repository.checkUserNickname(nickname: params.nickname);
 }
 

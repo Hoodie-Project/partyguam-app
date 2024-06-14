@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/colors.dart';
+import '../../index.dart';
 
 class SignIn0000Styles {
   static const RoundedRectangleBorder socialButtonBorder =

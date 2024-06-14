@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../routes/route_path.dart';
-import '../../../theme/colors.dart';
-import '../../../theme/styles.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/buttons.dart';
-import '../cubit/user_form_cubit.dart';
-import 'styles.dart';
+import '../../sign_up/styles.dart';
 
-class SignUp0115 extends StatelessWidget {
-  const SignUp0115({super.key});
+class SignUpDetail0127 extends StatefulWidget {
+  const SignUpDetail0127({super.key});
 
+  @override
+  State<SignUpDetail0127> createState() => _SignUpDetail0127State();
+}
+
+class _SignUpDetail0127State extends State<SignUpDetail0127> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const NoIconsAppBar(title: '가입완료'),
+      appBar: const ExitIconAppBar(),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
         child: Column(
@@ -29,7 +29,7 @@ class SignUp0115 extends StatelessWidget {
             Center(
               child: Text(
                 textAlign: TextAlign.center,
-                '가입을 축하합니다!\n세부 프로필을 작성해 볼까요?',
+                '세부 프로필 입력이 완료되었어요!\n파티에 참여해볼까요?',
                 style: SignUp0115Styles.mainTitle,
               ),
             ),
@@ -43,40 +43,23 @@ class SignUp0115 extends StatelessWidget {
                 Expanded(
                   child: buildOutlinedShortButton(
                     context,
-                    '홈으로 이동',
-                    RouterPath.signIn,
+                    '프로필로 이동',
+                    '/',
                   ),
                 ),
                 const SizedBox(
                   width: 8.0,
                 ),
                 Expanded(
-                  child: _buildNextButton(context),
+                  child: buildFilledLongButton(
+                    context,
+                    '확인',
+                    RouterPath.main,
+                  ),
                 ),
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNextButton(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Material(
-        color: AppColors.greyColors.shade50,
-        elevation: 1.0,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(16.0),
-        ),
-        child: ElevatedButton(
-          onPressed: () {
-            context.read<UserFormCubit>().createUser();
-            context.push('${RouterPath.signUp}/detail/0121');
-          },
-          style: CommonButtonStyles.filledLongStyle,
-          child: const Text('작성하기'),
         ),
       ),
     );

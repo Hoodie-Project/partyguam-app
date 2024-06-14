@@ -25,22 +25,22 @@ class SignUpDetailsListStyle {
     color: AppColors.greyColors.shade700,
   );
 
-  static MaterialStateColor selectedIcon =
-      MaterialStateColor.resolveWith((Set<MaterialState> states) {
-    if (states.contains(MaterialState.selected)) {
+  static WidgetStateColor selectedIcon =
+      WidgetStateColor.resolveWith((Set<WidgetState> states) {
+    if (states.contains(WidgetState.selected)) {
       return AppColors.primaryDarkColors.shade100;
     }
     return AppColors.greyColors.shade200;
   });
 
-  static MaterialStateColor regularText =
-      MaterialStateColor.resolveWith((Set<MaterialState> states) {
+  static WidgetStateColor regularText =
+      WidgetStateColor.resolveWith((Set<WidgetState> states) {
     return AppColors.greyColors.shade700;
   });
 
-  static MaterialStateColor selectedTile =
-      MaterialStateColor.resolveWith((Set<MaterialState> states) {
-    if (states.contains(MaterialState.selected)) {
+  static WidgetStateColor selectedTile =
+      WidgetStateColor.resolveWith((Set<WidgetState> states) {
+    if (states.contains(WidgetState.selected)) {
       return AppColors.primaryLightColors.shade300;
     }
     return AppColors.greyColors.shade50;

@@ -1,4 +1,5 @@
 /// config
+library;
 export 'config/dio.dart';
 export 'config/path.dart';
 
@@ -8,7 +9,7 @@ export 'datasources/remote/user_datasource.dart';
 
 /// dto
 export 'dto/auth/access_token_dto.dart';
-export 'dto/user/success_dto.dart';
+export 'dto/user/response_dto.dart';
 export 'dto/user/token_dto.dart';
 export 'dto/user/user_credential_dto.dart';
 

@@ -3,13 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../../../../domain/usecases/validation.dart';
-import '../../../routes/route_path.dart';
-import '../../../theme/colors.dart';
-import '../../../theme/styles.dart';
-import '../../../widgets/app_bar.dart';
-import '../../../widgets/text.dart';
-import '../cubit/user_form_cubit.dart';
+import '../../../domain/usecases/validation.dart';
+import '../../index.dart';
 import 'styles.dart';
 
 class SignUp0113 extends StatefulWidget {

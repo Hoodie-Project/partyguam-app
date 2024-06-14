@@ -11,7 +11,7 @@ abstract class UserDataSource {
     required String idToken,
   });
 
-  Future<SuccessDto> checkUserNickname({
+  Future<ResponseDto> checkUserNickname({
     required String nickname,
   });
 
@@ -47,7 +47,7 @@ class UserDataSourceImpl implements UserDataSource {
       };
 
       await _dioClient.post(
-        ApiAuthPath.userCredentials,
+        ApiUserPath.userCredentials,
         data: data,
       );
 
@@ -63,7 +63,7 @@ class UserDataSourceImpl implements UserDataSource {
   }
 
   @override
-  Future<SuccessDto> checkUserNickname({required String nickname}) async {
+  Future<ResponseDto> checkUserNickname({required String nickname}) async {
     try {
       // check cookie
 
@@ -74,11 +74,11 @@ class UserDataSourceImpl implements UserDataSource {
       final params = {'nickname': nickname};
 
       final response = await _dioClient.get(
-        ApiUserPath.nickName,
+        ApiUserPath.nickname,
         queryParameters: params,
       );
 
-      return SuccessDto.fromJson(response);
+      return ResponseDto.fromJson(response);
     } on ApiException {
       rethrow;
     } catch (e) {
@@ -105,7 +105,7 @@ class UserDataSourceImpl implements UserDataSource {
       };
 
       final response = await _dioClient.post(
-        ApiUserPath.user,
+        ApiUserPath.users,
         data: data,
       );
 

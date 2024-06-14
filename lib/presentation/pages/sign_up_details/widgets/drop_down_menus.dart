@@ -62,17 +62,17 @@ class _AddressDropDownMenuState extends State<AddressDropDownMenu> {
           menuHeight: 156.0,
           menuStyle: MenuStyle(
             /// TODO: 메뉴 backgroundColor 하얀색으로 지정
-            backgroundColor: MaterialStateProperty.resolveWith(
+            backgroundColor: WidgetStateProperty.resolveWith(
               (states) {
                 return AppColors.greyColors.shade50;
               },
             ),
-            minimumSize: MaterialStateProperty.resolveWith(
+            minimumSize: WidgetStateProperty.resolveWith(
               (states) {
                 return const Size(161.0, 52.0);
               },
             ),
-            shape: MaterialStateProperty.resolveWith(
+            shape: WidgetStateProperty.resolveWith(
               (states) {
                 return RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/index.dart';
 import '../../../../theme/colors.dart';
 import '../../../../theme/styles.dart';
-import '../../../../utils/constants.dart';
 import '../../../../widgets/app_bar.dart';
 
 class ExperienceView extends StatefulWidget {

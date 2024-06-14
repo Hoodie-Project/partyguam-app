@@ -29,12 +29,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     /// invoke the usecase
     final result = await _sendUserCredentials(
-        SendUserCredentialParams(uid: 'uid', idToken: 'idToken'));
+        const SendUserCredentialParams(uid: 'uid', idToken: 'idToken'));
 
     /// equatable syntax: result.fold(L,R)
 
     result.fold(
-      (registered) => emit(UserCredentialsSent()),
+      (registered) => emit(const UserCredentialsSent()),
       (r) => emit(const UserCredentialsSent()),
     );
   }

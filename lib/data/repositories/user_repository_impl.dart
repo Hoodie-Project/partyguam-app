@@ -5,13 +5,10 @@ import '../../core/index.dart';
 import '../../domain/index.dart';
 import '../index.dart';
 
-@LazySingleton(as: UserCredentialRepository)
-class UserCredentialRepositoryImpl implements UserCredentialRepository {
-  const UserCredentialRepositoryImpl(
-    this._remoteDataSource,
-  );
+@LazySingleton(as: UserSignUpRepository)
+class UserSignUpRepositoryImpl implements UserSignUpRepository {
+  const UserSignUpRepositoryImpl(this._remoteDataSource);
 
-  /// DI (Dependency Inversion)
   final UserDataSource _remoteDataSource;
 
   @override
@@ -39,16 +36,9 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
       return Left(ApiFailure.fromException(e));
     }
   }
-}
-
-@LazySingleton(as: UserSignUpRepository)
-class UserSignUpRepositoryImpl implements UserSignUpRepository {
-  const UserSignUpRepositoryImpl(this._remoteDataSource);
-
-  final UserDataSource _remoteDataSource;
 
   @override
-  ApiResult<SuccessDto> checkUserNickname({required String nickname}) async {
+  ApiResult<ResponseDto> checkUserNickname({required String nickname}) async {
     try {
       final response =
           await _remoteDataSource.checkUserNickname(nickname: nickname);

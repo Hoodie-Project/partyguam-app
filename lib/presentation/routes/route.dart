@@ -1,20 +1,20 @@
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/presentation/pages/party/party_1150.dart';
 
 import '../pages/main/main_1100.dart';
-import '../pages/sign_up/views/sign_in_0000.dart';
-import '../pages/sign_up/views/sign_up_0111.dart';
-import '../pages/sign_up/views/sign_up_0112.dart';
-import '../pages/sign_up/views/sign_up_0113.dart';
-import '../pages/sign_up/views/sign_up_0114.dart';
-import '../pages/sign_up/views/sign_up_0115.dart';
-import '../pages/sign_up_details/views/0122/sign_up_details_0122.dart';
-import '../pages/sign_up_details/views/sign_up_details_0121.dart';
-import '../pages/sign_up_details/views/sign_up_details_0123.dart';
-import '../pages/sign_up_details/views/sign_up_details_0124.dart';
-import '../pages/sign_up_details/views/sign_up_details_0125.dart';
-import '../pages/sign_up_details/views/sign_up_details_0126.dart';
-import '../pages/sign_up_details/views/sign_up_details_0127.dart';
+import '../pages/party/party_1150.dart';
+import '../pages/sign_up/sign_in_0000.dart';
+import '../pages/sign_up/sign_up_0111.dart';
+import '../pages/sign_up/sign_up_0112.dart';
+import '../pages/sign_up/sign_up_0113.dart';
+import '../pages/sign_up/sign_up_0114.dart';
+import '../pages/sign_up/sign_up_0115.dart';
+import '../pages/sign_up_details/views/0122/sign_up_detail_0122.dart';
+import '../pages/sign_up_details/views/sign_up_detail_0121.dart';
+import '../pages/sign_up_details/views/sign_up_detail_0123.dart';
+import '../pages/sign_up_details/views/sign_up_detail_0124.dart';
+import '../pages/sign_up_details/views/sign_up_detail_0125.dart';
+import '../pages/sign_up_details/views/sign_up_detail_0126.dart';
+import '../pages/sign_up_details/views/sign_up_detail_0127.dart';
 import 'route_path.dart';
 
 final router = GoRouter(

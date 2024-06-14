@@ -57,7 +57,7 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<String?> checkUserNickname(String nickname) async {
+  Future<void> checkUserNickname(String nickname) async {
     emit(const CheckUserNicknamePending());
 
     final result = await _checkUserNickname(
