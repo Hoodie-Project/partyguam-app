@@ -10,14 +10,20 @@ class Main1100 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SignInAppBar(title: '메인'),
+      appBar: const SignInAppBar(title: '메인'),
       body: Column(
         children: [
-          Text('메인 페이지에 오신걸 환영합니다!'),
+          const Text('메인 페이지에 오신걸 환영합니다!'),
           buildFilledLongButton(
             context,
             '회원가입 페이지',
             RouterPath.signUp,
+          ),
+          const SizedBox(height: 20),
+          buildFilledLongButton(
+            context,
+            '파티 지원 페이지',
+            '${RouterPath.party}/1150',
           ),
         ],
       ),
