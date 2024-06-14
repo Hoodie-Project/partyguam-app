@@ -14,7 +14,7 @@ class SendUserCredentials
     extends UsecaseWithParams<void, SendUserCredentialParams> {
   const SendUserCredentials(this._repository);
 
-  final UserCredentialRepository _repository;
+  final UserSignUpRepository _repository;
 
   /**
    * implement an abstract class for usecase to make an return type identical.

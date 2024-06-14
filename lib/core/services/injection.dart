@@ -8,4 +8,4 @@ final getIt = GetIt.instance;
 @InjectableInit()
 void initializeGetIt() => getIt.init();
 
-// dart run build_runner build
+//dart run build_runner build --delete-conflicting-outputs

@@ -43,10 +43,10 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i6.AuthRepositoryImpl(gh<_i7.AuthDataSource>()));
     gh.lazySingleton<_i8.UserDataSource>(
         () => _i8.UserDataSourceImpl(gh<_i7.DioClient>()));
-    gh.lazySingleton<_i5.UserCredentialRepository>(
-        () => _i9.UserCredentialRepositoryImpl(gh<_i7.UserDataSource>()));
     gh.lazySingleton<_i5.UserSignUpRepository>(
         () => _i9.UserSignUpRepositoryImpl(gh<_i7.UserDataSource>()));
+    gh.factory<_i10.SendUserCredentials>(
+        () => _i10.SendUserCredentials(gh<_i5.UserSignUpRepository>()));
     gh.factory<_i10.CheckUserNickname>(
         () => _i10.CheckUserNickname(gh<_i5.UserSignUpRepository>()));
     gh.factory<_i10.CreateUser>(
@@ -55,12 +55,10 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i11.SignInWithKakao(gh<_i5.AuthRepository>()));
     gh.factory<_i11.GetKakaoUserInfo>(
         () => _i11.GetKakaoUserInfo(gh<_i5.AuthRepository>()));
-    gh.factory<_i10.SendUserCredentials>(
-        () => _i10.SendUserCredentials(gh<_i5.UserCredentialRepository>()));
     gh.factory<_i12.UserCubit>(() => _i12.UserCubit(
           checkUserNickname: gh<_i5.CheckUserNickname>(),
           sendUserCredentials: gh<_i5.SendUserCredentials>(),
-          dioClient: gh<_i3.DioClient>(),
+          dioClient: gh<_i7.DioClient>(),
         ));
     gh.factory<_i13.UserFormCubit>(
         () => _i13.UserFormCubit(createUser: gh<_i5.CreateUser>()));
