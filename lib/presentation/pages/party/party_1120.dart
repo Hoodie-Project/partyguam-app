@@ -222,36 +222,40 @@ class _Party1120State extends State<Party1120> {
   }
 
   Widget _buildPartyIntroductionForm() {
-    return TextFormField(
-      scrollPadding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      controller: _textController,
-      onTapOutside: (PointerDownEvent event) {
-        FocusScope.of(context).unfocus();
-      },
-      minLines: null,
-      maxLines: 10,
-      maxLength: 250,
-      buildCounter: _buildTextFormCounter,
-      decoration: InputDecoration(
-        hintText: hintText(),
-        hintStyle: TextStyle(
-          color: AppColors.greyColors.shade400,
-          fontSize: 14.0,
-          fontWeight: FontWeight.normal,
-          letterSpacing: -0.25,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColors.greyColors.shade200,
+    return Scrollbar(
+      interactive: true,
+      radius: Radius.circular(16),
+      child: TextFormField(
+        scrollPadding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        controller: _textController,
+        onTapOutside: (PointerDownEvent event) {
+          FocusScope.of(context).unfocus();
+        },
+        minLines: null,
+        maxLines: 10,
+        maxLength: 250,
+        buildCounter: _buildTextFormCounter,
+        decoration: InputDecoration(
+          hintText: hintText(),
+          hintStyle: TextStyle(
+            color: AppColors.greyColors.shade400,
+            fontSize: 14.0,
+            fontWeight: FontWeight.normal,
+            letterSpacing: -0.25,
           ),
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColors.primaryDarkColors.shade100,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.greyColors.shade200,
+            ),
+            borderRadius: BorderRadius.circular(16.0),
           ),
-          borderRadius: BorderRadius.circular(16.0),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.primaryDarkColors.shade100,
+            ),
+            borderRadius: BorderRadius.circular(16.0),
+          ),
         ),
       ),
     );
