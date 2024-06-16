@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/core/index.dart';
-import 'package:partyguam/presentation/index.dart';
 
+import '../../../core/index.dart';
+import '../../index.dart';
 import '../sign_up/styles.dart';
 
 class Party1120 extends StatefulWidget {
@@ -87,7 +87,7 @@ class _Party1120State extends State<Party1120> {
                 _buildPartyNameForm(),
                 const SizedBox(height: 60),
                 buildTitleText('파티 유형', '파티가 목표로 하는 유형을 선택해 주세요.'),
-                _buildPartyTypeDropDownMenu(screenWidth),
+                _buildPartyTypeDropDownMenu(),
                 const SizedBox(height: 60),
                 buildTitleText('파티 소개글', '파티의 방향성, 참고사항 등을 자유롭게 적어 주세요.'),
                 _buildPartyIntroductionForm(),
@@ -196,20 +196,57 @@ class _Party1120State extends State<Party1120> {
     );
   }
 
-  Widget _buildPartyTypeDropDownMenu(double screenWidth) {
+  Widget _buildPartyTypeDropDownMenu() {
     return Center(
       child: DropdownMenu(
+        hintText: '유형을 선택해 주세요.',
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.normal,
+          fontSize: 16.0,
+        ),
         width: MediaQuery.of(context).size.width * 0.9,
+        inputDecorationTheme: InputDecorationTheme(
+          contentPadding: const EdgeInsets.only(left: 20.0),
+          hintStyle: TextStyle(
+            color: AppColors.greyColors.shade400,
+            fontSize: 16.0,
+            fontWeight: FontWeight.normal,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16.0),
+            borderSide: BorderSide(
+              color: AppColors.greyColors.shade200,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16.0),
+            borderSide: const BorderSide(
+              color: AppColors.primaryLightColors,
+            ),
+          ),
+        ),
         menuStyle: MenuStyle(
           shape: WidgetStatePropertyAll<OutlinedBorder>(
             RoundedRectangleBorder(
-              side: BorderSide(
+              side: const BorderSide(
                 color: AppColors.primaryLightColors,
               ),
               borderRadius: BorderRadius.circular(16.0),
             ),
           ),
+          backgroundColor: WidgetStatePropertyAll<Color>(
+            AppColors.greyColors.shade50,
+          ),
         ),
+        selectedTrailingIcon: const Icon(
+          Icons.keyboard_arrow_up_rounded,
+          color: AppColors.primaryLightColors,
+        ),
+        trailingIcon: Icon(
+          Icons.keyboard_arrow_down_rounded,
+          color: AppColors.greyColors.shade300,
+        ),
+        requestFocusOnTap: true,
         dropdownMenuEntries:
             PartyTypes.values.map<DropdownMenuEntry<PartyTypes>>((element) {
           return DropdownMenuEntry(
@@ -224,7 +261,7 @@ class _Party1120State extends State<Party1120> {
   Widget _buildPartyIntroductionForm() {
     return Scrollbar(
       interactive: true,
-      radius: Radius.circular(16),
+      radius: const Radius.circular(16),
       child: TextFormField(
         scrollPadding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
