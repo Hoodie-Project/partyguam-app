@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:partyguam/main.dart';
 
 import '../../../core/index.dart';
 import '../../index.dart';
@@ -31,7 +32,7 @@ class UserDataSourceImpl implements UserDataSource {
   final DioClient _dioClient;
 
   @override
-  Future<void> sendUserCredential({
+  Future<AccessTokenDto?> sendUserCredential({
     required String uid,
     required String idToken,
   }) async {
@@ -46,10 +47,17 @@ class UserDataSourceImpl implements UserDataSource {
         'idToken': idToken,
       };
 
-      await _dioClient.post(
+      final response = await _dioClient.post(
         ApiAuthPath.userCredentials,
         data: data,
       );
+      print(response);
+
+      if (response.isNotEmpty) {
+        final result = AccessTokenDto.fromJson(response);
+
+        await localStorage.setString('accessToken', result.accessToken);
+      }
 
       /// https://youtu.be/_E3EF1jPumM?si=Bq7ovtYzj46WizbJ&t=18712
       /// when you throw an error inside of try phrase, make sure rethrow the error between try - catch phrase.
@@ -60,6 +68,7 @@ class UserDataSourceImpl implements UserDataSource {
       /// dart error
       throw ApiException(message: e.toString(), statusCode: 505);
     }
+    return null;
   }
 
   @override
@@ -96,6 +105,11 @@ class UserDataSourceImpl implements UserDataSource {
   }) async {
     try {
       // check cookie
+      final signUpToken = await _dioClient.checkCookie();
+
+      if (signUpToken?.token != TokenTypes.login.token) {
+        debugPrint('No signupToken provided');
+      }
 
       final data = {
         'email': email,
@@ -109,9 +123,12 @@ class UserDataSourceImpl implements UserDataSource {
         data: data,
       );
 
-      debugPrint('here: ${AccessTokenDto.fromJson(response)}');
+      final result = AccessTokenDto.fromJson(response);
+      debugPrint('createUser success: ${AccessTokenDto.fromJson(response)}');
 
-      return AccessTokenDto.fromJson(response);
+      await localStorage.setString('accessToken', result.accessToken);
+
+      return result;
     } on ApiException {
       rethrow;
     } catch (e) {
@@ -126,3 +143,37 @@ class UserDataSourceImpl implements UserDataSource {
  * if an error occurs inside of the datasource, throw the error.
  * data/repository will catch the error, then return a failure.
  * */
+
+abstract class UserSignUpDataSource {
+  Future<LocationResponseDto> fetchLocations();
+}
+
+@LazySingleton(as: UserSignUpDataSource)
+class UserSignUpDataSourceImpl extends UserSignUpDataSource {
+  UserSignUpDataSourceImpl(this._dioClient);
+
+  final DioClient _dioClient;
+
+  @override
+  Future<LocationResponseDto> fetchLocations() async {
+    try {
+      final refreshToken = await _dioClient.checkCookie();
+
+      if (refreshToken?.token != TokenTypes.register.token) {
+        debugPrint('No refreshToken provided');
+      }
+
+      final response = await _dioClient.get(
+        ApiUserPath.locations,
+      );
+
+      return LocationResponseDto.fromJson(response);
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      /// dart error
+      debugPrint(e.toString());
+      throw ApiException(message: e.toString(), statusCode: 505);
+    }
+  }
+}

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/index.dart';
 import '../../../theme/colors.dart';
 import '../../../theme/styles.dart';
-import '../../../utils/constants.dart';
 import '../../../widgets/app_bar.dart';
 import '../../../widgets/snack_bar.dart';
 import '../../../widgets/text.dart';
+import '../../sign_up/cubit/user_cubit.dart';
 import '../widgets/buttons.dart';
 import '../widgets/steppers.dart';
 
@@ -18,7 +20,20 @@ class SignUpDetail0121 extends StatefulWidget {
 }
 
 class _SignUpDetail0121State extends State<SignUpDetail0121> {
-  // province
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<UserCubit>().getLocations();
+  }
+
+  @override
+  void dispose() {
+    context.read<UserCubit>().getLocations();
+
+    super.dispose();
+  }
+
   final List<String> _provinceList =
       Province.values.map((element) => element.option).toList();
   final List _selectedProvinces = [];

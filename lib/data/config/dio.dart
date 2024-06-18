@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/index.dart';
+import '../../main.dart';
 import '../index.dart';
+import 'auth_interceptor.dart';
 
 final options = BaseOptions(
   baseUrl: ApiConfigPath.hostUri,
@@ -20,35 +22,20 @@ final options = BaseOptions(
 @lazySingleton
 class DioClient {
   final Dio _dio;
-
   final CookieJar _cookieJar = CookieJar();
+  String accessToken = '';
 
   DioClient() : _dio = Dio(options) {
     _initializeDio();
   }
 
   Future<void> _initializeDio() async {
+    _dio.interceptors.add(AuthInterceptor());
     _dio.interceptors.add(CookieManager(_cookieJar));
 
-    await _clearCookiesOnStart();
+    await clearCookies();
+    await clearTokens();
   }
-
-  // Future<void> saveRefreshToken() async {
-  //   try {
-  //     List<Cookie> cookies =
-  //         await _cookieJar.loadForRequest(Uri.parse(ApiConfigPath.hostUri));
-  //
-  //     debugPrint('cookies: $cookies');
-  //
-  //     for (var cookie in cookies) {
-  //       if (cookie.name == 'refreshToken') {
-  //         debugPrint('cookie: $cookie');
-  //       }
-  //     }
-  //   } catch (e) {
-  //     throw ApiException(message: e.toString(), statusCode: 600);
-  //   }
-  // }
 
   Future<TokenDto?> checkCookie() async {
     List<Cookie> cookies =
@@ -71,8 +58,12 @@ class DioClient {
     await _cookieJar.delete(uri);
   }
 
-  Future<void> _clearCookiesOnStart() async {
+  Future<void> clearCookies() async {
     await _cookieJar.deleteAll();
+  }
+
+  Future<void> clearTokens() async {
+    await localStorage.remove('accessToken');
   }
 
   /// GET

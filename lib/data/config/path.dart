@@ -25,4 +25,9 @@ abstract class ApiUserPath {
     'user',
     defaultValue: '/users',
   );
+
+  static const locations = String.fromEnvironment(
+    'locations',
+    defaultValue: '/locations',
+  );
 }

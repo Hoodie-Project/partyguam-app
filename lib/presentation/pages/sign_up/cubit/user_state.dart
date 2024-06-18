@@ -47,6 +47,14 @@ final class CreateUserComplete extends UserState {
   const CreateUserComplete();
 }
 
+final class GetLocationsPending extends UserState {
+  const GetLocationsPending();
+}
+
+final class GetLocationsComplete extends UserState {
+  const GetLocationsComplete();
+}
+
 class UserError extends UserState {
   const UserError(this.message);
 

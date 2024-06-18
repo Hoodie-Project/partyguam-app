@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
@@ -12,19 +14,24 @@ part 'user_state.dart';
 @Injectable()
 class UserCubit extends Cubit<UserState> {
   UserCubit({
+    required DioClient dioClient,
     required CheckUserNickname checkUserNickname,
     required SendUserCredentials sendUserCredentials,
-    required DioClient dioClient,
-  })  : _checkUserNickname = checkUserNickname,
+    required FetchLocations fetchLocations,
+  })  : _dioClient = dioClient,
+        _checkUserNickname = checkUserNickname,
         _sendUserCredentials = sendUserCredentials,
-        _dioClient = dioClient,
+        _fetchLocations = fetchLocations,
         super(const UserInitial());
 
+  final DioClient _dioClient;
   final CheckUserNickname _checkUserNickname;
   final SendUserCredentials _sendUserCredentials;
-  final DioClient _dioClient;
+  final FetchLocations _fetchLocations;
 
-  void resetUserCubitState() {
+  void resetUserCubitState() async {
+    await _dioClient.clearCookies();
+
     emit(const UserInitial());
   }
 
@@ -51,7 +58,7 @@ class UserCubit extends Cubit<UserState> {
         } else if (result.token == TokenTypes.login.token) {
           emit(const Registered());
         }
-      }
+      } else {}
     } catch (e) {
       emit(UserError(e.toString()));
     }
@@ -67,6 +74,21 @@ class UserCubit extends Cubit<UserState> {
     result.fold(
       (failure) => emit(const NicknameUnavailable()),
       (success) => emit(const NicknameAvailable()),
+    );
+  }
+
+  getLocations() async {
+    emit(const GetLocationsPending());
+
+    final result = await _fetchLocations();
+
+    result.fold(
+      (failure) => emit(const GetLocationsPending()),
+      (success) {
+        final locations = success.data;
+
+        emit(const GetLocationsComplete());
+      },
     );
   }
 }
