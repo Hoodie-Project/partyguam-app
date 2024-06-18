@@ -32,7 +32,7 @@ class SendUserCredentials
    */
 
   @override
-  ApiResult<void> call(SendUserCredentialParams params) async =>
+  ApiResult<AccessTokenDto?> call(SendUserCredentialParams params) async =>
       _repository.sendUserCredential(
         uid: params.uid,
         idToken: params.idToken,

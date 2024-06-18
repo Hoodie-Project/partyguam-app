@@ -15,7 +15,7 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
   final UserDataSource _remoteDataSource;
 
   @override
-  ApiResult<void> sendUserCredential({
+  ApiResult<AccessTokenDto?> sendUserCredential({
     required String uid,
     required String idToken,
   }) async {
@@ -43,9 +43,13 @@ class UserCredentialRepositoryImpl implements UserCredentialRepository {
 
 @LazySingleton(as: UserSignUpRepository)
 class UserSignUpRepositoryImpl implements UserSignUpRepository {
-  const UserSignUpRepositoryImpl(this._remoteDataSource);
+  const UserSignUpRepositoryImpl(
+    this._remoteDataSource,
+    this._userSignUpDataSource,
+  );
 
   final UserDataSource _remoteDataSource;
+  final UserSignUpDataSource _userSignUpDataSource;
 
   @override
   ApiResult<SuccessDto> checkUserNickname({required String nickname}) async {
@@ -73,6 +77,17 @@ class UserSignUpRepositoryImpl implements UserSignUpRepository {
         birth: birth,
         gender: gender,
       );
+
+      return Right(response);
+    } on ApiException catch (e) {
+      return Left(ApiFailure.fromException(e));
+    }
+  }
+
+  @override
+  ApiResult<LocationResponseDto> fetchLocations() async {
+    try {
+      final response = await _userSignUpDataSource.fetchLocations();
 
       return Right(response);
     } on ApiException catch (e) {
