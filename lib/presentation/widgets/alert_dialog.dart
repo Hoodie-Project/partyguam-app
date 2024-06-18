@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:partyguam/presentation/pages/sign_up/cubit/auth_cubit.dart';
+import 'package:partyguam/presentation/pages/sign_up/cubit/user_cubit.dart';
 
 import '../theme/colors.dart';
 
@@ -77,9 +77,7 @@ Future<Widget?> showExitDialog(BuildContext context, String exitRoute) {
                       Expanded(
                         child: InkWell(
                           onTap: () {
-                            context
-                                .read<AuthCubit>()
-                                .resetAuthenticationStatus();
+                            context.read<UserCubit>().resetUserCubitState();
                             context.go(exitRoute);
                           },
                           child: Container(

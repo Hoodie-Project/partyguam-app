@@ -69,6 +69,8 @@ class _SignIn0000State extends State<SignIn0000> with WidgetsBindingObserver {
             } else if (state is Unregistered) {
               context
                   .push('${RouterPath.signUp}/0111', extra: {'email': email});
+            } else {
+              return;
             }
           },
         ),

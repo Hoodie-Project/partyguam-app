@@ -15,47 +15,54 @@ class SignUp0115 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const NoIconsAppBar(title: '가입완료'),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
-            Center(
-              child: Text(
-                textAlign: TextAlign.center,
-                '가입을 축하합니다!\n세부 프로필을 작성해 볼까요?',
-                style: SignUp0115Styles.mainTitle,
+    return BlocListener<UserFormCubit, UserFormState>(
+      listener: (context, state) {
+        if (state.createUserComplete) {
+          context.push('${RouterPath.signUp}/detail/0121');
+        }
+      },
+      child: Scaffold(
+        appBar: const NoIconsAppBar(title: '가입완료'),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Expanded(
+                flex: 1,
+                child: SizedBox(),
               ),
-            ),
-            const Expanded(
-              flex: 1,
-              child: SizedBox(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: buildOutlinedShortButton(
-                    context,
-                    '홈으로 이동',
-                    RouterPath.signIn,
+              Center(
+                child: Text(
+                  textAlign: TextAlign.center,
+                  '가입을 축하합니다!\n세부 프로필을 작성해 볼까요?',
+                  style: SignUp0115Styles.mainTitle,
+                ),
+              ),
+              const Expanded(
+                flex: 1,
+                child: SizedBox(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: buildOutlinedShortButton(
+                      context,
+                      '홈으로 이동',
+                      RouterPath.signIn,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 8.0,
-                ),
-                Expanded(
-                  child: _buildNextButton(context),
-                ),
-              ],
-            ),
-          ],
+                  const SizedBox(
+                    width: 8.0,
+                  ),
+                  Expanded(
+                    child: _buildNextButton(context),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -73,7 +80,6 @@ class SignUp0115 extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             context.read<UserFormCubit>().createUser();
-            context.push('${RouterPath.signUp}/detail/0121');
           },
           style: CommonButtonStyles.filledLongStyle,
           child: const Text('작성하기'),
